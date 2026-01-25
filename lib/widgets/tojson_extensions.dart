@@ -710,10 +710,10 @@ Color? decodeColor(dynamic data) {
     return null;
   }
 
-  double r = data['r'];
-  double g = data['g'];
-  double b = data['b'];
-  double a = data['a'];
+  double r = data['r'].toDouble();
+  double g = data['g'].toDouble();
+  double b = data['b'].toDouble();
+  double a = data['a'].toDouble();
   ColorSpace cs = decodeColorSpace(data['colorSpace']);
 
   return Color.from(alpha: a, red: r, green: g, blue: b, colorSpace: cs);

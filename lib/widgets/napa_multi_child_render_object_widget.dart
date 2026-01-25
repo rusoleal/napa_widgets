@@ -6,7 +6,7 @@ abstract class NapaMultiChildRenderObjectWidget extends NapaRenderObjectWidget {
 
   NapaMultiChildRenderObjectWidget({List<NapaWidget>? children})
     : children = children ?? [],
-      super(childMode: NapaChildMode.multiChild);
+      super(childMode: NapaChildMode.multipleChildren);
 
   @override
   dynamic toJson() {

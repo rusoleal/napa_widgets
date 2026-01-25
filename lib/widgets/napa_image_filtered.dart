@@ -1,5 +1,4 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/widgets.dart';
 import 'package:inspectable_property/inspectable.dart';
 import 'data/napa_image_filter.dart';
 import 'napa_single_child_render_object_widget.dart';

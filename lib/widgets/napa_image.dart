@@ -154,31 +154,6 @@ class NapaImage extends NapaStatefulWidget {
   String get widgetName => 'Image';
 
   @override
-  Widget? get treePreview {
-    if (data == null) {
-      return null;
-    }
-
-    return Image.memory(
-      data!.data,
-      alignment: alignment,
-      centerSlice: centerSlice,
-      color: color,
-      colorBlendMode: colorBlendMode,
-      excludeFromSemantics: excludeFromSemantics,
-      filterQuality: filterQuality,
-      fit: fit,
-      gaplessPlayback: gaplessPlayback,
-      height: height,
-      isAntiAlias: isAntiAlias,
-      matchTextDirection: matchTextDirection,
-      opacity: opacity == null ? null : AlwaysStoppedAnimation(opacity!),
-      repeat: repeat,
-      width: width,
-    );
-  }
-
-  @override
   Widget toWidget() {
     if (data == null) {
       return Container();

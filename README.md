@@ -1,39 +1,58 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
-
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+Napa widgets are an inspectable and serializable version of common Flutter widgets.
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+* Inspect in real time internal properties.
+* JSON compatible serialization/deserialization. 
 
-## Getting started
+## Library status
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+| Widget name    | Status  |
+|----------------|---------|
+| Align          | Ok      |
+| AspectRatio    | Ok      |
+| BackdropFilter | Ok      |
+| Baseline       | Ok      |
+| BoxScrollView  | Pending |
+| Center         | Ok      |
+| ClipPath       | Pending |
+| ClipRect       | Ok      |
+| Column         | Ok      |
+| Container      | Ok      |
+| CustomPaint    | Pending |
+| DecoratedBox   | Ok      |
+| Expanded       | Ok      |
+| FittedBox      | Ok      |
+| Flex           | Ok      |
+| Fiexible       | Ok      |
+| Icon           | Pending |
+| Image          | Ok      |
+| ImageFiltered  | Ok      |
+| ListView       | Pending |
+| Opacity        | Ok      |
+| Padding        | Ok      |
+| Positioned     | Ok      |
+| RotatedBox     | Ok      |
+| Row            | Ok      |
+| ScrollView     | Pending |
+| SizedBox       | Ok      |
+| Stack          | Ok      |
+| Text           | Ok      |
+| Transform      | Ok      |
+| Wrap           | Ok      |
+
+
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+Compose Napa widgets and transform to regular widgets...
 
 ```dart
-const like = 'sample';
+const napaWidget = NapaPadding(
+  padding: EdgeInsetsGeometry.all(8.0),
+  child: NapaText('Hello world!!!'),
+);
+
+Widget flutterWidget = napaWidget.toWidget();
 ```
 
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.

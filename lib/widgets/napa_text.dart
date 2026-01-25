@@ -21,8 +21,7 @@ class NapaText extends NapaStatelessWidget {
   TextHeightBehavior? textHeightBehavior;
   Color? selectionColor;
 
-  NapaText({
-    required this.text,
+  NapaText(this.text, {
     this.style,
     this.strutStyle,
     this.textAlign,
@@ -165,7 +164,7 @@ class NapaText extends NapaStatelessWidget {
     }
 
     return NapaText(
-      text: data['text'],
+      data['text'],
       style: NapaTextStyle.decode(data['style']),
       strutStyle: decodeStrutStyle(data['strutStyle']),
       textAlign: decodeTextAlign(data['textAlign']),

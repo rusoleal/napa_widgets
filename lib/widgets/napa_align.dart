@@ -4,6 +4,9 @@ import 'package:napa_widgets/widgets/tojson_extensions.dart';
 import 'napa_single_child_render_object_widget.dart';
 import 'napa_widget.dart';
 
+/// Wrapper class for [Align].
+/// https://api.flutter.dev/flutter/widgets/Align-class.html
+///
 class NapaAlign extends NapaSingleChildRenderObjectWidget {
   AlignmentGeometry alignment;
   double? widthFactor;
@@ -37,11 +40,11 @@ class NapaAlign extends NapaSingleChildRenderObjectWidget {
 
   @override
   toJson() {
-    return <String, dynamic>{
+    return super.toJson()..addAll(<String, dynamic>{
       'alignment': alignment.toJson(),
       if (widthFactor != null) 'widthFactor': widthFactor,
       if (heightFactor != null) 'heightFactor': heightFactor,
-    }..addAll(super.toJson());
+    });
   }
 
   @override

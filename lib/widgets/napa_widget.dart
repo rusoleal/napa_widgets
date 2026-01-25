@@ -15,7 +15,6 @@ import 'napa_fitted_box.dart';
 import 'napa_flex.dart';
 import 'napa_flexible.dart';
 import 'napa_image.dart';
-import 'napa_old_film_effect.dart';
 import 'napa_opacity.dart';
 import 'napa_padding.dart';
 import 'napa_positioned.dart';
@@ -27,10 +26,17 @@ import 'napa_text.dart';
 import 'napa_transform.dart';
 import 'napa_wrap.dart';
 
+/// Wrapper class for Widget base class.
+/// https://api.flutter.dev/flutter/widgets/Widget-class.html
+///
+/// Acts as base class for any [NapaWidget].
+///
+/// Exposes type as read-only property.
+///
 abstract class NapaWidget with Inspectable {
   final NapaChildMode childMode;
 
-  NapaWidget({this.childMode = NapaChildMode.noChild}) {
+  NapaWidget({this.childMode = NapaChildMode.noChildren}) {
     properties.addAll([
       InspectableProperty<String>(
         name: 'type',
@@ -40,6 +46,9 @@ abstract class NapaWidget with Inspectable {
     ]);
   }
 
+  /// toJson returns a json compatible object.
+  ///
+  /// Descendants must override this method to expose custom properties.
   dynamic toJson() {
     return <String, dynamic>{'_name': widgetName};
   }
@@ -49,10 +58,12 @@ abstract class NapaWidget with Inspectable {
   @override
   String toString() => widgetName;
 
-  Widget? get treePreview => null;
-
+  /// Get a Flutter widget equivalent object.
+  ///
+  /// Descendants must override it.
   Widget toWidget();
 
+  /// Deserialize a json compatible object  into a [NapaWidget] or null.
   static NapaWidget? decode(dynamic data) {
     if (data is Map<String, dynamic>) {
       String name = data['_name'];
@@ -93,8 +104,6 @@ abstract class NapaWidget with Inspectable {
           return NapaImage.decode(data);
         //case 'ListView':
         //  return NapaListView.decode(data);
-        case 'OldFilmEffect':
-          return NapaOldFilmEffect.decode(data);
         case 'Opacity':
           return NapaOpacity.decode(data);
         case 'Padding':
@@ -122,4 +131,15 @@ abstract class NapaWidget with Inspectable {
   }
 }
 
-enum NapaChildMode { noChild, singleChild, multiChild }
+/// Describes [NapaWidget] descendants.
+enum NapaChildMode {
+
+  /// Widget has no children.
+  noChildren,
+
+  // Widget has one child.
+  singleChild,
+
+  // Widget has multiple children.
+  multipleChildren
+}

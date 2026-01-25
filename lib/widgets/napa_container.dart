@@ -118,19 +118,6 @@ class NapaContainer extends NapaStatelessWidget {
   String get widgetName => 'Container';
 
   @override
-  Widget? get treePreview {
-    if (color != null) {
-      return Container(color: color);
-    }
-    if (decoration != null &&
-        decoration is BoxDecoration &&
-        (decoration as BoxDecoration).color != null) {
-      return Container(color: (decoration as BoxDecoration).color);
-    }
-    return null;
-  }
-
-  @override
   Widget toWidget() => Container(
     alignment: alignment,
     padding: padding,

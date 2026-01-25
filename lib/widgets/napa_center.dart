@@ -9,6 +9,14 @@ class NapaCenter extends NapaAlign {
   String get widgetName => 'Center';
 
   @override
+  toJson() {
+    // remove alignment property.
+    var toReturn = super.toJson();
+    (toReturn as Map<String,dynamic>).remove('alignment');
+    return toReturn;
+  }
+
+  @override
   Widget toWidget() {
     return Center(
       widthFactor: widthFactor,
