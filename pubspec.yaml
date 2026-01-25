@@ -1,6 +1,6 @@
 name: napa_widgets
 description: "Napa widgets are an inspectable and serializable version of common Flutter widgets."
-version: 0.2.0
+version: 0.2.1
 repository: https://github.com/rusoleal/napa_widgets
 topics:
   - reflection

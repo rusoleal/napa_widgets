@@ -29,3 +29,4 @@ export 'widgets/napa_stack.dart';
 export 'widgets/napa_text.dart';
 export 'widgets/napa_transform.dart';
 export 'widgets/napa_wrap.dart';
+export 'widgets/napa_widget.dart';
