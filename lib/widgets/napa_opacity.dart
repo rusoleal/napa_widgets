@@ -4,6 +4,9 @@ import 'package:inspectable_property/inspectable.dart';
 import 'napa_single_child_render_object_widget.dart';
 import 'napa_widget.dart';
 
+/// Wrapper class for [Opacity].
+/// https://api.flutter.dev/flutter/widgets/Opacity-class.html
+///
 class NapaOpacity extends NapaSingleChildRenderObjectWidget {
   bool alwaysIncludeSemantics;
   double opacity;

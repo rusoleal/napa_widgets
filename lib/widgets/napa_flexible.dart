@@ -4,6 +4,9 @@ import 'package:napa_widgets/widgets/tojson_extensions.dart';
 import 'napa_parent_data_widget.dart';
 import 'napa_widget.dart';
 
+/// Wrapper class for [Flex].
+/// https://api.flutter.dev/flutter/widgets/Flex-class.html
+///
 class NapaFlexible extends NapaParentDataWidget {
   FlexFit fit;
   int flex;

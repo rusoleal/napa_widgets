@@ -3,6 +3,9 @@ import 'package:inspectable_property/inspectable.dart';
 import 'napa_single_child_render_object_widget.dart';
 import 'napa_widget.dart';
 
+/// Wrapper class for [AspectRatio].
+/// https://api.flutter.dev/flutter/widgets/AspectRatio-class.html
+///
 class NapaAspectRatio extends NapaSingleChildRenderObjectWidget {
   double aspectRatio;
 

@@ -5,6 +5,9 @@ import 'napa_single_child_render_object_widget.dart';
 import 'napa_widget.dart';
 import 'tojson_extensions.dart';
 
+/// Wrapper class for [BackdropFilter].
+/// https://api.flutter.dev/flutter/widgets/BackdropFilter-class.html
+///
 class NapaBackdropFilter extends NapaSingleChildRenderObjectWidget {
   NapaImageFilter filter;
   BlendMode blendMode;

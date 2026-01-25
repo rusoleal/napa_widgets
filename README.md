@@ -15,8 +15,10 @@ Napa widgets are an inspectable and serializable version of common Flutter widge
 | Baseline       | Ok      |
 | BoxScrollView  | Pending |
 | Center         | Ok      |
+| ClipOval       | Pending |
 | ClipPath       | Pending |
 | ClipRect       | Ok      |
+| ClipRRect      | Pending |
 | Column         | Ok      |
 | Container      | Ok      |
 | CustomPaint    | Pending |

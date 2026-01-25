@@ -1,9 +1,13 @@
 import 'package:flutter/widgets.dart';
 import 'package:inspectable_property/inspectable.dart';
+import 'data/napa_text_scaler.dart';
 import 'data/napa_text_style.dart';
 import 'napa_stateless_widget.dart';
 import 'tojson_extensions.dart';
 
+/// Wrapper class for [Text].
+/// https://api.flutter.dev/flutter/widgets/Text-class.html
+///
 class NapaText extends NapaStatelessWidget {
   String text;
   NapaTextStyle? style;
@@ -13,7 +17,7 @@ class NapaText extends NapaStatelessWidget {
   Locale? locale;
   bool? softWrap;
   TextOverflow? overflow;
-  TextScaler? textScaler;
+  NapaTextScaler? textScaler;
   int? maxLines;
   String? semanticsLabel;
   String? semanticsIdentifier;
@@ -149,7 +153,7 @@ class NapaText extends NapaStatelessWidget {
     locale: locale,
     softWrap: softWrap,
     overflow: overflow,
-    textScaler: textScaler,
+    textScaler: textScaler?.toTextScaler(),
     maxLines: maxLines,
     semanticsLabel: semanticsLabel,
     semanticsIdentifier: semanticsIdentifier,
@@ -172,7 +176,7 @@ class NapaText extends NapaStatelessWidget {
       locale: decodeLocale(data['locale']),
       softWrap: data['softWrap'],
       overflow: decodeTextOverflow(data['overflow']),
-      textScaler: decodeTextScaler(data['textScaler']),
+      textScaler: NapaTextScaler.decode(data['textScaler']),
       maxLines: data['maxLines'],
       semanticsLabel: data['semanticsLabel'],
       semanticsIdentifier: data['semanticsIdentifier'],

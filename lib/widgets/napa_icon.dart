@@ -3,6 +3,9 @@ import 'package:napa_widgets/widgets/tojson_extensions.dart';
 
 import 'napa_stateless_widget.dart';
 
+/// Wrapper class for [Icon].
+/// https://api.flutter.dev/flutter/widgets/Icon-class.html
+///
 class NapaIcon extends NapaStatelessWidget {
   IconData? icon;
   double? size;

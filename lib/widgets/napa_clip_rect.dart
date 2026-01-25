@@ -3,6 +3,9 @@ import 'napa_single_child_render_object_widget.dart';
 import 'napa_widget.dart';
 import 'tojson_extensions.dart';
 
+/// Wrapper class for [ClipRect].
+/// https://api.flutter.dev/flutter/widgets/ClipRect-class.html
+///
 class NapaClipRect extends NapaSingleChildRenderObjectWidget {
   CustomClipper<Rect>? clipper;
   Clip clipBehavior;

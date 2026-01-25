@@ -4,6 +4,9 @@ import 'package:inspectable_property/inspectable.dart';
 import 'napa_single_child_render_object_widget.dart';
 import 'napa_widget.dart';
 
+/// Wrapper class for [SizedBox].
+/// https://api.flutter.dev/flutter/widgets/SizedBox-class.html
+///
 class NapaSizedBox extends NapaSingleChildRenderObjectWidget {
   double? width;
   double? height;
@@ -49,7 +52,7 @@ class NapaSizedBox extends NapaSingleChildRenderObjectWidget {
     return NapaSizedBox(
       width: data['width'],
       height: data['height'],
-      child: NapaWidget.decode(data['child'])
+      child: NapaWidget.decode(data['child']),
     );
   }
 }

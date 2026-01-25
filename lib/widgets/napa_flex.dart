@@ -3,6 +3,9 @@ import 'package:inspectable_property/inspectable.dart';
 import 'napa_multi_child_render_object_widget.dart';
 import 'tojson_extensions.dart';
 
+/// Wrapper class for [Flex].
+/// https://api.flutter.dev/flutter/widgets/Flex-class.html
+///
 class NapaFlex extends NapaMultiChildRenderObjectWidget {
   Clip clipBehavior;
   CrossAxisAlignment crossAxisAlignment;

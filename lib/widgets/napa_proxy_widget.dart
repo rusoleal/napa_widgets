@@ -1,6 +1,10 @@
 
+import 'package:flutter/widgets.dart';
 import 'napa_widget.dart';
 
+/// Wrapper class for [ProxyWidget].
+/// https://api.flutter.dev/flutter/widgets/ProxyWidget-class.html
+///
 abstract class NapaProxyWidget extends NapaWidget {
 
   NapaWidget child;

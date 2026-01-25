@@ -4,6 +4,9 @@ import 'package:napa_widgets/widgets/tojson_extensions.dart';
 import 'napa_single_child_render_object_widget.dart';
 import 'napa_widget.dart';
 
+/// Wrapper class for [DecoratedBox].
+/// https://api.flutter.dev/flutter/widgets/DecoratedBox-class.html
+///
 class NapaDecoratedBox extends NapaSingleChildRenderObjectWidget {
   Decoration decoration;
   DecorationPosition position;

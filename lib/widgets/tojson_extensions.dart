@@ -364,23 +364,6 @@ Size? decodeSize(dynamic data) {
   return Size(data['width'], data['height']);
 }
 
-extension TextScalerToJson on TextScaler {
-  dynamic toJson() {
-    return <String, dynamic>{
-      'type': 'linear',
-      'textScaleFactor': textScaleFactor,
-    };
-  }
-}
-
-TextScaler? decodeTextScaler(dynamic data) {
-  if (data == null) {
-    return data;
-  }
-
-  return TextScaler.linear(data['textScaleFactor']);
-}
-
 extension TextHeightBehaviorToJson on TextHeightBehavior {
   dynamic toJson() {
     return <String, dynamic>{

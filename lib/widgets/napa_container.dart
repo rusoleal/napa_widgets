@@ -5,6 +5,9 @@ import 'napa_stateless_widget.dart';
 import 'napa_widget.dart';
 import 'tojson_extensions.dart';
 
+/// Wrapper class for [Container].
+/// https://api.flutter.dev/flutter/widgets/Container-class.html
+///
 class NapaContainer extends NapaStatelessWidget {
   AlignmentGeometry? alignment;
   NapaWidget? child;

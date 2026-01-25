@@ -3,6 +3,9 @@ import 'package:inspectable_property/inspectable.dart';
 import 'napa_parent_data_widget.dart';
 import 'napa_widget.dart';
 
+/// Wrapper class for [Positioned].
+/// https://api.flutter.dev/flutter/widgets/Positioned-class.html
+///
 class NapaPositioned extends NapaParentDataWidget {
   double? left;
   double? top;

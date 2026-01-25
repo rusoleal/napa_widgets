@@ -3,6 +3,9 @@ import 'package:flutter/widgets.dart';
 import 'napa_flex.dart';
 import 'tojson_extensions.dart';
 
+/// Wrapper class for [Row].
+/// https://api.flutter.dev/flutter/widgets/Row-class.html
+///
 class NapaRow extends NapaFlex {
 
   NapaRow({

@@ -4,6 +4,9 @@ import 'data/image_wrapper.dart';
 import 'napa_stateful_widget.dart';
 import 'tojson_extensions.dart';
 
+/// Wrapper class for [Image].
+/// https://api.flutter.dev/flutter/widgets/Image-class.html
+///
 class NapaImage extends NapaStatefulWidget {
   AlignmentGeometry alignment;
   Rect? centerSlice;

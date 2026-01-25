@@ -1,6 +1,10 @@
+import 'package:flutter/widgets.dart';
 import 'napa_render_object_widget.dart';
 import 'napa_widget.dart';
 
+/// Wrapper class for [SingleChildRenderObjectWidget].
+/// https://api.flutter.dev/flutter/widgets/SingleChildRenderObjectWidget-class.html
+///
 abstract class NapaSingleChildRenderObjectWidget
     extends NapaRenderObjectWidget {
   NapaWidget? child;

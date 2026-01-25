@@ -3,6 +3,9 @@ import 'package:inspectable_property/inspectable.dart';
 import 'napa_multi_child_render_object_widget.dart';
 import 'tojson_extensions.dart';
 
+/// Wrapper class for [Wrap].
+/// https://api.flutter.dev/flutter/widgets/Wrap-class.html
+///
 class NapaWrap extends NapaMultiChildRenderObjectWidget {
   WrapAlignment alignment;
   Clip clipBehavior;

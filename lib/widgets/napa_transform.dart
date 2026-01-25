@@ -4,6 +4,9 @@ import 'data/napa_matrix4.dart';
 import 'napa_single_child_render_object_widget.dart';
 import 'napa_widget.dart';
 
+/// Wrapper class for [Transform].
+/// https://api.flutter.dev/flutter/widgets/Transform-class.html
+///
 class NapaTransform extends NapaSingleChildRenderObjectWidget {
   NapaMatrix4Compose transform;
 

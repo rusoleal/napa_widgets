@@ -2,6 +2,9 @@ import 'package:flutter/widgets.dart';
 import 'napa_align.dart';
 import 'napa_widget.dart';
 
+/// Wrapper class for [Center].
+/// https://api.flutter.dev/flutter/widgets/Center-class.html
+///
 class NapaCenter extends NapaAlign {
   NapaCenter({super.widthFactor, super.heightFactor, super.child});
 

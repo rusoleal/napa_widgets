@@ -124,6 +124,8 @@ abstract class NapaWidget with Inspectable {
           return NapaTransform.decode(data);
         case 'Wrap':
           return NapaWrap.decode(data);
+        default:
+          throw Exception('Unknown implementation for widget \'$name\'');
       }
     }
 
