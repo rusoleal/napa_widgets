@@ -30,31 +30,31 @@ class NapaFlex extends NapaMultiChildRenderObjectWidget {
     super.children,
   }) {
     properties.addAll([
-      InspectableProperty<Clip>(
+      InspectableProperty<Enum>(
         name: 'clipBehavior',
         getValue: (obj) => clipBehavior,
         setValue: (obj, value, customData) => clipBehavior = value,
         values: () => Clip.values,
       ),
-      InspectableProperty<CrossAxisAlignment>(
+      InspectableProperty<Enum>(
         name: 'crossAxisAlignment',
         getValue: (obj) => crossAxisAlignment,
         setValue: (obj, value, customData) => crossAxisAlignment = value,
         values: () => CrossAxisAlignment.values,
       ),
-      InspectableProperty<Axis>(
+      InspectableProperty<Enum>(
         name: 'direction',
         getValue: (obj) => direction,
         setValue: (obj, value, customData) => direction = value,
         values: () => Axis.values,
       ),
-      InspectableProperty<MainAxisAlignment>(
+      InspectableProperty<Enum>(
         name: 'mainAxisAlignment',
         getValue: (obj) => mainAxisAlignment,
         setValue: (obj, value, customData) => mainAxisAlignment = value,
         values: () => MainAxisAlignment.values,
       ),
-      InspectableProperty<MainAxisSize>(
+      InspectableProperty<Enum>(
         name: 'mainAxisSize',
         getValue: (obj) => mainAxisSize,
         setValue: (obj, value, customData) => mainAxisSize = value,
@@ -65,21 +65,21 @@ class NapaFlex extends NapaMultiChildRenderObjectWidget {
         getValue: (obj) => spacing,
         setValue: (obj, value, customData) => spacing = value,
       ),
-      InspectableProperty<TextBaseline>(
+      InspectableProperty<Enum>(
         name: 'textBaseline',
         nullable: true,
         getValue: (obj) => textBaseline,
         setValue: (obj, value, customData) => textBaseline = value,
         values: () => TextBaseline.values,
       ),
-      InspectableProperty<TextDirection>(
+      InspectableProperty<Enum>(
         name: 'textDirection',
         nullable: true,
         getValue: (obj) => textDirection,
         setValue: (obj, value, customData) => textDirection = value,
         values: () => TextDirection.values,
       ),
-      InspectableProperty<VerticalDirection>(
+      InspectableProperty<Enum>(
         name: 'verticalDirection',
         getValue: (obj) => verticalDirection,
         setValue: (obj, value, customData) => verticalDirection = value,

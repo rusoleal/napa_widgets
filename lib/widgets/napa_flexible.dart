@@ -17,7 +17,7 @@ class NapaFlexible extends NapaParentDataWidget {
     required super.child,
   }) {
     properties.addAll([
-      InspectableProperty<FlexFit>(
+      InspectableProperty<Enum>(
         name: 'fit',
         getValue: (Inspectable obj) => fit,
         setValue: (obj, value, customData) => fit = value,

@@ -23,13 +23,13 @@ class NapaFittedBox extends NapaSingleChildRenderObjectWidget {
         name: 'alignment',
         getValue: (obj) => alignment,
       ),
-      InspectableProperty<Clip>(
+      InspectableProperty<Enum>(
         name: 'clipBehavior',
         getValue: (obj) => clipBehavior,
         setValue: (obj, value, customData) => clipBehavior = value,
         values: () => Clip.values,
       ),
-      InspectableProperty<BoxFit>(
+      InspectableProperty<Enum>(
         name: 'fit',
         getValue: (obj) => fit,
         setValue: (obj, value, customData) => fit = value,

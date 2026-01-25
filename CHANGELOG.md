@@ -1,3 +1,7 @@
+## 0.2.2
+
+* Change inspectable enum properties to Enum type. Now Enum properties can use built-in enum editor.
+
 ## 0.2.1
 
 * Fix export of NapaWidget base class.

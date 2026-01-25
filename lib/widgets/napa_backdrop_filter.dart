@@ -25,7 +25,7 @@ class NapaBackdropFilter extends NapaSingleChildRenderObjectWidget {
         getValue: (Inspectable obj) => filter,
         setValue: (obj, value, customData) => filter = value,
       ),
-      InspectableProperty<BlendMode>(
+      InspectableProperty<Enum>(
         name: 'blendMode',
         getValue: (Inspectable obj) => blendMode,
         setValue: (obj, value, customData) => blendMode = value,

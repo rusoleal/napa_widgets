@@ -22,7 +22,7 @@ class NapaBaseline extends NapaSingleChildRenderObjectWidget {
         getValue: (Inspectable obj) => baseline,
         setValue: (obj, value, customData) => baseline = value,
       ),
-      InspectableProperty<TextBaseline>(
+      InspectableProperty<Enum>(
         name: 'baselineType',
         getValue: (Inspectable obj) => baselineType,
         setValue: (obj, value, customData) => baselineType = value,

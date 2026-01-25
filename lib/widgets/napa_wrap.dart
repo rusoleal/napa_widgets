@@ -30,31 +30,31 @@ class NapaWrap extends NapaMultiChildRenderObjectWidget {
     super.children,
   }) {
     properties.addAll([
-      InspectableProperty<WrapAlignment>(
+      InspectableProperty<Enum>(
         name: 'alignment',
         getValue: (obj) => alignment,
         setValue: (obj, value, customData) => alignment = value,
         values: () => WrapAlignment.values,
       ),
-      InspectableProperty<Clip>(
+      InspectableProperty<Enum>(
         name: 'clipBehavior',
         getValue: (obj) => clipBehavior,
         setValue: (obj, value, customData) => clipBehavior = value,
         values: () => Clip.values,
       ),
-      InspectableProperty<WrapCrossAlignment>(
+      InspectableProperty<Enum>(
         name: 'crossAxisAlignment',
         getValue: (obj) => crossAxisAlignment,
         setValue: (obj, value, customData) => crossAxisAlignment = value,
         values: () => WrapCrossAlignment.values,
       ),
-      InspectableProperty<Axis>(
+      InspectableProperty<Enum>(
         name: 'direction',
         getValue: (obj) => direction,
         setValue: (obj, value, customData) => direction = value,
         values: () => Axis.values,
       ),
-      InspectableProperty<WrapAlignment>(
+      InspectableProperty<Enum>(
         name: 'runAlignment',
         getValue: (obj) => runAlignment,
         setValue: (obj, value, customData) => runAlignment = value,
@@ -70,14 +70,14 @@ class NapaWrap extends NapaMultiChildRenderObjectWidget {
         getValue: (obj) => spacing,
         setValue: (obj, value, customData) => spacing = value,
       ),
-      InspectableProperty<TextDirection>(
+      InspectableProperty<Enum>(
         name: 'textDirection',
         nullable: true,
         getValue: (obj) => textDirection,
         setValue: (obj, value, customData) => textDirection = value,
         values: () => TextDirection.values,
       ),
-      InspectableProperty<VerticalDirection>(
+      InspectableProperty<Enum>(
         name: 'verticalDirection',
         getValue: (obj) => verticalDirection,
         setValue: (obj, value, customData) => verticalDirection = value,

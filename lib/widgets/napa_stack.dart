@@ -24,19 +24,19 @@ class NapaStack extends NapaMultiChildRenderObjectWidget {
         getValue: (Inspectable obj) => alignment,
         setValue: (obj, value, customData) => alignment = value,
       ),
-      InspectableProperty<Clip>(
+      InspectableProperty<Enum>(
         name: 'clipBehavior',
         getValue: (obj) => clipBehavior,
         setValue: (obj, value, customData) => clipBehavior = value,
         values: () => Clip.values,
       ),
-      InspectableProperty<StackFit>(
+      InspectableProperty<Enum>(
         name: 'fit',
         getValue: (obj) => fit,
         setValue: (obj, value, customData) => fit = value,
         values: () => StackFit.values,
       ),
-      InspectableProperty<TextDirection>(
+      InspectableProperty<Enum>(
         name: 'textDirection',
         nullable: true,
         getValue: (obj) => textDirection,

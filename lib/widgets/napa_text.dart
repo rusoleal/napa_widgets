@@ -53,14 +53,14 @@ class NapaText extends NapaStatelessWidget {
         getValue: (obj) => style,
         setValue: (obj, value, customData) => style = value,
       ),
-      InspectableProperty<TextAlign>(
+      InspectableProperty<Enum>(
         name: 'textAlign',
         nullable: true,
         getValue: (obj) => textAlign,
         setValue: (obj, value, customData) => textAlign = value,
         values: () => TextAlign.values,
       ),
-      InspectableProperty<TextDirection>(
+      InspectableProperty<Enum>(
         name: 'textDirection',
         nullable: true,
         getValue: (obj) => textDirection,
@@ -73,7 +73,7 @@ class NapaText extends NapaStatelessWidget {
         getValue: (obj) => softWrap,
         setValue: (obj, value, customData) => softWrap = value,
       ),
-      InspectableProperty<TextOverflow>(
+      InspectableProperty<Enum>(
         name: 'overflow',
         nullable: true,
         getValue: (obj) => overflow,
@@ -98,7 +98,7 @@ class NapaText extends NapaStatelessWidget {
         getValue: (obj) => semanticsIdentifier,
         setValue: (obj, value, customData) => semanticsIdentifier = value,
       ),
-      InspectableProperty<TextWidthBasis>(
+      InspectableProperty<Enum>(
         name: 'textWidthBasis',
         nullable: true,
         getValue: (obj) => textWidthBasis,

@@ -57,7 +57,7 @@ class NapaContainer extends NapaStatelessWidget {
         getValue: (Inspectable obj) => color,
         setValue: (obj, value, customData) => color = value,
       ),
-      InspectableProperty<Clip>(
+      InspectableProperty<Enum>(
         name: 'clipBehavior',
         getValue: (Inspectable obj) => clipBehavior,
         setValue: (obj, value, customData) => clipBehavior = value,

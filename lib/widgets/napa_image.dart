@@ -59,7 +59,7 @@ class NapaImage extends NapaStatefulWidget {
         getValue: (obj) => color,
         setValue: (obj, value, customData) => color = value,
       ),
-      InspectableProperty<BlendMode>(
+      InspectableProperty<Enum>(
         name: 'colorBlendMode',
         nullable: true,
         getValue: (obj) => colorBlendMode,
@@ -71,13 +71,13 @@ class NapaImage extends NapaStatefulWidget {
         getValue: (obj) => excludeFromSemantics,
         setValue: (obj, value, customData) => excludeFromSemantics = value,
       ),
-      InspectableProperty<FilterQuality>(
+      InspectableProperty<Enum>(
         name: 'filterQuality',
         getValue: (obj) => filterQuality,
         setValue: (obj, value, customData) => filterQuality = value,
         values: () => FilterQuality.values,
       ),
-      InspectableProperty<BoxFit>(
+      InspectableProperty<Enum>(
         name: 'fit',
         nullable: true,
         getValue: (obj) => fit,
@@ -111,7 +111,7 @@ class NapaImage extends NapaStatefulWidget {
         getValue: (obj) => opacity,
         setValue: (obj, value, customData) => opacity = value,
       ),
-      InspectableProperty<ImageRepeat>(
+      InspectableProperty<Enum>(
         name: 'repeat',
         getValue: (obj) => repeat,
         setValue: (obj, value, customData) => repeat = value,
