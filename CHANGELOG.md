@@ -1,3 +1,14 @@
+## 0.3.0
+
+* New widget implementations:
+* ListView.
+* RepaintBoundary.
+* ClipOval.
+* ClipPath.
+* ClipRect.
+* ClipRRect.
+* ClipRSuperellipse.
+
 ## 0.2.2
 
 * Change inspectable enum properties to Enum type. Now Enum properties can use built-in enum editor.

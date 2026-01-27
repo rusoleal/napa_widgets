@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:ui';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
 import 'data/image_wrapper.dart';
 import 'napa_widget.dart';
@@ -290,6 +291,23 @@ Offset? decodeOffset(dynamic data) {
   }
 
   return Offset(data['dx'], data['dy']);
+}
+
+Radius decodeRadius(dynamic data) {
+  return Radius.elliptical(data['x'], data['y']);
+}
+
+BorderRadiusGeometry? decodeBorderRadiusGeometry(dynamic data) {
+  if (data == null) {
+    return null;
+  }
+
+  return BorderRadius.only(
+    topLeft: decodeRadius(data['topLeft']),
+    topRight: decodeRadius(data['topRight']),
+    bottomLeft: decodeRadius(data['bottomLeft']),
+    bottomRight: decodeRadius(data['bottomRight']),
+  );
 }
 
 extension BorderRadiusGeometryToJson on BorderRadiusGeometry {
@@ -948,6 +966,41 @@ FilterQuality decodeFilterQuality(String name) {
     case 'medium':
     default:
       return FilterQuality.medium;
+  }
+}
+
+DragStartBehavior decodeDragStartBehavior(String name) {
+  switch (name) {
+    case 'down':
+      return .down;
+    case 'start':
+    default:
+      return .start;
+  }
+}
+
+ScrollViewKeyboardDismissBehavior? decodeScrollViewKeyboardDismissBehavior(
+  String? name,
+) {
+  switch (name) {
+    case 'manual':
+      return .manual;
+    case 'onDrag':
+      return .onDrag;
+    default:
+      return null;
+  }
+}
+
+HitTestBehavior decodeHitTestBehavior(String name) {
+  switch (name) {
+    case 'deferToChild':
+      return .deferToChild;
+    case 'translucent':
+      return .translucent;
+    case 'opaque':
+    default:
+      return .opaque;
   }
 }
 

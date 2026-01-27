@@ -5,7 +5,11 @@ import 'napa_aspect_ratio.dart';
 import 'napa_backdrop_filter.dart';
 import 'napa_baseline.dart';
 import 'napa_center.dart';
+import 'napa_clip_oval.dart';
+import 'napa_clip_path.dart';
 import 'napa_clip_rect.dart';
+import 'napa_clip_rrect.dart';
+import 'napa_clip_rsuperellipse.dart';
 import 'napa_column.dart';
 import 'napa_container.dart';
 import 'napa_custom_paint.dart';
@@ -15,9 +19,11 @@ import 'napa_fitted_box.dart';
 import 'napa_flex.dart';
 import 'napa_flexible.dart';
 import 'napa_image.dart';
+import 'napa_list_view.dart';
 import 'napa_opacity.dart';
 import 'napa_padding.dart';
 import 'napa_positioned.dart';
+import 'napa_repaint_boundary.dart';
 import 'napa_rotated_box.dart';
 import 'napa_row.dart';
 import 'napa_sized_box.dart';
@@ -78,10 +84,16 @@ abstract class NapaWidget with Inspectable {
           return NapaBaseline.decode(data);
         case 'Center':
           return NapaCenter.decode(data);
-        //case 'ClipPath':
-        //  return NapaClipPath.decode(data);
+        case 'ClipPath':
+          return NapaClipPath.decode(data);
+        case 'ClipOval':
+          return NapaClipOval.decode(data);
         case 'ClipRect':
           return NapaClipRect.decode(data);
+        case 'ClipRRect':
+          return NapaClipRRect.decode(data);
+        case 'ClipRSuperellipse':
+          return NapaClipRSuperellipse.decode(data);
         case 'Column':
           return NapaColumn.decode(data);
         case 'Container':
@@ -102,14 +114,16 @@ abstract class NapaWidget with Inspectable {
         //  return NapaIcon.decode(data);
         case 'Image':
           return NapaImage.decode(data);
-        //case 'ListView':
-        //  return NapaListView.decode(data);
+        case 'ListView':
+          return NapaListView.decode(data);
         case 'Opacity':
           return NapaOpacity.decode(data);
         case 'Padding':
           return NapaPadding.decode(data);
         case 'Positioned':
           return NapaPositioned.decode(data);
+        case 'RepaintBoundary':
+          return NapaRepaintBoundary.decode(data);
         case 'RotatedBox':
           return NapaRotatedBox.decode(data);
         case 'Row':

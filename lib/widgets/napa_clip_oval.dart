@@ -4,14 +4,18 @@ import 'napa_single_child_render_object_widget.dart';
 import 'napa_widget.dart';
 import 'tojson_extensions.dart';
 
-/// Wrapper class for [ClipRect].
-/// https://api.flutter.dev/flutter/widgets/ClipRect-class.html
+/// Wrapper class for [ClipOval].
+/// https://api.flutter.dev/flutter/widgets/ClipOval-class.html
 ///
-class NapaClipRect extends NapaSingleChildRenderObjectWidget {
+class NapaClipOval extends NapaSingleChildRenderObjectWidget {
   CustomClipper<Rect>? clipper;
   Clip clipBehavior;
 
-  NapaClipRect({super.child, this.clipper, this.clipBehavior = Clip.hardEdge}) {
+  NapaClipOval({
+    super.child,
+    this.clipper,
+    this.clipBehavior = Clip.antiAlias,
+  }) {
     properties.addAll([
       InspectableProperty<Enum>(
         name: 'clipBehavior',
@@ -20,7 +24,6 @@ class NapaClipRect extends NapaSingleChildRenderObjectWidget {
         values: () => Clip.values,
       ),
     ]);
-
   }
 
   @override
@@ -29,23 +32,23 @@ class NapaClipRect extends NapaSingleChildRenderObjectWidget {
   }
 
   @override
-  String get widgetName => 'ClipRect';
+  String get widgetName => 'ClipOval';
 
   @override
-  Widget toWidget() => ClipRect(
+  Widget toWidget() => ClipOval(
     clipper: clipper,
     clipBehavior: clipBehavior,
     child: child?.toWidget(),
   );
 
-  static NapaClipRect? decode(dynamic data) {
+  static NapaClipOval? decode(dynamic data) {
     if (data == null) {
       return null;
     }
 
-    return NapaClipRect(
+    return NapaClipOval(
       clipBehavior: decodeClip(data['clipBehavior']),
-      child: NapaWidget.decode(data['child'])
+      child: NapaWidget.decode(data['child']),
     );
   }
 }

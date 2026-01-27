@@ -7,41 +7,43 @@ Napa widgets are an inspectable and serializable version of common Flutter widge
 
 ## Library status
 
-| Widget name    | Status  |
-|----------------|---------|
-| Align          | Ok      |
-| AspectRatio    | Ok      |
-| BackdropFilter | Ok      |
-| Baseline       | Ok      |
-| BoxScrollView  | Pending |
-| Center         | Ok      |
-| ClipOval       | Pending |
-| ClipPath       | Pending |
-| ClipRect       | Ok      |
-| ClipRRect      | Pending |
-| Column         | Ok      |
-| Container      | Ok      |
-| CustomPaint    | Pending |
-| DecoratedBox   | Ok      |
-| Expanded       | Ok      |
-| FittedBox      | Ok      |
-| Flex           | Ok      |
-| Fiexible       | Ok      |
-| Icon           | Pending |
-| Image          | Ok      |
-| ImageFiltered  | Ok      |
-| ListView       | Pending |
-| Opacity        | Ok      |
-| Padding        | Ok      |
-| Positioned     | Ok      |
-| RotatedBox     | Ok      |
-| Row            | Ok      |
-| ScrollView     | Pending |
-| SizedBox       | Ok      |
-| Stack          | Ok      |
-| Text           | Ok      |
-| Transform      | Ok      |
-| Wrap           | Ok      |
+| Widget name       | Status  | Comment                          |
+|-------------------|---------|----------------------------------|
+| Align             | Ok      |                                  |
+| AspectRatio       | Ok      |                                  |
+| BackdropFilter    | Ok      |                                  |
+| Baseline          | Ok      |                                  |
+| Center            | Ok      |                                  |
+| ClipOval          | Ok      | No CustomClipper implementation. |
+| ClipPath          | Pending | No CustomClipper implementation. |
+| ClipRect          | Ok      | No CustomClipper implementation. |
+| ClipRRect         | Ok      | No CustomClipper implementation. |
+| ClipRSuperellipse | Ok      | No CustomClipper implementation. |
+| Column            | Ok      |                                  |
+| Container         | Ok      |                                  |
+| CustomPaint       | Pending | Need's scripting.                |
+| DecoratedBox      | Ok      |                                  |
+| Expanded          | Ok      |                                  |
+| FittedBox         | Ok      |                                  |
+| Flex              | Ok      |                                  |
+| Flexible          | Ok      |                                  |
+| Flow              | Pending | Need's scripting.                |
+| Icon              | Pending |                                  |
+| Image             | Ok      |                                  |
+| ImageFiltered     | Ok      |                                  |
+| ListView          | Ok      |                                  |
+| Opacity           | Ok      |                                  |
+| Padding           | Ok      |                                  |
+| Positioned        | Ok      |                                  |
+| RepaintBoundary   | Ok      |                                  |
+| RotatedBox        | Ok      |                                  |
+| Row               | Ok      |                                  |
+| ScrollView        | Pending |                                  |
+| SizedBox          | Ok      |                                  |
+| Stack             | Ok      |                                  |
+| Text              | Ok      |                                  |
+| Transform         | Ok      |                                  |
+| Wrap              | Ok      |                                  |
 
 
 
