@@ -1,11 +1,6 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:napa_widgets/widgets/napa_center.dart';
-import 'package:napa_widgets/widgets/napa_container.dart';
-import 'package:napa_widgets/widgets/napa_padding.dart';
-import 'package:napa_widgets/widgets/napa_text.dart';
-import 'package:napa_widgets/widgets/napa_widget.dart';
+import 'package:napa_widgets/napa_widgets.dart';
 
 void main() {
   runApp(const MyApp());
@@ -43,14 +38,52 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
 
-    final testWidget = NapaCenter(
-      child: NapaContainer(
-        color: Colors.blue,
-        child: NapaPadding(
-          padding: EdgeInsetsGeometry.all(8.0),
-          child: NapaText('Hello world!!!'),
+    final testWidget = NapaColumn(
+      crossAxisAlignment: .stretch,
+      children: [
+        NapaContainer(
+          color: Colors.blue,
+          child: NapaPadding(
+            padding: EdgeInsetsGeometry.all(8.0),
+            child: NapaText('Hello world!!!'),
+          ),
         ),
-      ),
+        NapaExpanded(
+          child: NapaClipRect(
+            child: NapaCustomPaint(
+              painter: NapaCustomPainter(
+                scriptType: .lua,
+                script: '''
+                  function paint(canvas, size)
+                    --print("calling paint function from dart")
+                    
+                    -- color = 0xFFFF0000 
+                    local c = drawing.newColor(4294901760)
+                    canvas:drawColor(c, drawing.BlendMode.srcOver)
+                    
+                    --canvas:save()
+                    --canvas:restore()
+                    
+                    -- print(tostring(size) .. " - " .. tostring(size.flipped))
+                  end
+                  
+                  ''',
+              ),
+              child: NapaCenter(child: NapaText('NapaCustomPaint')),
+            ),
+          ),
+        ),
+        NapaExpanded(child: NapaFlow(
+          delegate: NapaFlowDelegate(
+            script: '''
+              function paintChildren(context)
+                print("paintChildren executed")
+              end
+            '''
+          ),
+          children: [NapaText('NapaFlow')]
+        )),
+      ],
     );
     widgetToPresent = testWidget.toWidget();
     final serializableObject = testWidget.toJson();
@@ -92,7 +125,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       final deserializedObject = jsonDecode(value);
                       final napaWidget = NapaWidget.decode(deserializedObject);
                       widgetToPresent = napaWidget?.toWidget();
-                    } on Exception catch (ex) {
+                    } catch (ex) {
+                      print(ex);
                       widgetToPresent = Center(
                         child: Text(
                           ex.toString(),

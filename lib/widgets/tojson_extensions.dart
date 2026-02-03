@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
+import 'package:napa_widgets/scripting/napa_script_type.dart';
 import 'data/image_wrapper.dart';
 import 'napa_widget.dart';
 import 'data/napa_text_decoration.dart';
@@ -114,9 +115,11 @@ TileMode? decodeTileMode(String? name) {
   }
 }
 
-extension CustomPainterToJson on CustomPainter {
-  dynamic toJson() {
-    return <String, dynamic>{};
+NapaScriptType decodeNapaScriptType(String name) {
+  switch (name) {
+    case 'lua':
+    default:
+      return .lua;
   }
 }
 

@@ -1,36 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:inspectable_property/inspectable.dart';
-import 'napa_align.dart';
-import 'napa_aspect_ratio.dart';
-import 'napa_backdrop_filter.dart';
-import 'napa_baseline.dart';
-import 'napa_center.dart';
-import 'napa_clip_oval.dart';
-import 'napa_clip_path.dart';
-import 'napa_clip_rect.dart';
-import 'napa_clip_rrect.dart';
-import 'napa_clip_rsuperellipse.dart';
-import 'napa_column.dart';
-import 'napa_container.dart';
-import 'napa_custom_paint.dart';
-import 'napa_decorated_box.dart';
-import 'napa_expanded.dart';
-import 'napa_fitted_box.dart';
-import 'napa_flex.dart';
-import 'napa_flexible.dart';
-import 'napa_image.dart';
-import 'napa_list_view.dart';
-import 'napa_opacity.dart';
-import 'napa_padding.dart';
-import 'napa_positioned.dart';
+import 'package:napa_widgets/napa_widgets.dart';
 import 'napa_repaint_boundary.dart';
-import 'napa_rotated_box.dart';
-import 'napa_row.dart';
-import 'napa_sized_box.dart';
-import 'napa_stack.dart';
-import 'napa_text.dart';
-import 'napa_transform.dart';
-import 'napa_wrap.dart';
 
 /// Wrapper class for Widget base class.
 /// https://api.flutter.dev/flutter/widgets/Widget-class.html
@@ -40,6 +11,51 @@ import 'napa_wrap.dart';
 /// Exposes type as read-only property.
 ///
 abstract class NapaWidget with Inspectable {
+
+  /// Decoding register. Only NapaWidgets added to _register can be decoded.
+  ///
+  /// Custom [NapaWidgets] must be registered via [registerNapaWidget] function
+  /// in order to be decoded
+  ///
+  /// By default, _register is populated with built-in [NapaWidgets].
+  ///
+  static final Map<String, NapaWidget? Function(dynamic data)> _register = {
+    'Align': (data) => NapaAlign.decode(data),
+    'AspectRatio': (data) => NapaAspectRatio.decode(data),
+    'BackdropFilter': (data) => NapaBackdropFilter.decode(data),
+    'Baseline': (data) => NapaBaseline.decode(data),
+    'Center': (data) => NapaCenter.decode(data),
+    'ClipPath': (data) => NapaClipPath.decode(data),
+    'ClipOval': (data) => NapaClipOval.decode(data),
+    'ClipRect': (data) => NapaClipRect.decode(data),
+    'ClipRRect': (data) => NapaClipRRect.decode(data),
+    'ClipRSuperellipse': (data) => NapaClipRSuperellipse.decode(data),
+    'Column': (data) => NapaColumn.decode(data),
+    'Container': (data) => NapaContainer.decode(data),
+    'CustomPaint': (data) => NapaCustomPaint.decode(data),
+    'DecoratedBox': (data) => NapaDecoratedBox.decode(data),
+    'Expanded': (data) => NapaExpanded.decode(data),
+    'FittedBox': (data) => NapaFittedBox.decode(data),
+    'Flex': (data) => NapaFlex.decode(data),
+    'Flexible': (data) => NapaFlexible.decode(data),
+    'Flow': (data) => NapaFlow.decode(data),
+    //case 'Icon':
+    //  return NapaIcon.decode(data);
+    'Image': (data) => NapaImage.decode(data),
+    'ListView': (data) => NapaListView.decode(data),
+    'Opacity': (data) => NapaOpacity.decode(data),
+    'Padding': (data) => NapaPadding.decode(data),
+    'Positioned': (data) => NapaPositioned.decode(data),
+    'RepaintBoundary': (data) => NapaRepaintBoundary.decode(data),
+    'RotatedBox': (data) => NapaRotatedBox.decode(data),
+    'Row': (data) => NapaRow.decode(data),
+    'SizedBox': (data) => NapaSizedBox.decode(data),
+    'Stack': (data) => NapaStack.decode(data),
+    'Text': (data) => NapaText.decode(data),
+    'Transform': (data) => NapaTransform.decode(data),
+    'Wrap': (data) => NapaWrap.decode(data),
+  };
+
   final NapaChildMode childMode;
 
   NapaWidget({this.childMode = NapaChildMode.noChildren}) {
@@ -72,84 +88,42 @@ abstract class NapaWidget with Inspectable {
   /// Deserialize a json compatible object  into a [NapaWidget] or null.
   static NapaWidget? decode(dynamic data) {
     if (data is Map<String, dynamic>) {
-      String name = data['_name'];
-      switch (name) {
-        case 'Align':
-          return NapaAlign.decode(data);
-        case 'AspectRatio':
-          return NapaAspectRatio.decode(data);
-        case 'BackdropFilter':
-          return NapaBackdropFilter.decode(data);
-        case 'Baseline':
-          return NapaBaseline.decode(data);
-        case 'Center':
-          return NapaCenter.decode(data);
-        case 'ClipPath':
-          return NapaClipPath.decode(data);
-        case 'ClipOval':
-          return NapaClipOval.decode(data);
-        case 'ClipRect':
-          return NapaClipRect.decode(data);
-        case 'ClipRRect':
-          return NapaClipRRect.decode(data);
-        case 'ClipRSuperellipse':
-          return NapaClipRSuperellipse.decode(data);
-        case 'Column':
-          return NapaColumn.decode(data);
-        case 'Container':
-          return NapaContainer.decode(data);
-        case 'CustomPaint':
-          return NapaCustomPaint.decode(data);
-        case 'DecoratedBox':
-          return NapaDecoratedBox.decode(data);
-        case 'Expanded':
-          return NapaExpanded.decode(data);
-        case 'FittedBox':
-          return NapaFittedBox.decode(data);
-        case 'Flex':
-          return NapaFlex.decode(data);
-        case 'Flexible':
-          return NapaFlexible.decode(data);
-        //case 'Icon':
-        //  return NapaIcon.decode(data);
-        case 'Image':
-          return NapaImage.decode(data);
-        case 'ListView':
-          return NapaListView.decode(data);
-        case 'Opacity':
-          return NapaOpacity.decode(data);
-        case 'Padding':
-          return NapaPadding.decode(data);
-        case 'Positioned':
-          return NapaPositioned.decode(data);
-        case 'RepaintBoundary':
-          return NapaRepaintBoundary.decode(data);
-        case 'RotatedBox':
-          return NapaRotatedBox.decode(data);
-        case 'Row':
-          return NapaRow.decode(data);
-        case 'SizedBox':
-          return NapaSizedBox.decode(data);
-        case 'Stack':
-          return NapaStack.decode(data);
-        case 'Text':
-          return NapaText.decode(data);
-        case 'Transform':
-          return NapaTransform.decode(data);
-        case 'Wrap':
-          return NapaWrap.decode(data);
-        default:
+      String name = '';
+      try {
+        try {
+          name = data['_name'];
+        } catch (ex) {
+          throw Exception('_name property not found.');
+        }
+        final decodeRegister = _register[name];
+        if (decodeRegister != null) {
+          return decodeRegister(data);
+        } else {
           throw Exception('Unknown implementation for widget \'$name\'');
+        }
+      } on _NapaException catch (ex) {
+        throw _NapaException('Exception decoding widget \'$name\'\n$ex');
       }
     }
 
     return null;
   }
+
+  /// Add a new [NapaWidget] implementation to decoding register.
+  ///
+  /// Only [NapaWidgets] added to the register has the ability to be
+  /// decoded (deserialized).
+  ///
+  static void registerNapaWidget(
+    String name,
+    NapaWidget? Function(dynamic data) decodeFunction,
+  ) {
+    _register[name] = decodeFunction;
+  }
 }
 
 /// Describes [NapaWidget] descendants.
 enum NapaChildMode {
-
   /// Widget has no children.
   noChildren,
 
@@ -157,5 +131,15 @@ enum NapaChildMode {
   singleChild,
 
   // Widget has multiple children.
-  multipleChildren
+  multipleChildren,
+}
+
+class _NapaException implements Exception {
+
+  String cause;
+
+  _NapaException(this.cause);
+
+  @override
+  String toString() => cause;
 }
