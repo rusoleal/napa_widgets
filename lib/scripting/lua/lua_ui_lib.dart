@@ -351,72 +351,6 @@ class LuaUILib {
     state.newMetatable('MTRRect');
     state.pushDartFunction(_luaRRectIndex);
     state.setField(-2, '__index');
-    state.pushDartFunction(_luaRRectGetBlRadius);
-    state.setField(-2, 'blRadius');
-    state.pushDartFunction(_luaRRectGetBlRadiusX);
-    state.setField(-2, 'blRadiusX');
-    state.pushDartFunction(_luaRRectGetBlRadiusY);
-    state.setField(-2, 'blRadiusY');
-    state.pushDartFunction(_luaRRectGetBottom);
-    state.setField(-2, 'bottom');
-    state.pushDartFunction(_luaRRectGetBrRadius);
-    state.setField(-2, 'brRadius');
-    state.pushDartFunction(_luaRRectGetBrRadiusX);
-    state.setField(-2, 'brRadiusX');
-    state.pushDartFunction(_luaRRectGetBrRadiusY);
-    state.setField(-2, 'brRadiusY');
-    state.pushDartFunction(_luaRRectGetCenter);
-    state.setField(-2, 'center');
-    state.pushDartFunction(_luaRRectHasNaN);
-    state.setField(-2, 'hasNaN');
-    state.pushDartFunction(_luaRRectGetHeight);
-    state.setField(-2, 'height');
-    state.pushDartFunction(_luaRRectIsCircle);
-    state.setField(-2, 'isCircle');
-    state.pushDartFunction(_luaRRectIsEllipse);
-    state.setField(-2, 'isEllipse');
-    state.pushDartFunction(_luaRRectIsEmpty);
-    state.setField(-2, 'isEmpty');
-    state.pushDartFunction(_luaRRectIsFinite);
-    state.setField(-2, 'isFinite');
-    state.pushDartFunction(_luaRRectIsRect);
-    state.setField(-2, 'isRect');
-    state.pushDartFunction(_luaRRectIsStadium);
-    state.setField(-2, 'isStadium');
-    state.pushDartFunction(_luaRRectGetLeft);
-    state.setField(-2, 'left');
-    state.pushDartFunction(_luaRRectGetLongestSide);
-    state.setField(-2, 'longestSide');
-    state.pushDartFunction(_luaRRectGetMiddleRect);
-    state.setField(-2, 'middleRect');
-    state.pushDartFunction(_luaRRectGetOuterRect);
-    state.setField(-2, 'outerRect');
-    state.pushDartFunction(_luaRRectGetRight);
-    state.setField(-2, 'right');
-    state.pushDartFunction(_luaRRectGetSafeInnerRect);
-    state.setField(-2, 'safeInnerRect');
-    state.pushDartFunction(_luaRRectGetShortestSide);
-    state.setField(-2, 'shortestSide');
-    state.pushDartFunction(_luaRRectGetTallMiddlerect);
-    state.setField(-2, 'tallMiddleRect');
-    state.pushDartFunction(_luaRRectGetTlRadius);
-    state.setField(-2, 'tlRadius');
-    state.pushDartFunction(_luaRRectGetTlRadiusX);
-    state.setField(-2, 'tlRadiusX');
-    state.pushDartFunction(_luaRRectGetTlRadiusY);
-    state.setField(-2, 'tlRadiusY');
-    state.pushDartFunction(_luaRRectGetTop);
-    state.setField(-2, 'top');
-    state.pushDartFunction(_luaRRectGetTrRadius);
-    state.setField(-2, 'trRadius');
-    state.pushDartFunction(_luaRRectGetTrRadiusX);
-    state.setField(-2, 'trRadiusX');
-    state.pushDartFunction(_luaRRectGetTrRadiusY);
-    state.setField(-2, 'trRadiusY');
-    state.pushDartFunction(_luaRRectGetWideMiddleRect);
-    state.setField(-2, 'wideMiddleRect');
-    state.pushDartFunction(_luaRRectGetWidth);
-    state.setField(-2, 'width');
     state.pushDartFunction(_luaRRectContains);
     state.setField(-2, 'contains');
     state.pushDartFunction(_luaRRectDeflate);
@@ -431,12 +365,8 @@ class LuaUILib {
 
     // Radius metatable
     state.newMetatable('MTRadius');
-    state.pushValue(-1);
+    state.pushDartFunction(_luaRadiusIndex);
     state.setField(-2, '__index');
-    state.pushDartFunction(_luaRadiusGetX);
-    state.setField(-2, 'x');
-    state.pushDartFunction(_luaRadiusGetY);
-    state.setField(-2, 'y');
     state.pushDartFunction(_luaRadiusClamp);
     state.setField(-2, 'clamp');
     state.pushDartFunction(_luaRadiusClampValues);
@@ -561,14 +491,8 @@ class LuaUILib {
     state.setField(-2, 'MTParagraphBuilder');
 
     state.newMetatable('MTImage');
-    state.pushValue(-1);
+    state.pushDartFunction(_luaImageIndex);
     state.setField(-2, '__index');
-    state.pushDartFunction(_luaImageGetWidth);
-    state.setField(-2, 'width');
-    state.pushDartFunction(_luaImageGetHeight);
-    state.setField(-2, 'height');
-    state.pushDartFunction(_luaImageGetColorSpace);
-    state.setField(-2, 'colorSpace');
     state.setField(-2, 'MTImage');
 
     return 1;
@@ -1543,15 +1467,22 @@ class LuaUILib {
     return 1;
   }
 
-  static int _luaRadiusGetX(LuaState state) {
-    Userdata? radius = state.toUserdata(1);
-    state.pushNumber((radius!.data as Radius).x);
-    return 1;
-  }
+  static int _luaRadiusIndex(LuaState state) {
+    Userdata<dynamic>? p = state.toUserdata(1);
+    Radius radius = p?.data as Radius;
 
-  static int _luaRadiusGetY(LuaState state) {
-    Userdata? radius = state.toUserdata(1);
-    state.pushNumber((radius!.data as Radius).y);
+    final key = state.checkString(2);
+    switch (key) {
+      case 'x':
+        state.pushNumber(radius.x);
+        return 1;
+      case 'y':
+        state.pushNumber(radius.y);
+        return 1;
+    }
+
+    state.getMetatableAux('MTRadius');
+    state.getField(-1, key);
     return 1;
   }
 
@@ -1734,79 +1665,100 @@ class LuaUILib {
         state.getMetatableAux('MTOffset');
         state.setMetatable(-2);
         return 1;
-      case '':
-        var data = state.newUserdata();
-        data.data = rect.center;
-        state.getMetatableAux('MTOffset');
-        state.setMetatable(-2);
-        return 1;
-      case '':
-        var data = state.newUserdata();
-        data.data = rect.centerLeft;
-        state.getMetatableAux('MTOffset');
-        state.setMetatable(-2);
-        return 1;
-      case '':
-        var data = state.newUserdata();
-        data.data = rect.centerRight;
-        state.getMetatableAux('MTOffset');
-        state.setMetatable(-2);
-        return 1;
-      case '':
+      case 'hasNaN':
         state.pushBoolean(rect.hasNaN);
         return 1;
-      case '':
+      case 'height':
         state.pushNumber(rect.height);
         return 1;
-      case '':
+      case 'isCircle':
+        state.pushBoolean(rect.isCircle);
+        return 1;
+      case 'isEllipse':
+        state.pushBoolean(rect.isEllipse);
+        return 1;
+      case 'isEmpty':
         state.pushBoolean(rect.isEmpty);
         return 1;
-      case '':
+      case 'isFinite':
         state.pushBoolean(rect.isFinite);
         return 1;
-      case '':
-        state.pushBoolean(rect.isInfinite);
+      case 'isRect':
+        state.pushBoolean(rect.isRect);
         return 1;
-      case '':
+      case 'isStadium':
+        state.pushBoolean(rect.isStadium);
+        return 1;
+      case 'left':
         state.pushNumber(rect.left);
         return 1;
-      case '':
+      case 'longestSide':
         state.pushNumber(rect.longestSide);
         return 1;
-      case '':
+      case 'middleRect':
+        var data = state.newUserdata();
+        data.data = rect.middleRect;
+        state.getMetatableAux('MTRect');
+        state.setMetatable(-2);
+        return 1;
+      case 'outerRect':
+        var data = state.newUserdata();
+        data.data = rect.outerRect;
+        state.getMetatableAux('MTRect');
+        state.setMetatable(-2);
+        return 1;
+      case 'right':
         state.pushNumber(rect.right);
         return 1;
-      case '':
+      case 'safeInnerRect':
+        var data = state.newUserdata();
+        data.data = rect.safeInnerRect;
+        state.getMetatableAux('MTRect');
+        state.setMetatable(-2);
+        return 1;
+      case 'shortestSide':
         state.pushNumber(rect.shortestSide);
         return 1;
-      case '':
+      case 'tallMiddleRect':
         var data = state.newUserdata();
-        data.data = rect.size;
-        state.getMetatableAux('MTSize');
+        data.data = rect.tallMiddleRect;
+        state.getMetatableAux('MTRect');
         state.setMetatable(-2);
         return 1;
-      case '':
+      case 'tlRadius':
+        var data = state.newUserdata();
+        data.data = rect.tlRadius;
+        state.getMetatableAux('MTRadius');
+        state.setMetatable(-2);
+        return 1;
+      case 'tlRadiusX':
+        state.pushNumber(rect.tlRadiusX);
+        return 1;
+      case 'tlRadiusY':
+        state.pushNumber(rect.tlRadiusY);
+        return 1;
+      case 'top':
         state.pushNumber(rect.top);
         return 1;
-      case '':
+      case 'trRadius':
         var data = state.newUserdata();
-        data.data = rect.topCenter;
-        state.getMetatableAux('MTOffset');
+        data.data = rect.trRadius;
+        state.getMetatableAux('MTRadius');
         state.setMetatable(-2);
         return 1;
-      case '':
+      case 'trRadiusX':
+        state.pushNumber(rect.trRadiusX);
+        return 1;
+      case 'trRadiusY':
+        state.pushNumber(rect.trRadiusY);
+        return 1;
+      case 'wideMiddleRect':
         var data = state.newUserdata();
-        data.data = rect.topLeft;
-        state.getMetatableAux('MTOffset');
+        data.data = rect.wideMiddleRect;
+        state.getMetatableAux('MTRect');
         state.setMetatable(-2);
         return 1;
-      case '':
-        var data = state.newUserdata();
-        data.data = rect.topRight;
-        state.getMetatableAux('MTOffset');
-        state.setMetatable(-2);
-        return 1;
-      case '':
+      case 'width':
         state.pushNumber(rect.width);
         return 1;
     }
@@ -1817,263 +1769,6 @@ class LuaUILib {
 
   }
 
-  static int _luaRRectGetBlRadius(LuaState state) {
-    Userdata? rect = state.toUserdata(1);
-
-    Userdata toReturn = state.newUserdata();
-    toReturn.data = (rect!.data as RRect).blRadius;
-
-    state.getMetatableAux('MTRadius');
-    state.setMetatable(-2);
-
-    return 1;
-  }
-
-  static int _luaRRectGetBlRadiusX(LuaState state) {
-    Userdata? rect = state.toUserdata(1);
-    state.pushNumber((rect!.data as RRect).blRadiusX);
-    return 1;
-  }
-
-  static int _luaRRectGetBlRadiusY(LuaState state) {
-    Userdata? rect = state.toUserdata(1);
-    state.pushNumber((rect!.data as RRect).blRadiusY);
-    return 1;
-  }
-
-  static int _luaRRectGetBottom(LuaState state) {
-    Userdata? rect = state.toUserdata(1);
-    state.pushNumber((rect!.data as RRect).bottom);
-    return 1;
-  }
-
-  static int _luaRRectGetBrRadius(LuaState state) {
-    Userdata? rect = state.toUserdata(1);
-
-    Userdata toReturn = state.newUserdata();
-    toReturn.data = (rect!.data as RRect).brRadius;
-
-    state.getMetatableAux('MTRadius');
-    state.setMetatable(-2);
-
-    return 1;
-  }
-
-  static int _luaRRectGetBrRadiusX(LuaState state) {
-    Userdata? rect = state.toUserdata(1);
-    state.pushNumber((rect!.data as RRect).brRadiusX);
-    return 1;
-  }
-
-  static int _luaRRectGetBrRadiusY(LuaState state) {
-    Userdata? rect = state.toUserdata(1);
-    state.pushNumber((rect!.data as RRect).brRadiusY);
-    return 1;
-  }
-
-  static int _luaRRectGetCenter(LuaState state) {
-    Userdata? rect = state.toUserdata(1);
-
-    Userdata toReturn = state.newUserdata();
-    toReturn.data = (rect!.data as RRect).center;
-
-    state.getMetatableAux('MTOffset');
-    state.setMetatable(-2);
-
-    return 1;
-  }
-
-  static int _luaRRectHasNaN(LuaState state) {
-    Userdata? rect = state.toUserdata(1);
-    state.pushBoolean((rect!.data as RRect).hasNaN);
-    return 1;
-  }
-
-  static int _luaRRectGetHeight(LuaState state) {
-    Userdata? rect = state.toUserdata(1);
-    state.pushNumber((rect!.data as RRect).height);
-    return 1;
-  }
-
-  static int _luaRRectIsCircle(LuaState state) {
-    Userdata? rect = state.toUserdata(1);
-    state.pushBoolean((rect!.data as RRect).isCircle);
-    return 1;
-  }
-
-  static int _luaRRectIsEllipse(LuaState state) {
-    Userdata? rect = state.toUserdata(1);
-    state.pushBoolean((rect!.data as RRect).isEllipse);
-    return 1;
-  }
-
-  static int _luaRRectIsEmpty(LuaState state) {
-    Userdata? rect = state.toUserdata(1);
-    state.pushBoolean((rect!.data as RRect).isEmpty);
-    return 1;
-  }
-
-  static int _luaRRectIsFinite(LuaState state) {
-    Userdata? rect = state.toUserdata(1);
-    state.pushBoolean((rect!.data as RRect).isFinite);
-    return 1;
-  }
-
-  static int _luaRRectIsRect(LuaState state) {
-    Userdata? rect = state.toUserdata(1);
-    state.pushBoolean((rect!.data as RRect).isRect);
-    return 1;
-  }
-
-  static int _luaRRectIsStadium(LuaState state) {
-    Userdata? rect = state.toUserdata(1);
-    state.pushBoolean((rect!.data as RRect).isStadium);
-    return 1;
-  }
-
-  static int _luaRRectGetLeft(LuaState state) {
-    Userdata? rect = state.toUserdata(1);
-    state.pushNumber((rect!.data as RRect).left);
-    return 1;
-  }
-
-  static int _luaRRectGetLongestSide(LuaState state) {
-    Userdata? rect = state.toUserdata(1);
-    state.pushNumber((rect!.data as RRect).longestSide);
-    return 1;
-  }
-
-  static int _luaRRectGetMiddleRect(LuaState state) {
-    Userdata? rect = state.toUserdata(1);
-
-    Userdata toReturn = state.newUserdata();
-    toReturn.data = (rect!.data as RRect).middleRect;
-
-    state.getMetatableAux('MTRect');
-    state.setMetatable(-2);
-
-    return 1;
-  }
-
-  static int _luaRRectGetOuterRect(LuaState state) {
-    Userdata? rect = state.toUserdata(1);
-
-    Userdata toReturn = state.newUserdata();
-    toReturn.data = (rect!.data as RRect).outerRect;
-
-    state.getMetatableAux('MTRect');
-    state.setMetatable(-2);
-
-    return 1;
-  }
-
-  static int _luaRRectGetRight(LuaState state) {
-    Userdata? rect = state.toUserdata(1);
-    state.pushNumber((rect!.data as RRect).right);
-    return 1;
-  }
-
-  static int _luaRRectGetSafeInnerRect(LuaState state) {
-    Userdata? rect = state.toUserdata(1);
-
-    Userdata toReturn = state.newUserdata();
-    toReturn.data = (rect!.data as RRect).safeInnerRect;
-
-    state.getMetatableAux('MTRect');
-    state.setMetatable(-2);
-
-    return 1;
-  }
-
-  static int _luaRRectGetShortestSide(LuaState state) {
-    Userdata? rect = state.toUserdata(1);
-    state.pushNumber((rect!.data as RRect).shortestSide);
-    return 1;
-  }
-
-  static int _luaRRectGetTallMiddlerect(LuaState state) {
-    Userdata? rect = state.toUserdata(1);
-
-    Userdata toReturn = state.newUserdata();
-    toReturn.data = (rect!.data as RRect).tallMiddleRect;
-
-    state.getMetatableAux('MTRect');
-    state.setMetatable(-2);
-
-    return 1;
-  }
-
-  static int _luaRRectGetTlRadius(LuaState state) {
-    Userdata? rect = state.toUserdata(1);
-
-    Userdata toReturn = state.newUserdata();
-    toReturn.data = (rect!.data as RRect).tlRadius;
-
-    state.getMetatableAux('MTRadius');
-    state.setMetatable(-2);
-
-    return 1;
-  }
-
-  static int _luaRRectGetTlRadiusX(LuaState state) {
-    Userdata? rect = state.toUserdata(1);
-    state.pushNumber((rect!.data as RRect).tlRadiusX);
-    return 1;
-  }
-
-  static int _luaRRectGetTlRadiusY(LuaState state) {
-    Userdata? rect = state.toUserdata(1);
-    state.pushNumber((rect!.data as RRect).tlRadiusY);
-    return 1;
-  }
-
-  static int _luaRRectGetTop(LuaState state) {
-    Userdata? rect = state.toUserdata(1);
-    state.pushNumber((rect!.data as RRect).top);
-    return 1;
-  }
-
-  static int _luaRRectGetTrRadius(LuaState state) {
-    Userdata? rect = state.toUserdata(1);
-
-    Userdata toReturn = state.newUserdata();
-    toReturn.data = (rect!.data as RRect).trRadius;
-
-    state.getMetatableAux('MTRadius');
-    state.setMetatable(-2);
-
-    return 1;
-  }
-
-  static int _luaRRectGetTrRadiusX(LuaState state) {
-    Userdata? rect = state.toUserdata(1);
-    state.pushNumber((rect!.data as RRect).trRadiusX);
-    return 1;
-  }
-
-  static int _luaRRectGetTrRadiusY(LuaState state) {
-    Userdata? rect = state.toUserdata(1);
-    state.pushNumber((rect!.data as RRect).trRadiusY);
-    return 1;
-  }
-
-  static int _luaRRectGetWideMiddleRect(LuaState state) {
-    Userdata? rect = state.toUserdata(1);
-
-    Userdata toReturn = state.newUserdata();
-    toReturn.data = (rect!.data as RRect).wideMiddleRect;
-
-    state.getMetatableAux('MTRect');
-    state.setMetatable(-2);
-
-    return 1;
-  }
-
-  static int _luaRRectGetWidth(LuaState state) {
-    Userdata? rect = state.toUserdata(1);
-    state.pushNumber((rect!.data as RRect).width);
-    return 1;
-  }
 
   static int _luaRRectContains(LuaState state) {
     Userdata? rect = state.toUserdata(1);
@@ -2797,21 +2492,25 @@ class LuaUILib {
     return 1;
   }
 
-  static int _luaImageGetWidth(LuaState state) {
-    Userdata? image = state.toUserdata(1);
-    state.pushInteger((image!.data as Image).width);
-    return 1;
-  }
+  static int _luaImageIndex(LuaState state) {
+    Userdata? p = state.toUserdata(1);
+    Image image = p?.data as Image;
 
-  static int _luaImageGetHeight(LuaState state) {
-    Userdata? image = state.toUserdata(1);
-    state.pushInteger((image!.data as Image).height);
-    return 1;
-  }
+    final key = state.checkString(2);
+    switch (key) {
+      case 'colorSpace':
+        state.pushInteger(image.colorSpace.index);
+        return 1;
+      case 'height':
+        state.pushInteger(image.height);
+        return 1;
+      case 'width':
+        state.pushInteger(image.width);
+        return 1;
+    }
 
-  static int _luaImageGetColorSpace(LuaState state) {
-    Userdata? image = state.toUserdata(1);
-    state.pushInteger((image!.data as Image).colorSpace.index);
+    state.getMetatableAux('MTImage');
+    state.getField(-1, key);
     return 1;
   }
 
