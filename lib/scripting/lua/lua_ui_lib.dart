@@ -4,9 +4,9 @@ import 'package:flutter/animation.dart';
 import 'package:flutter/painting.dart' show LinearGradient;//, RadialGradient;
 import 'package:lua_dardo_plus/lua.dart';
 
-class LuaDrawingLib {
+class LuaUILib {
 
-  static int openDrawingLib(LuaState state) {
+  static int openLib(LuaState state) {
     state.newLib({
       'newColor': _luaNewColor,
       'newColorFrom': _luaNewColorFrom,
@@ -291,93 +291,24 @@ class LuaDrawingLib {
 
     // Color metatable
     state.newMetatable('MTColor');
-    state.pushValue(-1);
+    state.pushDartFunction(_luaColorIndex);
     state.setField(-2, '__index');
-    state.pushDartFunction(_luaColorGetA);
-    state.setField(-2, 'a');
-    state.pushDartFunction(_luaColorGetR);
-    state.setField(-2, 'r');
-    state.pushDartFunction(_luaColorGetG);
-    state.setField(-2, 'g');
-    state.pushDartFunction(_luaColorGetB);
-    state.setField(-2, 'b');
-    state.pushDartFunction(_luaColorGetColorSpace);
-    state.setField(-2, 'colorSpace');
     state.pushDartFunction(_luaColorComputeLuminance);
     state.setField(-2, 'computeLuminance');
     state.setField(-2, 'MTColor');
 
     // Paint metatable
     state.newMetatable('MTPaint');
-    state.pushValue(-1);
+    state.pushDartFunction(_luaPaintIndex);
     state.setField(-2, '__index');
-    state.pushDartFunction(_luaPaintGetBlendMode);
-    state.setField(-2, 'getBlendMode');
-    state.pushDartFunction(_luaPaintSetBlendMode);
-    state.setField(-2, 'setBlendMode');
-    state.pushDartFunction(_luaPaintGetColor);
-    state.setField(-2, 'getColor');
-    state.pushDartFunction(_luaPaintSetColor);
-    state.setField(-2, 'setColor');
-    // TODO add colorFilter setter/getter
-    state.pushDartFunction(_luaPaintGetFilterQuality);
-    state.setField(-2, 'getFilterQuality');
-    state.pushDartFunction(_luaPaintSetFilterQuality);
-    state.setField(-2, 'setFilterQuality');
-    state.pushDartFunction(_luaPaintSetImageFilter);
-    state.setField(-2, 'setImageFilter');
-    state.pushDartFunction(_luaPaintGetInvertColors);
-    state.setField(-2, 'getInvertColors');
-    state.pushDartFunction(_luaPaintSetInvertColors);
-    state.setField(-2, 'setInvertColors');
-    state.pushDartFunction(_luaPaintGetIsAntialias);
-    state.setField(-2, 'getIsAntialias');
-    state.pushDartFunction(_luaPaintSetIsAntialias);
-    state.setField(-2, 'setIsAntialias');
-    state.pushDartFunction(_luaPaintSetMaskFilter);
-    state.setField(-2, 'setMaskFilter');
-    state.pushDartFunction(_luaPaintSetShader);
-    state.setField(-2, 'setShader');
-    state.pushDartFunction(_luaPaintGetStrokeCap);
-    state.setField(-2, 'getStrokeCap');
-    state.pushDartFunction(_luaPaintSetStrokeCap);
-    state.setField(-2, 'setStrokeCap');
-    state.pushDartFunction(_luaPaintGetStrokeJoin);
-    state.setField(-2, 'getStrokeJoin');
-    state.pushDartFunction(_luaPaintSetStrokeJoin);
-    state.setField(-2, 'setStrokeJoin');
-    state.pushDartFunction(_luaPaintGetStrokeMiterLimit);
-    state.setField(-2, 'getStrokeMiterLimit');
-    state.pushDartFunction(_luaPaintSetStrokeMiterLimit);
-    state.setField(-2, 'setStrokeMiterLimit');
-    state.pushDartFunction(_luaPaintGetStrokeWidth);
-    state.setField(-2, 'getStrokeWidth');
-    state.pushDartFunction(_luaPaintSetStrokeWidth);
-    state.setField(-2, 'setStrokeWidth');
-    state.pushDartFunction(_luaPaintGetStyle);
-    state.setField(-2, 'getStyle');
-    state.pushDartFunction(_luaPaintSetStyle);
-    state.setField(-2, 'setStyle');
+    state.pushDartFunction(_luaPaintNewIndex);
+    state.setField(-2, '__newindex');
     state.setField(-2, 'MTPaint');
 
     // Offset metatable
     state.newMetatable('MTOffset');
-    state.pushValue(-1);
+    state.pushDartFunction(_luaOffsetIndex);
     state.setField(-2, '__index');
-    state.pushDartFunction(_luaOffsetGetDirection);
-    state.setField(-2, 'direction');
-    state.pushDartFunction(_luaOffsetGetDistance);
-    state.setField(-2, 'distance');
-    state.pushDartFunction(_luaOffsetGetDistanceSquared);
-    state.setField(-2, 'distanceSquared');
-    state.pushDartFunction(_luaOffsetGetDx);
-    state.setField(-2, 'dx');
-    state.pushDartFunction(_luaOffsetGetDy);
-    state.setField(-2, 'dy');
-    state.pushDartFunction(_luaOffsetGetIsFinite);
-    state.setField(-2, 'isFinite');
-    state.pushDartFunction(_luaOffsetGetIsInfinite);
-    state.setField(-2, 'isInfinite');
     state.pushDartFunction(_luaOffsetScale);
     state.setField(-2, 'scale');
     state.pushDartFunction(_luaOffsetTranslate);
@@ -394,50 +325,8 @@ class LuaDrawingLib {
 
     // Rect metatable
     state.newMetatable('MTRect');
-    state.pushValue(-1);
+    state.pushDartFunction(_luaRectIndex);
     state.setField(-2, '__index');
-    state.pushDartFunction(_luaRectGetBottom);
-    state.setField(-2, 'bottom');
-    state.pushDartFunction(_luaRectGetBottomCenter);
-    state.setField(-2, 'bottomCenter');
-    state.pushDartFunction(_luaRectGetBottomLeft);
-    state.setField(-2, 'bottomLeft');
-    state.pushDartFunction(_luaRectGetBottomRight);
-    state.setField(-2, 'bottomRight');
-    state.pushDartFunction(_luaRectGetCenter);
-    state.setField(-2, 'center');
-    state.pushDartFunction(_luaRectGetCenterLeft);
-    state.setField(-2, 'centerLeft');
-    state.pushDartFunction(_luaRectGetCenterRight);
-    state.setField(-2, 'centerRight');
-    state.pushDartFunction(_luaRectHasNan);
-    state.setField(-2, 'hasNaN');
-    state.pushDartFunction(_luaRectGetHeight);
-    state.setField(-2, 'height');
-    state.pushDartFunction(_luaRectIsEmpty);
-    state.setField(-2, 'isEmpty');
-    state.pushDartFunction(_luaRectIsFinite);
-    state.setField(-2, 'isFinite');
-    state.pushDartFunction(_luaRectIsInfinite);
-    state.setField(-2, 'isInfinite');
-    state.pushDartFunction(_luaRectGetLeft);
-    state.setField(-2, 'left');
-    state.pushDartFunction(_luaRectGetLongestSide);
-    state.setField(-2, 'longestSide');
-    state.pushDartFunction(_luaRectGetRight);
-    state.setField(-2, 'right');
-    state.pushDartFunction(_luaRectGetShortestSide);
-    state.setField(-2, 'shortestSide');
-    state.pushDartFunction(_luaRectGetTop);
-    state.setField(-2, 'top');
-    state.pushDartFunction(_luaRectGetTopCenter);
-    state.setField(-2, 'topCenter');
-    state.pushDartFunction(_luaRectGetTopLeft);
-    state.setField(-2, 'topLeft');
-    state.pushDartFunction(_luaRectGetTopRight);
-    state.setField(-2, 'topRight');
-    state.pushDartFunction(_luaRectGetWidth);
-    state.setField(-2, 'width');
     state.pushDartFunction(_luaRectContains);
     state.setField(-2, 'contains');
     state.pushDartFunction(_luaRectDeflate);
@@ -460,7 +349,7 @@ class LuaDrawingLib {
 
     // RRect metatable
     state.newMetatable('MTRRect');
-    state.pushValue(-1);
+    state.pushDartFunction(_luaRRectIndex);
     state.setField(-2, '__index');
     state.pushDartFunction(_luaRRectGetBlRadius);
     state.setField(-2, 'blRadius');
@@ -830,207 +719,106 @@ class LuaDrawingLib {
     return 1;
   }
 
-  static int _luaPaintSetStrokeMiterLimit(LuaState state) {
+  static int _luaPaintIndex(LuaState state) {
     Userdata<dynamic>? p = state.toUserdata(1);
     Paint paint = p?.data as Paint;
 
-    double strokeMiterLimit = state.toNumber(2);
-    paint.strokeMiterLimit = strokeMiterLimit;
-    return 0;
-  }
+    final key = state.checkString(2);
+    switch (key) {
+      case 'blendMode':
+        state.pushInteger(paint.blendMode.index);
+        return 1;
+      case 'color':
+        Userdata color = state.newUserdata();
+        color.data = paint.color;
+        state.getMetatableAux('MTColor');
+        state.setMetatable(-2);
+        return 1;
+      //case 'colorFilter':
+      case 'filterQuality':
+        state.pushInteger(paint.filterQuality.index);
+        return 1;
+      //case 'imageFilter':
+      case 'invertColors':
+        state.pushBoolean(paint.invertColors);
+        return 1;
+      case 'isAntiAlias':
+        state.pushBoolean(paint.isAntiAlias);
+        return 1;
+      //case 'maskFilter':
+      //case 'shader':
+      case 'strokeCap':
+        state.pushInteger(paint.strokeCap.index);
+        return 1;
+      case 'strokeJoin':
+        state.pushInteger(paint.strokeJoin.index);
+        return 1;
+      case 'strokeMiterLimit':
+        state.pushNumber(paint.strokeMiterLimit);
+        return 1;
+      case 'strokeWidth':
+        state.pushNumber(paint.strokeWidth);
+        return 1;
+      case 'style':
+        state.pushInteger(paint.style.index);
+        return 1;
+    }
 
-  static int _luaPaintGetStrokeMiterLimit(LuaState state) {
-    Userdata<dynamic>? p = state.toUserdata(1);
-    Paint paint = p?.data as Paint;
-
-    state.pushNumber(paint.strokeMiterLimit);
+    state.getMetatableAux('MTPaint');
+    state.getField(-1, key);
     return 1;
   }
 
-  static int _luaPaintSetStrokeWidth(LuaState state) {
+  static int _luaPaintNewIndex(LuaState state) {
     Userdata<dynamic>? p = state.toUserdata(1);
     Paint paint = p?.data as Paint;
 
-    double strokeWidth = state.toNumber(2);
-    paint.strokeWidth = strokeWidth;
-    return 0;
-  }
+    final key = state.checkString(2);
+    switch (key) {
+      case 'blendMode':
+        int blendMode = state.toInteger(3);
+        paint.blendMode = BlendMode.values[blendMode];
+        return 0;
+      case 'color':
+        Userdata? color = state.toUserdata(3);
+        paint.color = color?.data as Color;
+        return 0;
+    //case 'colorFilter':
+      case 'filterQuality':
+        int filterQuality = state.toInteger(3);
+        paint.filterQuality = FilterQuality.values[filterQuality];
+        return 0;
+    //case 'imageFilter':
+      case 'invertColors':
+        paint.invertColors = state.toBoolean(3);
+        return 0;
+      case 'isAntiAlias':
+        paint.isAntiAlias = state.toBoolean(3);
+        return 0;
+    //case 'maskFilter':
+    //case 'shader':
+      case 'strokeCap':
+        int strokeCap = state.toInteger(3);
+        paint.strokeCap = StrokeCap.values[strokeCap];
+        return 0;
+      case 'strokeJoin':
+        int strokeJoin = state.toInteger(3);
+        paint.strokeJoin = StrokeJoin.values[strokeJoin];
+        return 0;
+      case 'strokeMiterLimit':
+        paint.strokeMiterLimit = state.toNumber(3);
+        return 0;
+      case 'strokeWidth':
+        paint.strokeWidth = state.toNumber(3);
+        return 0;
+      case 'style':
+        int style = state.toInteger(3);
+        paint.style = PaintingStyle.values[style];
+        return 0;
+    }
 
-  static int _luaPaintGetStrokeWidth(LuaState state) {
-    Userdata<dynamic>? p = state.toUserdata(1);
-    Paint paint = p?.data as Paint;
-
-    state.pushNumber(paint.strokeWidth);
-    return 1;
-  }
-
-  static int _luaPaintSetIsAntialias(LuaState state) {
-    Userdata<dynamic>? p = state.toUserdata(1);
-    Paint paint = p?.data as Paint;
-
-    bool isAntialias = state.toBoolean(2);
-    paint.isAntiAlias = isAntialias;
-    return 0;
-  }
-
-  static int _luaPaintGetIsAntialias(LuaState state) {
-    Userdata? p = state.toUserdata(1);
-    Paint paint = p?.data as Paint;
-
-    state.pushBoolean(paint.isAntiAlias);
-    return 1;
-  }
-
-  static int _luaPaintSetMaskFilter(LuaState state) {
-    Userdata? p = state.toUserdata(1);
-    Paint paint = p?.data as Paint;
-
-    Userdata? maskFilter = state.toUserdata(2);
-    //print(maskFilter?.data);
-    paint.maskFilter = maskFilter!.data as MaskFilter;
-
-    return 0;
-  }
-
-  static int _luaPaintSetInvertColors(LuaState state) {
-    Userdata<dynamic>? p = state.toUserdata(1);
-    Paint paint = p?.data as Paint;
-
-    bool invertColors = state.toBoolean(2);
-    paint.invertColors = invertColors;
-    return 0;
-  }
-
-  static int _luaPaintGetInvertColors(LuaState state) {
-    Userdata<dynamic>? p = state.toUserdata(1);
-    Paint paint = p?.data as Paint;
-
-    state.pushBoolean(paint.invertColors);
-    return 1;
-  }
-
-  static int _luaPaintSetStrokeCap(LuaState state) {
-    Userdata<dynamic>? p = state.toUserdata(1);
-    Paint paint = p?.data as Paint;
-
-    int strokeCap = state.toInteger(2);
-    paint.strokeCap = StrokeCap.values[strokeCap];
-    return 0;
-  }
-
-  static int _luaPaintSetShader(LuaState state) {
-    Userdata<dynamic>? p = state.toUserdata(1);
-    Paint paint = p?.data as Paint;
-    Userdata? shader = state.toUserdata(2);
-    paint.shader = shader!.data as Shader;
-    return 0;
-  }
-
-  static int _luaPaintGetStrokeCap(LuaState state) {
-    Userdata<dynamic>? p = state.toUserdata(1);
-    Paint paint = p?.data as Paint;
-
-    state.pushInteger(paint.strokeCap.index);
-    return 1;
-  }
-
-  static int _luaPaintSetStrokeJoin(LuaState state) {
-    Userdata<dynamic>? p = state.toUserdata(1);
-    Paint paint = p?.data as Paint;
-
-    int strokeJoin = state.toInteger(2);
-    paint.strokeJoin = StrokeJoin.values[strokeJoin];
-    return 0;
-  }
-
-  static int _luaPaintGetStrokeJoin(LuaState state) {
-    Userdata<dynamic>? p = state.toUserdata(1);
-    Paint paint = p?.data as Paint;
-
-    state.pushInteger(paint.strokeJoin.index);
-    return 1;
-  }
-
-  static int _luaPaintSetFilterQuality(LuaState state) {
-    Userdata<dynamic>? p = state.toUserdata(1);
-    Paint paint = p?.data as Paint;
-
-    int filterQuality = state.toInteger(2);
-    paint.filterQuality = FilterQuality.values[filterQuality];
-    return 0;
-  }
-
-  static int _luaPaintGetFilterQuality(LuaState state) {
-    Userdata<dynamic>? p = state.toUserdata(1);
-    Paint paint = p?.data as Paint;
-
-    state.pushInteger(paint.filterQuality.index);
-    return 1;
-  }
-
-  static int _luaPaintSetImageFilter(LuaState state) {
-    Userdata<dynamic>? p = state.toUserdata(1);
-    Paint paint = p?.data as Paint;
-
-    var filter = state.toUserdata(2);
-    paint.imageFilter = filter!.data as ImageFilter;
-
-    return 0;
-  }
-
-  static int _luaPaintSetStyle(LuaState state) {
-    Userdata<dynamic>? p = state.toUserdata(1);
-    Paint paint = p?.data as Paint;
-
-    int style = state.toInteger(2);
-    paint.style = PaintingStyle.values[style];
-    return 0;
-  }
-
-  static int _luaPaintGetStyle(LuaState state) {
-    Userdata<dynamic>? p = state.toUserdata(1);
-    Paint paint = p?.data as Paint;
-
-    state.pushInteger(paint.style.index);
-    return 1;
-  }
-
-  static int _luaPaintSetColor(LuaState state) {
-    Userdata<dynamic>? p = state.toUserdata(1);
-    Paint paint = p?.data as Paint;
-
-    Userdata? color = state.toUserdata(2);
-    paint.color = color!.data as Color;
-    return 0;
-  }
-
-  static int _luaPaintGetColor(LuaState state) {
-    Userdata<dynamic>? p = state.toUserdata(1);
-    Paint paint = p?.data as Paint;
-
-    Userdata color = state.newUserdata();
-    color.data = paint.color;
-
-    state.getMetatableAux('MTColor');
-    state.setMetatable(-2);
-
-    return 1;
-  }
-
-  static int _luaPaintSetBlendMode(LuaState state) {
-    Userdata<dynamic>? p = state.toUserdata(1);
-    Paint paint = p?.data as Paint;
-
-    int blendMode = state.toInteger(2);
-    paint.blendMode = BlendMode.values[blendMode];
-    return 0;
-  }
-
-  static int _luaPaintGetBlendMode(LuaState state) {
-    Userdata<dynamic>? p = state.toUserdata(1);
-    Paint paint = p?.data as Paint;
-
-    state.pushInteger(paint.blendMode.index);
+    state.getMetatableAux('MTPaint');
+    state.getField(-1, key);
     return 1;
   }
 
@@ -1357,43 +1145,31 @@ class LuaDrawingLib {
     return 0;
   }
 
-  static int _luaColorGetA(LuaState state) {
+  static int _luaColorIndex(LuaState state) {
     Userdata? p = state.toUserdata(1);
     Color color = p?.data as Color;
 
-    state.pushNumber(color.a);
-    return 1;
-  }
+    final key = state.checkString(2);
+    switch (key) {
+      case 'a':
+        state.pushNumber(color.a);
+        return 1;
+      case 'b':
+        state.pushNumber(color.b);
+        return 1;
+      case 'colorSpace':
+        state.pushInteger(color.colorSpace.index);
+        return 1;
+      case 'g':
+        state.pushNumber(color.g);
+        return 1;
+      case 'r':
+        state.pushNumber(color.r);
+        return 1;
+    }
 
-  static int _luaColorGetR(LuaState state) {
-    Userdata? p = state.toUserdata(1);
-    Color color = p?.data as Color;
-
-    state.pushNumber(color.r);
-    return 1;
-  }
-
-  static int _luaColorGetG(LuaState state) {
-    Userdata? p = state.toUserdata(1);
-    Color color = p?.data as Color;
-
-    state.pushNumber(color.g);
-    return 1;
-  }
-
-  static int _luaColorGetB(LuaState state) {
-    Userdata? p = state.toUserdata(1);
-    Color color = p?.data as Color;
-
-    state.pushNumber(color.b);
-    return 1;
-  }
-
-  static int _luaColorGetColorSpace(LuaState state) {
-    Userdata? p = state.toUserdata(1);
-    Color color = p?.data as Color;
-
-    state.pushInteger(color.colorSpace.index);
+    state.getMetatableAux('MTColor');
+    state.getField(-1, key);
     return 1;
   }
 
@@ -1405,59 +1181,37 @@ class LuaDrawingLib {
     return 1;
   }
 
-  static int _luaOffsetGetDirection(LuaState state) {
+  static int _luaOffsetIndex(LuaState state) {
     Userdata? p = state.toUserdata(1);
     Offset offset = p?.data as Offset;
 
-    state.pushNumber(offset.direction);
-    return 1;
-  }
+    final key = state.checkString(2);
+    switch (key) {
+      case 'direction':
+        state.pushNumber(offset.direction);
+        return 1;
+      case 'distance':
+        state.pushNumber(offset.distance);
+        return 1;
+      case 'distanceSquared':
+        state.pushNumber(offset.distanceSquared);
+        return 1;
+      case 'dx':
+        state.pushNumber(offset.dx);
+        return 1;
+      case 'dy':
+        state.pushNumber(offset.dy);
+        return 1;
+      case 'isFinite':
+        state.pushBoolean(offset.isFinite);
+        return 1;
+      case 'isInfinite':
+        state.pushBoolean(offset.isInfinite);
+        return 1;
+    }
 
-  static int _luaOffsetGetDistance(LuaState state) {
-    Userdata? p = state.toUserdata(1);
-    Offset offset = p?.data as Offset;
-
-    state.pushNumber(offset.distance);
-    return 1;
-  }
-
-  static int _luaOffsetGetDistanceSquared(LuaState state) {
-    Userdata? p = state.toUserdata(1);
-    Offset offset = p?.data as Offset;
-
-    state.pushNumber(offset.distanceSquared);
-    return 1;
-  }
-
-  static int _luaOffsetGetDx(LuaState state) {
-    Userdata? p = state.toUserdata(1);
-    Offset offset = p?.data as Offset;
-
-    state.pushNumber(offset.dx);
-    return 1;
-  }
-
-  static int _luaOffsetGetDy(LuaState state) {
-    Userdata? p = state.toUserdata(1);
-    Offset offset = p?.data as Offset;
-
-    state.pushNumber(offset.dy);
-    return 1;
-  }
-
-  static int _luaOffsetGetIsFinite(LuaState state) {
-    Userdata? p = state.toUserdata(1);
-    Offset offset = p?.data as Offset;
-
-    state.pushBoolean(offset.isFinite);
-    return 1;
-  }
-
-  static int _luaOffsetGetIsInfinite(LuaState state) {
-    Userdata? p = state.toUserdata(1);
-    Offset offset = p?.data as Offset;
-
-    state.pushBoolean(offset.isInfinite);
+    state.getMetatableAux('MTOffset');
+    state.getField(-1, key);
     return 1;
   }
 
@@ -1542,222 +1296,115 @@ class LuaDrawingLib {
     return 1;
   }
 
-  /*static int _luaSizeGetWidth(LuaState state) {
+  static int _luaRectIndex(LuaState state) {
     Userdata? p = state.toUserdata(1);
-    Size size = p?.data as Size;
+    Rect rect = p?.data as Rect;
 
-    state.pushNumber(size.width);
+    final key = state.checkString(2);
+    switch (key) {
+      case 'bottom':
+        state.pushNumber(rect.bottom);
+        return 1;
+      case 'bottomCenter':
+        var data = state.newUserdata();
+        data.data = rect.bottomCenter;
+        state.getMetatableAux('MTOffset');
+        state.setMetatable(-2);
+        return 1;
+      case 'bottomLeft':
+        var data = state.newUserdata();
+        data.data = rect.bottomLeft;
+        state.getMetatableAux('MTOffset');
+        state.setMetatable(-2);
+        return 1;
+      case 'bottomRight':
+        var data = state.newUserdata();
+        data.data = rect.bottomRight;
+        state.getMetatableAux('MTOffset');
+        state.setMetatable(-2);
+        return 1;
+      case 'center':
+        var data = state.newUserdata();
+        data.data = rect.center;
+        state.getMetatableAux('MTOffset');
+        state.setMetatable(-2);
+        return 1;
+      case 'centerLeft':
+        var data = state.newUserdata();
+        data.data = rect.centerLeft;
+        state.getMetatableAux('MTOffset');
+        state.setMetatable(-2);
+        return 1;
+      case 'centerRight':
+        var data = state.newUserdata();
+        data.data = rect.centerRight;
+        state.getMetatableAux('MTOffset');
+        state.setMetatable(-2);
+        return 1;
+      case 'hasNaN':
+        state.pushBoolean(rect.hasNaN);
+        return 1;
+      case 'height':
+        state.pushNumber(rect.height);
+        return 1;
+      case 'isEmpty':
+        state.pushBoolean(rect.isEmpty);
+        return 1;
+      case 'isFinite':
+        state.pushBoolean(rect.isFinite);
+        return 1;
+      case 'isInfinite':
+        state.pushBoolean(rect.isInfinite);
+        return 1;
+      case 'left':
+        state.pushNumber(rect.left);
+        return 1;
+      case 'longestSide':
+        state.pushNumber(rect.longestSide);
+        return 1;
+      case 'right':
+        state.pushNumber(rect.right);
+        return 1;
+      case 'shortestSide':
+        state.pushNumber(rect.shortestSide);
+        return 1;
+      case 'size':
+        var data = state.newUserdata();
+        data.data = rect.size;
+        state.getMetatableAux('MTSize');
+        state.setMetatable(-2);
+        return 1;
+      case 'top':
+        state.pushNumber(rect.top);
+        return 1;
+      case 'topCenter':
+        var data = state.newUserdata();
+        data.data = rect.topCenter;
+        state.getMetatableAux('MTOffset');
+        state.setMetatable(-2);
+        return 1;
+      case 'topLeft':
+        var data = state.newUserdata();
+        data.data = rect.topLeft;
+        state.getMetatableAux('MTOffset');
+        state.setMetatable(-2);
+        return 1;
+      case 'topRight':
+        var data = state.newUserdata();
+        data.data = rect.topRight;
+        state.getMetatableAux('MTOffset');
+        state.setMetatable(-2);
+        return 1;
+      case 'width':
+        state.pushNumber(rect.width);
+        return 1;
+    }
+
+    state.getMetatableAux('MTRect');
+    state.getField(-1, key);
     return 1;
   }
 
-  static int _luaSizeGetHeight(LuaState state) {
-    Userdata? p = state.toUserdata(1);
-    Size size = p?.data as Size;
-
-    state.pushNumber(size.height);
-    return 1;
-  }*/
-
-  static int _luaRectGetBottom(LuaState state) {
-    Userdata? p = state.toUserdata(1);
-    Rect r = p!.data as Rect;
-    state.pushNumber(r.bottom);
-    return 1;
-  }
-
-  static int _luaRectGetBottomCenter(LuaState state) {
-    Userdata? p = state.toUserdata(1);
-    Rect r = p!.data as Rect;
-
-    Userdata toReturn = state.newUserdata();
-    toReturn.data = r.bottomCenter;
-
-    state.getMetatableAux('MTOffset');
-    state.setMetatable(-2);
-
-    return 1;
-  }
-
-  static int _luaRectGetBottomLeft(LuaState state) {
-    Userdata? p = state.toUserdata(1);
-    Rect r = p!.data as Rect;
-
-    Userdata toReturn = state.newUserdata();
-    toReturn.data = r.bottomLeft;
-
-    state.getMetatableAux('MTOffset');
-    state.setMetatable(-2);
-
-    return 1;
-  }
-
-  static int _luaRectGetBottomRight(LuaState state) {
-    Userdata? p = state.toUserdata(1);
-    Rect r = p!.data as Rect;
-
-    Userdata toReturn = state.newUserdata();
-    toReturn.data = r.bottomRight;
-
-    state.getMetatableAux('MTOffset');
-    state.setMetatable(-2);
-
-    return 1;
-  }
-
-  static int _luaRectGetCenter(LuaState state) {
-    Userdata? p = state.toUserdata(1);
-    Rect r = p!.data as Rect;
-
-    Userdata toReturn = state.newUserdata();
-    toReturn.data = r.center;
-
-    state.getMetatableAux('MTOffset');
-    state.setMetatable(-2);
-
-    return 1;
-  }
-
-  static int _luaRectGetCenterLeft(LuaState state) {
-    Userdata? p = state.toUserdata(1);
-    Rect r = p!.data as Rect;
-
-    Userdata toReturn = state.newUserdata();
-    toReturn.data = r.centerLeft;
-
-    state.getMetatableAux('MTOffset');
-    state.setMetatable(-2);
-
-    return 1;
-  }
-
-  static int _luaRectGetCenterRight(LuaState state) {
-    Userdata? p = state.toUserdata(1);
-    Rect r = p!.data as Rect;
-
-    Userdata toReturn = state.newUserdata();
-    toReturn.data = r.centerRight;
-
-    state.getMetatableAux('MTOffset');
-    state.setMetatable(-2);
-
-    return 1;
-  }
-
-  static int _luaRectHasNan(LuaState state) {
-    Userdata? p = state.toUserdata(1);
-    Rect r = p!.data as Rect;
-    state.pushBoolean(r.hasNaN);
-    return 1;
-  }
-
-  static int _luaRectGetHeight(LuaState state) {
-    Userdata? p = state.toUserdata(1);
-    Rect r = p!.data as Rect;
-    state.pushNumber(r.height);
-    return 1;
-  }
-
-  static int _luaRectIsEmpty(LuaState state) {
-    Userdata? p = state.toUserdata(1);
-    Rect r = p!.data as Rect;
-    state.pushBoolean(r.isEmpty);
-    return 1;
-  }
-
-  static int _luaRectIsFinite(LuaState state) {
-    Userdata? p = state.toUserdata(1);
-    Rect r = p!.data as Rect;
-    state.pushBoolean(r.isFinite);
-    return 1;
-  }
-
-  static int _luaRectIsInfinite(LuaState state) {
-    Userdata? p = state.toUserdata(1);
-    Rect r = p!.data as Rect;
-    state.pushBoolean(r.isInfinite);
-    return 1;
-  }
-
-  static int _luaRectGetLeft(LuaState state) {
-    Userdata? p = state.toUserdata(1);
-    Rect r = p!.data as Rect;
-    state.pushNumber(r.left);
-    return 1;
-  }
-
-  static int _luaRectGetLongestSide(LuaState state) {
-    Userdata? p = state.toUserdata(1);
-    Rect r = p!.data as Rect;
-    state.pushNumber(r.longestSide);
-    return 1;
-  }
-
-  static int _luaRectGetRight(LuaState state) {
-    Userdata? p = state.toUserdata(1);
-    Rect r = p!.data as Rect;
-    state.pushNumber(r.right);
-    return 1;
-  }
-
-  static int _luaRectGetShortestSide(LuaState state) {
-    Userdata? p = state.toUserdata(1);
-    Rect r = p!.data as Rect;
-    state.pushNumber(r.shortestSide);
-    return 1;
-  }
-
-  static int _luaRectGetTop(LuaState state) {
-    Userdata? p = state.toUserdata(1);
-    Rect r = p!.data as Rect;
-    state.pushNumber(r.top);
-    return 1;
-  }
-
-  static int _luaRectGetTopCenter(LuaState state) {
-    Userdata? p = state.toUserdata(1);
-    Rect r = p!.data as Rect;
-
-    Userdata toReturn = state.newUserdata();
-    toReturn.data = r.topCenter;
-
-    state.getMetatableAux('MTOffset');
-    state.setMetatable(-2);
-
-    return 1;
-  }
-
-  static int _luaRectGetTopLeft(LuaState state) {
-    Userdata? p = state.toUserdata(1);
-    Rect r = p!.data as Rect;
-
-    Userdata toReturn = state.newUserdata();
-    toReturn.data = r.topLeft;
-
-    state.getMetatableAux('MTOffset');
-    state.setMetatable(-2);
-
-    return 1;
-  }
-
-  static int _luaRectGetTopRight(LuaState state) {
-    Userdata? p = state.toUserdata(1);
-    Rect r = p!.data as Rect;
-
-    Userdata toReturn = state.newUserdata();
-    toReturn.data = r.topRight;
-
-    state.getMetatableAux('MTOffset');
-    state.setMetatable(-2);
-
-    return 1;
-  }
-
-  static int _luaRectGetWidth(LuaState state) {
-    Userdata? p = state.toUserdata(1);
-    Rect r = p!.data as Rect;
-    state.pushNumber(r.width);
-    return 1;
-  }
 
   static int _luaRectContains(LuaState state) {
     Userdata? p = state.toUserdata(1);
@@ -2046,6 +1693,128 @@ class LuaDrawingLib {
     state.setMetatable(-2);
 
     return 1;
+  }
+
+  static int _luaRRectIndex(LuaState state) {
+    Userdata? p = state.toUserdata(1);
+    RRect rect = p?.data as RRect;
+
+    final key = state.checkString(2);
+    switch (key) {
+      case 'blRadius':
+        var data = state.newUserdata();
+        data.data = rect.blRadius;
+        state.getMetatableAux('MTRadius');
+        state.setMetatable(-2);
+        return 1;
+      case 'blRadiusX':
+        state.pushNumber(rect.blRadiusX);
+        return 1;
+      case 'blRadiusY':
+        state.pushNumber(rect.blRadiusY);
+        return 1;
+      case 'bottom':
+        state.pushNumber(rect.bottom);
+        return 1;
+      case 'brRadius':
+        var data = state.newUserdata();
+        data.data = rect.brRadius;
+        state.getMetatableAux('MTRadius');
+        state.setMetatable(-2);
+        return 1;
+      case 'brRadiusX':
+        state.pushNumber(rect.brRadiusX);
+        return 1;
+      case 'brRadiusY':
+        state.pushNumber(rect.brRadiusY);
+        return 1;
+      case 'center':
+        var data = state.newUserdata();
+        data.data = rect.center;
+        state.getMetatableAux('MTOffset');
+        state.setMetatable(-2);
+        return 1;
+      case '':
+        var data = state.newUserdata();
+        data.data = rect.center;
+        state.getMetatableAux('MTOffset');
+        state.setMetatable(-2);
+        return 1;
+      case '':
+        var data = state.newUserdata();
+        data.data = rect.centerLeft;
+        state.getMetatableAux('MTOffset');
+        state.setMetatable(-2);
+        return 1;
+      case '':
+        var data = state.newUserdata();
+        data.data = rect.centerRight;
+        state.getMetatableAux('MTOffset');
+        state.setMetatable(-2);
+        return 1;
+      case '':
+        state.pushBoolean(rect.hasNaN);
+        return 1;
+      case '':
+        state.pushNumber(rect.height);
+        return 1;
+      case '':
+        state.pushBoolean(rect.isEmpty);
+        return 1;
+      case '':
+        state.pushBoolean(rect.isFinite);
+        return 1;
+      case '':
+        state.pushBoolean(rect.isInfinite);
+        return 1;
+      case '':
+        state.pushNumber(rect.left);
+        return 1;
+      case '':
+        state.pushNumber(rect.longestSide);
+        return 1;
+      case '':
+        state.pushNumber(rect.right);
+        return 1;
+      case '':
+        state.pushNumber(rect.shortestSide);
+        return 1;
+      case '':
+        var data = state.newUserdata();
+        data.data = rect.size;
+        state.getMetatableAux('MTSize');
+        state.setMetatable(-2);
+        return 1;
+      case '':
+        state.pushNumber(rect.top);
+        return 1;
+      case '':
+        var data = state.newUserdata();
+        data.data = rect.topCenter;
+        state.getMetatableAux('MTOffset');
+        state.setMetatable(-2);
+        return 1;
+      case '':
+        var data = state.newUserdata();
+        data.data = rect.topLeft;
+        state.getMetatableAux('MTOffset');
+        state.setMetatable(-2);
+        return 1;
+      case '':
+        var data = state.newUserdata();
+        data.data = rect.topRight;
+        state.getMetatableAux('MTOffset');
+        state.setMetatable(-2);
+        return 1;
+      case '':
+        state.pushNumber(rect.width);
+        return 1;
+    }
+
+    state.getMetatableAux('MTRRect');
+    state.getField(-1, key);
+    return 1;
+
   }
 
   static int _luaRRectGetBlRadius(LuaState state) {

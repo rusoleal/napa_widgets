@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:lua_dardo_plus/lua.dart';
 import 'package:napa_widgets/napa_widgets.dart';
 
-import '../scripting/lua/lua_drawing_lib.dart';
+import '../scripting/lua/lua_ui_lib.dart';
 import '../scripting/napa_script_type.dart';
 
 /// Wrapper class for [Flow].
@@ -76,7 +76,7 @@ class NapaFlowDelegate {
     luaState.openLibs();
 
     // load drawing lib
-    luaState.requireF('drawing', LuaDrawingLib.openDrawingLib, true);
+    luaState.requireF('ui', LuaUILib.openLib, true);
     luaState.pop(1);
 
     luaState.loadString(script);

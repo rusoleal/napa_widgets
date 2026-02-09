@@ -4,7 +4,7 @@ import 'package:lua_dardo_plus/lua.dart';
 import 'package:napa_widgets/scripting/napa_script_type.dart';
 import 'package:napa_widgets/widgets/tojson_extensions.dart';
 
-import '../scripting/lua/lua_drawing_lib.dart';
+import '../scripting/lua/lua_ui_lib.dart';
 import 'napa_single_child_render_object_widget.dart';
 import 'napa_widget.dart';
 
@@ -115,7 +115,7 @@ class NapaCustomPainter {
     luaState.openLibs();
 
     // load drawing lib
-    luaState.requireF('drawing', LuaDrawingLib.openDrawingLib, true);
+    luaState.requireF('ui', LuaUILib.openLib, true);
     luaState.pop(1);
 
     luaState.loadString(script);

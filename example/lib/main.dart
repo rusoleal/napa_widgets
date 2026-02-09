@@ -58,8 +58,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     --print("calling paint function from dart")
                     
                     -- color = 0xFFFF0000 
-                    local c = drawing.newColor(4294901760)
-                    canvas:drawColor(c, drawing.BlendMode.srcOver)
+                    local c = ui.newColorFrom(1,1,0,0)
+                    canvas:drawColor(c, ui.BlendMode.srcOver)
+                    
+                    local paint = ui.newPaint()
+                    paint.color = ui.newColorFrom(1,0,1,0)
+                    local rect = ui.newRectFromLTWH(10,10,100,100)
+                    canvas:drawRect(rect,paint)
                     
                     --canvas:save()
                     --canvas:restore()
