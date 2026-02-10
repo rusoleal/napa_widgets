@@ -1,3 +1,5 @@
+## 0.4.0
+
 * Custom NapaWidgets must be registered via NapaWidget.registerNapaWidget() method.
 * Dependency for Lua scripting library.
 * NapaCustomPaint with Lua script.

@@ -27,7 +27,7 @@ Napa widgets are an inspectable and serializable version of common Flutter widge
 | FittedBox         | Ok      |                                  |
 | Flex              | Ok      |                                  |
 | Flexible          | Ok      |                                  |
-| Flow              | Pending | Need's scripting.                |
+| Flow              | Pending |                                  |
 | Icon              | Pending |                                  |
 | Image             | Ok      |                                  |
 | ImageFiltered     | Ok      |                                  |
@@ -38,7 +38,6 @@ Napa widgets are an inspectable and serializable version of common Flutter widge
 | RepaintBoundary   | Ok      |                                  |
 | RotatedBox        | Ok      |                                  |
 | Row               | Ok      |                                  |
-| ScrollView        | Pending |                                  |
 | SizedBox          | Ok      |                                  |
 | Stack             | Ok      |                                  |
 | Text              | Ok      |                                  |

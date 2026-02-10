@@ -1,7 +1,8 @@
 
+import 'dart:typed_data';
 import 'dart:ui';
 import 'package:flutter/animation.dart';
-import 'package:flutter/painting.dart' show LinearGradient;//, RadialGradient;
+import 'package:flutter/painting.dart' show LinearGradient, RadialGradient, Shadow;
 import 'package:lua_dardo_plus/lua.dart';
 
 class LuaUILib {
@@ -35,6 +36,30 @@ class LuaUILib {
       'newRadialGradient': _luaNewRadialGradient,
       'newMaskFilterBlur': _luaNewMaskFilterBlur,
       'newImageFilterBlur': _luaNewImageFilterBlur,
+      'newImageFilterMatrix': _luaNewImageFilterMatrix,
+      'newSize': _luaNewSize,
+      'newSizeSquare': _luaNewSizeSquare,
+      'newSizeFromWidth': _luaNewSizeFromWidth,
+      'newSizeFromHeight': _luaNewSizeFromHeight,
+      'newSizeFromRadius': _luaNewSizeFromRadius,
+      'newColorFilterMode': _luaNewColorFilterMode,
+      'newColorFilterMatrix': _luaNewColorFilterMatrix,
+      'newColorFilterLinearToSrgbGamma': _luaNewColorFilterLinearToSrgbGamma,
+      'newColorFilterSrgbToLinearGamma': _luaNewColorFilterSrgbToLinearGamma,
+      'newVertices': _luaNewVertices,
+      'newPictureRecorder': _luaNewPictureRecorder,
+      'newCanvas': _luaNewCanvas,
+      'newShadow': _luaNewShadow,
+      'newFontFeature': _luaNewFontFeature,
+      'newFontFeatureEnable': _luaNewFontFeatureEnable,
+      'newFontFeatureDisable': _luaNewFontFeatureDisable,
+      'newFontVariation': _luaNewFontVariation,
+      'newLocale': _luaNewLocale,
+      'newTextHeightBehavior': _luaNewTextHeightBehavior,
+      'newStrutStyle': _luaNewStrutStyle,
+      'newTextPosition': _luaNewTextPosition,
+      'newTextRange': _luaNewTextRange,
+      'newPathCombine': _luaNewPathCombine,
       'bounceIn': _luaBounceIn,
       'bounceInOut': _luaBounceInOut,
       'bounceOut': _luaBounceOut,
@@ -216,6 +241,90 @@ class LuaUILib {
     }
     state.setField(-2,"TextLeadingDistribution");
 
+    state.newTable();
+    for (int a=0; a<PointMode.values.length; a++) {
+      state.pushString(PointMode.values[a].name);
+      state.pushInteger(a);
+      state.setTable(-3);
+    }
+    state.setField(-2,"PointMode");
+
+    state.newTable();
+    for (int a=0; a<VertexMode.values.length; a++) {
+      state.pushString(VertexMode.values[a].name);
+      state.pushInteger(a);
+      state.setTable(-3);
+    }
+    state.setField(-2,"VertexMode");
+
+    state.newTable();
+    for (int a=0; a<PathOperation.values.length; a++) {
+      state.pushString(PathOperation.values[a].name);
+      state.pushInteger(a);
+      state.setTable(-3);
+    }
+    state.setField(-2,"PathOperation");
+
+    state.newTable();
+    for (int a=0; a<TextAffinity.values.length; a++) {
+      state.pushString(TextAffinity.values[a].name);
+      state.pushInteger(a);
+      state.setTable(-3);
+    }
+    state.setField(-2,"TextAffinity");
+
+    state.newTable();
+    for (int a=0; a<BoxHeightStyle.values.length; a++) {
+      state.pushString(BoxHeightStyle.values[a].name);
+      state.pushInteger(a);
+      state.setTable(-3);
+    }
+    state.setField(-2,"BoxHeightStyle");
+
+    state.newTable();
+    for (int a=0; a<BoxWidthStyle.values.length; a++) {
+      state.pushString(BoxWidthStyle.values[a].name);
+      state.pushInteger(a);
+      state.setTable(-3);
+    }
+    state.setField(-2,"BoxWidthStyle");
+
+    state.newTable();
+    for (int a=0; a<Clip.values.length; a++) {
+      state.pushString(Clip.values[a].name);
+      state.pushInteger(a);
+      state.setTable(-3);
+    }
+    state.setField(-2,"Clip");
+
+    state.newTable();
+    for (final entry in <String, FontWeight>{
+      'w100': FontWeight.w100, 'w200': FontWeight.w200,
+      'w300': FontWeight.w300, 'w400': FontWeight.w400,
+      'w500': FontWeight.w500, 'w600': FontWeight.w600,
+      'w700': FontWeight.w700, 'w800': FontWeight.w800,
+      'w900': FontWeight.w900, 'normal': FontWeight.normal,
+      'bold': FontWeight.bold,
+    }.entries) {
+      state.pushString(entry.key);
+      var ud = state.newUserdata();
+      ud.data = entry.value;
+      state.setTable(-3);
+    }
+    state.setField(-2,"FontWeight");
+
+    state.newTable();
+    for (final entry in <String, TextDecoration>{
+      'none': TextDecoration.none, 'underline': TextDecoration.underline,
+      'overline': TextDecoration.overline, 'lineThrough': TextDecoration.lineThrough,
+    }.entries) {
+      state.pushString(entry.key);
+      var ud = state.newUserdata();
+      ud.data = entry.value;
+      state.setTable(-3);
+    }
+    state.setField(-2,"TextDecoration");
+
     // Canvas metatable
     state.newMetatable('MTCanvas');
     state.pushValue(-1);
@@ -253,23 +362,24 @@ class LuaUILib {
     state.setField(-2, 'drawPath');
     state.pushDartFunction(_luaDrawPicture);
     state.setField(-2, 'drawPicture');
-    // TODO drawPoints
-    // TODO drawRawAtlas
-    // TODO drawRawPoints
+    state.pushDartFunction(_luaDrawPoints);
+    state.setField(-2, 'drawPoints');
     state.pushDartFunction(_luaDrawRect);
     state.setField(-2, 'drawRect');
     state.pushDartFunction(_luaDrawRRect);
     state.setField(-2, 'drawRRect');
     state.pushDartFunction(_luaDrawShadow);
     state.setField(-2, 'drawShadow');
-    // TODO drawVertices
+    state.pushDartFunction(_luaDrawVertices);
+    state.setField(-2, 'drawVertices');
     state.pushDartFunction(_luaGetDestinationClipBounds);
     state.setField(-2, 'getDestinationClipBounds');
     state.pushDartFunction(_luaGetLocalClipBounds);
     state.setField(-2, 'getLocalClipBounds');
     state.pushDartFunction(_luaGetSaveCount);
     state.setField(-2, 'getSaveCount');
-    // TODO getTransform
+    state.pushDartFunction(_luaGetTransform);
+    state.setField(-2, 'getTransform');
     state.pushDartFunction(_luaRestore);
     state.setField(-2, 'restore');
     state.pushDartFunction(_luaRestoreToCount);
@@ -284,7 +394,8 @@ class LuaUILib {
     state.setField(-2, 'scale');
     state.pushDartFunction(_luaSkew);
     state.setField(-2, 'skew');
-    // TODO transform
+    state.pushDartFunction(_luaCanvasTransform);
+    state.setField(-2, 'transform');
     state.pushDartFunction(_luaTranslate);
     state.setField(-2, 'translate');
     state.setField(-2, 'MTCanvas');
@@ -387,8 +498,9 @@ class LuaUILib {
     state.setField(-2, 'addOval');
     state.pushDartFunction(_luaPathAddPath);
     state.setField(-2, 'addPath');
+    state.pushDartFunction(_luaPathAddPolygon);
+    state.setField(-2, 'addPolygon');
     state.pushDartFunction(_luaPathAddRect);
-    // TODO addPolygon
     state.setField(-2, 'addRect');
     state.pushDartFunction(_luaPathAddRRect);
     state.setField(-2, 'addRRect');
@@ -432,7 +544,8 @@ class LuaUILib {
     state.setField(-2, 'reset');
     state.pushDartFunction(_luaPathShift);
     state.setField(-2, 'shift');
-    // TODO transform
+    state.pushDartFunction(_luaPathTransform);
+    state.setField(-2, 'transform');
     state.setField(-2, 'MTPath');
 
     // Paragraph metatable
@@ -457,17 +570,24 @@ class LuaUILib {
     state.setField(-2, 'numberOfLines');
     state.pushDartFunction(_luaParagraphWidth);
     state.setField(-2, 'width');
-    // TODO computeLineMetrics
-    // TODO dispose
-    // TODO getBoxesForPlaceholders
-    // TODO getBoxesForRange
-    // TODO getClosestGlyphInfoForOffset
-    // TODO getGlyphInfoAt
-    // TODO getLineBoundary
-    // TODO getLineMetricsAt
-    // TODO getLineNumberAt
-    // TODO getPositionForOffset
-    // TODO getWordBoundary
+    state.pushDartFunction(_luaParagraphComputeLineMetrics);
+    state.setField(-2, 'computeLineMetrics');
+    state.pushDartFunction(_luaParagraphDispose);
+    state.setField(-2, 'dispose');
+    state.pushDartFunction(_luaParagraphGetBoxesForPlaceholders);
+    state.setField(-2, 'getBoxesForPlaceholders');
+    state.pushDartFunction(_luaParagraphGetBoxesForRange);
+    state.setField(-2, 'getBoxesForRange');
+    state.pushDartFunction(_luaParagraphGetLineBoundary);
+    state.setField(-2, 'getLineBoundary');
+    state.pushDartFunction(_luaParagraphGetLineMetricsAt);
+    state.setField(-2, 'getLineMetricsAt');
+    state.pushDartFunction(_luaParagraphGetLineNumberAt);
+    state.setField(-2, 'getLineNumberAt');
+    state.pushDartFunction(_luaParagraphGetPositionForOffset);
+    state.setField(-2, 'getPositionForOffset');
+    state.pushDartFunction(_luaParagraphGetWordBoundary);
+    state.setField(-2, 'getWordBoundary');
     state.pushDartFunction(_luaParagraphLayout);
     state.setField(-2, 'layout');
     state.setField(-2, 'MTParagraph');
@@ -494,6 +614,108 @@ class LuaUILib {
     state.pushDartFunction(_luaImageIndex);
     state.setField(-2, '__index');
     state.setField(-2, 'MTImage');
+
+    // ColorFilter metatable (opaque)
+    state.newMetatable('MTColorFilter');
+    state.pushValue(-1);
+    state.setField(-2, '__index');
+    state.setField(-2, 'MTColorFilter');
+
+    // Vertices metatable (opaque)
+    state.newMetatable('MTVertices');
+    state.pushValue(-1);
+    state.setField(-2, '__index');
+    state.setField(-2, 'MTVertices');
+
+    // Shadow metatable
+    state.newMetatable('MTShadow');
+    state.pushDartFunction(_luaShadowIndex);
+    state.setField(-2, '__index');
+    state.setField(-2, 'MTShadow');
+
+    // FontFeature metatable
+    state.newMetatable('MTFontFeature');
+    state.pushDartFunction(_luaFontFeatureIndex);
+    state.setField(-2, '__index');
+    state.setField(-2, 'MTFontFeature');
+
+    // FontVariation metatable
+    state.newMetatable('MTFontVariation');
+    state.pushDartFunction(_luaFontVariationIndex);
+    state.setField(-2, '__index');
+    state.setField(-2, 'MTFontVariation');
+
+    // TextPosition metatable
+    state.newMetatable('MTTextPosition');
+    state.pushDartFunction(_luaTextPositionIndex);
+    state.setField(-2, '__index');
+    state.setField(-2, 'MTTextPosition');
+
+    // TextRange metatable
+    state.newMetatable('MTTextRange');
+    state.pushDartFunction(_luaTextRangeIndex);
+    state.setField(-2, '__index');
+    state.pushDartFunction(_luaTextRangeTextBefore);
+    state.setField(-2, 'textBefore');
+    state.pushDartFunction(_luaTextRangeTextAfter);
+    state.setField(-2, 'textAfter');
+    state.pushDartFunction(_luaTextRangeTextInside);
+    state.setField(-2, 'textInside');
+    state.setField(-2, 'MTTextRange');
+
+    // TextBox metatable
+    state.newMetatable('MTTextBox');
+    state.pushDartFunction(_luaTextBoxIndex);
+    state.setField(-2, '__index');
+    state.pushDartFunction(_luaTextBoxToRect);
+    state.setField(-2, 'toRect');
+    state.setField(-2, 'MTTextBox');
+
+    // LineMetrics metatable
+    state.newMetatable('MTLineMetrics');
+    state.pushDartFunction(_luaLineMetricsIndex);
+    state.setField(-2, '__index');
+    state.setField(-2, 'MTLineMetrics');
+
+    // Tangent metatable
+    state.newMetatable('MTTangent');
+    state.pushDartFunction(_luaTangentIndex);
+    state.setField(-2, '__index');
+    state.setField(-2, 'MTTangent');
+
+    // PathMetric metatable
+    state.newMetatable('MTPathMetric');
+    state.pushDartFunction(_luaPathMetricIndex);
+    state.setField(-2, '__index');
+    state.pushDartFunction(_luaPathMetricGetTangentForOffset);
+    state.setField(-2, 'getTangentForOffset');
+    state.pushDartFunction(_luaPathMetricExtractPath);
+    state.setField(-2, 'extractPath');
+    state.setField(-2, 'MTPathMetric');
+
+    // PathMetrics metatable
+    state.newMetatable('MTPathMetrics');
+    state.pushValue(-1);
+    state.setField(-2, '__index');
+    state.pushDartFunction(_luaPathMetricsToList);
+    state.setField(-2, 'toList');
+    state.setField(-2, 'MTPathMetrics');
+
+    // PictureRecorder metatable
+    state.newMetatable('MTPictureRecorder');
+    state.pushDartFunction(_luaPictureRecorderIndex);
+    state.setField(-2, '__index');
+    state.pushDartFunction(_luaPictureRecorderEndRecording);
+    state.setField(-2, 'endRecording');
+    state.setField(-2, 'MTPictureRecorder');
+
+    // Picture metatable
+    state.newMetatable('MTPicture');
+    state.pushValue(-1);
+    state.setField(-2, '__index');
+    state.pushDartFunction(_luaPictureDispose);
+    state.setField(-2, 'dispose');
+    state.setField(-2, 'MTPicture');
 
     return 1;
   }
@@ -658,19 +880,49 @@ class LuaUILib {
         state.getMetatableAux('MTColor');
         state.setMetatable(-2);
         return 1;
-      //case 'colorFilter':
+      case 'colorFilter':
+        if (paint.colorFilter == null) {
+          state.pushNil();
+        } else {
+          var ud = state.newUserdata();
+          ud.data = paint.colorFilter;
+          state.getMetatableAux('MTColorFilter');
+          state.setMetatable(-2);
+        }
+        return 1;
       case 'filterQuality':
         state.pushInteger(paint.filterQuality.index);
         return 1;
-      //case 'imageFilter':
+      case 'imageFilter':
+        if (paint.imageFilter == null) {
+          state.pushNil();
+        } else {
+          var ud = state.newUserdata();
+          ud.data = paint.imageFilter;
+        }
+        return 1;
       case 'invertColors':
         state.pushBoolean(paint.invertColors);
         return 1;
       case 'isAntiAlias':
         state.pushBoolean(paint.isAntiAlias);
         return 1;
-      //case 'maskFilter':
-      //case 'shader':
+      case 'maskFilter':
+        if (paint.maskFilter == null) {
+          state.pushNil();
+        } else {
+          var ud = state.newUserdata();
+          ud.data = paint.maskFilter;
+        }
+        return 1;
+      case 'shader':
+        if (paint.shader == null) {
+          state.pushNil();
+        } else {
+          var ud = state.newUserdata();
+          ud.data = paint.shader;
+        }
+        return 1;
       case 'strokeCap':
         state.pushInteger(paint.strokeCap.index);
         return 1;
@@ -707,20 +959,28 @@ class LuaUILib {
         Userdata? color = state.toUserdata(3);
         paint.color = color?.data as Color;
         return 0;
-    //case 'colorFilter':
+      case 'colorFilter':
+        paint.colorFilter = state.isNil(3) ? null : state.toUserdata(3)?.data as ColorFilter?;
+        return 0;
       case 'filterQuality':
         int filterQuality = state.toInteger(3);
         paint.filterQuality = FilterQuality.values[filterQuality];
         return 0;
-    //case 'imageFilter':
+      case 'imageFilter':
+        paint.imageFilter = state.isNil(3) ? null : state.toUserdata(3)?.data as ImageFilter?;
+        return 0;
       case 'invertColors':
         paint.invertColors = state.toBoolean(3);
         return 0;
       case 'isAntiAlias':
         paint.isAntiAlias = state.toBoolean(3);
         return 0;
-    //case 'maskFilter':
-    //case 'shader':
+      case 'maskFilter':
+        paint.maskFilter = state.isNil(3) ? null : state.toUserdata(3)?.data as MaskFilter?;
+        return 0;
+      case 'shader':
+        paint.shader = state.isNil(3) ? null : state.toUserdata(3)?.data as Shader?;
+        return 0;
       case 'strokeCap':
         int strokeCap = state.toInteger(3);
         paint.strokeCap = StrokeCap.values[strokeCap];
@@ -1066,6 +1326,76 @@ class LuaUILib {
     double sx = state.toNumber(2);
     double sy = state.toNumber(3);
     canvas.translate(sx, sy);
+    return 0;
+  }
+
+  static int _luaDrawPoints(LuaState state) {
+    Userdata<dynamic>? c = state.toUserdata(1);
+    Canvas canvas = (c?.data as Canvas);
+
+    int pointModeIndex = state.toInteger(2);
+    PointMode pointMode = PointMode.values[pointModeIndex];
+
+    List<Offset> points = [];
+    if (state.isTable(3)) {
+      state.pushNil();
+      while (state.next(3)) {
+        points.add(state.toUserdata(-1)?.data as Offset);
+        state.pop(1);
+      }
+    }
+
+    Userdata? paint = state.toUserdata(4);
+    canvas.drawPoints(pointMode, points, paint!.data as Paint);
+    return 0;
+  }
+
+  static int _luaDrawVertices(LuaState state) {
+    Userdata<dynamic>? c = state.toUserdata(1);
+    Canvas canvas = (c?.data as Canvas);
+
+    Userdata? vertices = state.toUserdata(2);
+    int blendModeIndex = state.toInteger(3);
+    Userdata? paint = state.toUserdata(4);
+
+    canvas.drawVertices(
+      vertices!.data as Vertices,
+      BlendMode.values[blendModeIndex],
+      paint!.data as Paint,
+    );
+    return 0;
+  }
+
+  static int _luaGetTransform(LuaState state) {
+    Userdata<dynamic>? c = state.toUserdata(1);
+    Canvas canvas = (c?.data as Canvas);
+
+    Float64List transform = canvas.getTransform();
+    state.newTable();
+    for (int i = 0; i < 16; i++) {
+      state.pushInteger(i + 1);
+      state.pushNumber(transform[i]);
+      state.setTable(-3);
+    }
+
+    return 1;
+  }
+
+  static int _luaCanvasTransform(LuaState state) {
+    Userdata<dynamic>? c = state.toUserdata(1);
+    Canvas canvas = (c?.data as Canvas);
+
+    Float64List matrix = Float64List(16);
+    if (state.isTable(2)) {
+      for (int i = 0; i < 16; i++) {
+        state.pushInteger(i + 1);
+        state.getTable(2);
+        matrix[i] = state.toNumber(-1);
+        state.pop(1);
+      }
+    }
+
+    canvas.transform(matrix);
     return 0;
   }
 
@@ -2123,6 +2453,45 @@ class LuaUILib {
     return 1;
   }
 
+  static int _luaPathAddPolygon(LuaState state) {
+    Userdata? path = state.toUserdata(1);
+
+    List<Offset> points = [];
+    if (state.isTable(2)) {
+      state.pushNil();
+      while (state.next(2)) {
+        points.add(state.toUserdata(-1)?.data as Offset);
+        state.pop(1);
+      }
+    }
+    bool close = state.toBoolean(3);
+
+    (path!.data as Path).addPolygon(points, close);
+    return 0;
+  }
+
+  static int _luaPathTransform(LuaState state) {
+    Userdata? path = state.toUserdata(1);
+
+    Float64List matrix = Float64List(16);
+    if (state.isTable(2)) {
+      for (int i = 0; i < 16; i++) {
+        state.pushInteger(i + 1);
+        state.getTable(2);
+        matrix[i] = state.toNumber(-1);
+        state.pop(1);
+      }
+    }
+
+    Userdata toReturn = state.newUserdata();
+    toReturn.data = (path!.data as Path).transform(matrix);
+
+    state.getMetatableAux('MTPath');
+    state.setMetatable(-2);
+
+    return 1;
+  }
+
   static int _luaParagraphAlphabeticBaseline(LuaState state) {
     Userdata? paragraph =  state.toUserdata(1);
     state.pushNumber((paragraph!.data as Paragraph).alphabeticBaseline);
@@ -2184,6 +2553,157 @@ class LuaUILib {
     return 0;
   }
 
+  static int _luaParagraphComputeLineMetrics(LuaState state) {
+    Userdata? paragraph = state.toUserdata(1);
+    List<LineMetrics> metrics = (paragraph!.data as Paragraph).computeLineMetrics();
+
+    state.newTable();
+    for (int i = 0; i < metrics.length; i++) {
+      state.pushInteger(i + 1);
+      Userdata ud = state.newUserdata();
+      ud.data = metrics[i];
+      state.getMetatableAux('MTLineMetrics');
+      state.setMetatable(-2);
+      state.setTable(-3);
+    }
+
+    return 1;
+  }
+
+  static int _luaParagraphDispose(LuaState state) {
+    Userdata? paragraph = state.toUserdata(1);
+    (paragraph!.data as Paragraph).dispose();
+    return 0;
+  }
+
+  static int _luaParagraphGetPositionForOffset(LuaState state) {
+    Userdata? paragraph = state.toUserdata(1);
+    Userdata? offset = state.toUserdata(2);
+
+    TextPosition pos = (paragraph!.data as Paragraph).getPositionForOffset(offset!.data as Offset);
+
+    Userdata toReturn = state.newUserdata();
+    toReturn.data = pos;
+
+    state.getMetatableAux('MTTextPosition');
+    state.setMetatable(-2);
+
+    return 1;
+  }
+
+  static int _luaParagraphGetWordBoundary(LuaState state) {
+    Userdata? paragraph = state.toUserdata(1);
+    Userdata? position = state.toUserdata(2);
+
+    TextRange range = (paragraph!.data as Paragraph).getWordBoundary(position!.data as TextPosition);
+
+    Userdata toReturn = state.newUserdata();
+    toReturn.data = range;
+
+    state.getMetatableAux('MTTextRange');
+    state.setMetatable(-2);
+
+    return 1;
+  }
+
+  static int _luaParagraphGetLineBoundary(LuaState state) {
+    Userdata? paragraph = state.toUserdata(1);
+    Userdata? position = state.toUserdata(2);
+
+    TextRange range = (paragraph!.data as Paragraph).getLineBoundary(position!.data as TextPosition);
+
+    Userdata toReturn = state.newUserdata();
+    toReturn.data = range;
+
+    state.getMetatableAux('MTTextRange');
+    state.setMetatable(-2);
+
+    return 1;
+  }
+
+  static int _luaParagraphGetLineMetricsAt(LuaState state) {
+    Userdata? paragraph = state.toUserdata(1);
+    int lineNumber = state.toInteger(2);
+
+    LineMetrics? lm = (paragraph!.data as Paragraph).getLineMetricsAt(lineNumber);
+    if (lm == null) {
+      state.pushNil();
+      return 1;
+    }
+
+    Userdata toReturn = state.newUserdata();
+    toReturn.data = lm;
+
+    state.getMetatableAux('MTLineMetrics');
+    state.setMetatable(-2);
+
+    return 1;
+  }
+
+  static int _luaParagraphGetLineNumberAt(LuaState state) {
+    Userdata? paragraph = state.toUserdata(1);
+    int codeUnitOffset = state.toInteger(2);
+
+    int? lineNumber = (paragraph!.data as Paragraph).getLineNumberAt(codeUnitOffset);
+    if (lineNumber == null) {
+      state.pushNil();
+    } else {
+      state.pushInteger(lineNumber);
+    }
+    return 1;
+  }
+
+  static int _luaParagraphGetBoxesForRange(LuaState state) {
+    Userdata? paragraph = state.toUserdata(1);
+    int start = state.toInteger(2);
+    int end = state.toInteger(3);
+    int? boxHeightStyleIndex = state.toIntegerX(4);
+    int? boxWidthStyleIndex = state.toIntegerX(5);
+
+    BoxHeightStyle boxHeightStyle = boxHeightStyleIndex != null
+        ? BoxHeightStyle.values[boxHeightStyleIndex]
+        : BoxHeightStyle.tight;
+    BoxWidthStyle boxWidthStyle = boxWidthStyleIndex != null
+        ? BoxWidthStyle.values[boxWidthStyleIndex]
+        : BoxWidthStyle.tight;
+
+    List<TextBox> boxes = (paragraph!.data as Paragraph).getBoxesForRange(
+      start, end,
+      boxHeightStyle: boxHeightStyle,
+      boxWidthStyle: boxWidthStyle,
+    );
+
+    state.newTable();
+    for (int i = 0; i < boxes.length; i++) {
+      state.pushInteger(i + 1);
+      Userdata ud = state.newUserdata();
+      ud.data = boxes[i];
+      state.getMetatableAux('MTTextBox');
+      state.setMetatable(-2);
+      state.setTable(-3);
+    }
+
+    return 1;
+  }
+
+  static int _luaParagraphGetBoxesForPlaceholders(LuaState state) {
+    Userdata? paragraph = state.toUserdata(1);
+
+    List<TextBox> boxes = (paragraph!.data as Paragraph).getBoxesForPlaceholders();
+
+    state.newTable();
+    for (int i = 0; i < boxes.length; i++) {
+      state.pushInteger(i + 1);
+      Userdata ud = state.newUserdata();
+      ud.data = boxes[i];
+      state.getMetatableAux('MTTextBox');
+      state.setMetatable(-2);
+      state.setTable(-3);
+    }
+
+    return 1;
+  }
+
   static int _luaNewParagraphStyle(LuaState state) {
     TextAlign? textAlign;
     TextDirection? textDirection;
@@ -2223,8 +2743,11 @@ class LuaUILib {
       state.getField(1, 'height');
       height = state.toNumberX(-1);
 
-      // TODO TextHeightBehavior
-      // TODO FontWeight
+      state.getField(1, 'textHeightBehavior');
+      textHeightBehavior = state.toUserdata(-1)?.data as TextHeightBehavior?;
+
+      state.getField(1, 'fontWeight');
+      fontWeight = state.toUserdata(-1)?.data as FontWeight?;
 
       state.getField(1, 'fontStyle');
       int? fontStyleIndex = state.toIntegerX(-1);
@@ -2232,12 +2755,14 @@ class LuaUILib {
         fontStyle = FontStyle.values[fontStyleIndex];
       }
 
-      // TODO StrutStyle
+      state.getField(1, 'strutStyle');
+      strutStyle = state.toUserdata(-1)?.data as StrutStyle?;
 
       state.getField(1, 'ellipsis');
       ellipsis = state.toStr(-1);
 
-      // TODO Locale
+      state.getField(1, 'locale');
+      locale = state.toUserdata(-1)?.data as Locale?;
     }
 
     Userdata toReturn = state.newUserdata();
@@ -2281,11 +2806,17 @@ class LuaUILib {
     double width = state.toNumber(2);
     double height = state.toNumber(3);
     PlaceholderAlignment alignment = PlaceholderAlignment.values[state.toInteger(4)];
-    // TODO scale
-    // TODO baselineOffset
-    // TODO baseline
+    double? scale = state.checkNumber(5);
+    double? baselineOffset = state.checkNumber(6);
+    int? baselineIndex = state.toIntegerX(7);
+    TextBaseline? baseline = baselineIndex != null ? TextBaseline.values[baselineIndex] : null;
 
-    (paragraphBuilder!.data as ParagraphBuilder).addPlaceholder(width, height, alignment);
+    (paragraphBuilder!.data as ParagraphBuilder).addPlaceholder(
+      width, height, alignment,
+      scale: scale ?? 1.0,
+      baselineOffset: baselineOffset,
+      baseline: baseline,
+    );
     return 0;
   }
 
@@ -2348,7 +2879,8 @@ class LuaUILib {
       state.getField(1, 'color');
       color = state.toUserdata(-1)?.data as Color?;
 
-      // TODO TextDecoration
+      state.getField(1, 'decoration');
+      decoration = state.toUserdata(-1)?.data as TextDecoration?;
 
       state.getField(1, 'decorationColor');
       decorationColor = state.toUserdata(-1)?.data as Color?;
@@ -2362,7 +2894,8 @@ class LuaUILib {
       state.getField(1, 'decorationThickness');
       decorationThickness = state.toNumberX(-1);
 
-      // TODO FontWeight
+      state.getField(1, 'fontWeight');
+      fontWeight = state.toUserdata(-1)?.data as FontWeight?;
 
       state.getField(1, 'fontStyle');
       int? fontStyleIndex = state.toIntegerX(-1);
@@ -2379,7 +2912,15 @@ class LuaUILib {
       state.getField(1, 'fontFamily');
       fontFamily = state.toStr(-1);
 
-      // TODO fontFamilyFallback
+      state.getField(1, 'fontFamilyFallback');
+      if (state.isTable(-1)) {
+        fontFamilyFallback = [];
+        state.pushNil();
+        while (state.next(-2)) {
+          fontFamilyFallback.add(state.toStr(-1)!);
+          state.pop(1);
+        }
+      }
 
       state.getField(1, 'fontSize');
       fontSize = state.toNumberX(-1);
@@ -2399,7 +2940,8 @@ class LuaUILib {
         leadingDistribution = TextLeadingDistribution.values[leadingDistributionIndex];
       }
 
-      // TODO Locale
+      state.getField(1, 'locale');
+      locale = state.toUserdata(-1)?.data as Locale?;
 
       state.getField(1, 'background');
       background = state.toUserdata(-1)?.data as Paint?;
@@ -2407,9 +2949,35 @@ class LuaUILib {
       state.getField(1, 'foreground');
       foreground = state.toUserdata(-1)?.data as Paint?;
 
-      // TODO shadows
-      // TODO fontFeatures
-      // TODO fontVariations
+      state.getField(1, 'shadows');
+      if (state.isTable(-1)) {
+        shadows = [];
+        state.pushNil();
+        while (state.next(-2)) {
+          shadows.add(state.toUserdata(-1)?.data as Shadow);
+          state.pop(1);
+        }
+      }
+
+      state.getField(1, 'fontFeatures');
+      if (state.isTable(-1)) {
+        fontFeatures = [];
+        state.pushNil();
+        while (state.next(-2)) {
+          fontFeatures.add(state.toUserdata(-1)?.data as FontFeature);
+          state.pop(1);
+        }
+      }
+
+      state.getField(1, 'fontVariations');
+      if (state.isTable(-1)) {
+        fontVariations = [];
+        state.pushNil();
+        while (state.next(-2)) {
+          fontVariations.add(state.toUserdata(-1)?.data as FontVariation);
+          state.pop(1);
+        }
+      }
     }
 
     Userdata toReturn = state.newUserdata();
@@ -2464,6 +3032,25 @@ class LuaUILib {
   }
 
   static int _luaNewRadialGradient(LuaState state) {
+    List<Color> colors = [];
+    Rect rect = Rect.zero;
+
+    if (state.isTable(1)) {
+      state.getField(1, 'colors');
+      state.pushNil();
+      while (state.next(-2)) {
+        colors.add(state.toUserdata(-1)?.data as Color);
+        state.pop(1);
+      }
+
+      state.getField(1, 'rect');
+      var data = state.toUserdata(-1)!;
+      rect = data.data as Rect;
+    }
+
+    var shader = RadialGradient(colors: colors).createShader(rect);
+    var toReturn = state.newUserdata();
+    toReturn.data = shader;
     return 1;
   }
 
@@ -2488,6 +3075,452 @@ class LuaUILib {
 
     var toReturn = state.newUserdata();
     toReturn.data = ImageFilter.blur(sigmaX: x, sigmaY: y, tileMode: tileMode);
+
+    return 1;
+  }
+
+  static int _luaNewImageFilterMatrix(LuaState state) {
+    Float64List matrix = Float64List(16);
+    if (state.isTable(1)) {
+      for (int i = 0; i < 16; i++) {
+        state.pushInteger(i + 1);
+        state.getTable(1);
+        matrix[i] = state.toNumber(-1);
+        state.pop(1);
+      }
+    }
+    int filterQualityIndex = state.toIntegerX(2) ?? FilterQuality.low.index;
+
+    var toReturn = state.newUserdata();
+    toReturn.data = ImageFilter.matrix(matrix, filterQuality: FilterQuality.values[filterQualityIndex]);
+
+    return 1;
+  }
+
+  // ── Size constructors ──
+
+  static int _luaNewSize(LuaState state) {
+    double width = state.toNumber(1);
+    double height = state.toNumber(2);
+
+    Userdata toReturn = state.newUserdata();
+    toReturn.data = Size(width, height);
+
+    state.getMetatableAux('MTSize');
+    state.setMetatable(-2);
+
+    return 1;
+  }
+
+  static int _luaNewSizeSquare(LuaState state) {
+    double dimension = state.toNumber(1);
+
+    Userdata toReturn = state.newUserdata();
+    toReturn.data = Size.square(dimension);
+
+    state.getMetatableAux('MTSize');
+    state.setMetatable(-2);
+
+    return 1;
+  }
+
+  static int _luaNewSizeFromWidth(LuaState state) {
+    double width = state.toNumber(1);
+
+    Userdata toReturn = state.newUserdata();
+    toReturn.data = Size.fromWidth(width);
+
+    state.getMetatableAux('MTSize');
+    state.setMetatable(-2);
+
+    return 1;
+  }
+
+  static int _luaNewSizeFromHeight(LuaState state) {
+    double height = state.toNumber(1);
+
+    Userdata toReturn = state.newUserdata();
+    toReturn.data = Size.fromHeight(height);
+
+    state.getMetatableAux('MTSize');
+    state.setMetatable(-2);
+
+    return 1;
+  }
+
+  static int _luaNewSizeFromRadius(LuaState state) {
+    double radius = state.toNumber(1);
+
+    Userdata toReturn = state.newUserdata();
+    toReturn.data = Size.fromRadius(radius);
+
+    state.getMetatableAux('MTSize');
+    state.setMetatable(-2);
+
+    return 1;
+  }
+
+  // ── ColorFilter constructors ──
+
+  static int _luaNewColorFilterMode(LuaState state) {
+    Userdata? color = state.toUserdata(1);
+    int blendMode = state.toInteger(2);
+
+    var toReturn = state.newUserdata();
+    toReturn.data = ColorFilter.mode(color!.data as Color, BlendMode.values[blendMode]);
+
+    state.getMetatableAux('MTColorFilter');
+    state.setMetatable(-2);
+
+    return 1;
+  }
+
+  static int _luaNewColorFilterMatrix(LuaState state) {
+    List<double> matrix = [];
+    if (state.isTable(1)) {
+      for (int i = 1; i <= 20; i++) {
+        state.pushInteger(i);
+        state.getTable(1);
+        matrix.add(state.toNumber(-1));
+        state.pop(1);
+      }
+    }
+
+    var toReturn = state.newUserdata();
+    toReturn.data = ColorFilter.matrix(matrix);
+
+    state.getMetatableAux('MTColorFilter');
+    state.setMetatable(-2);
+
+    return 1;
+  }
+
+  static int _luaNewColorFilterLinearToSrgbGamma(LuaState state) {
+    var toReturn = state.newUserdata();
+    toReturn.data = const ColorFilter.linearToSrgbGamma();
+
+    state.getMetatableAux('MTColorFilter');
+    state.setMetatable(-2);
+
+    return 1;
+  }
+
+  static int _luaNewColorFilterSrgbToLinearGamma(LuaState state) {
+    var toReturn = state.newUserdata();
+    toReturn.data = const ColorFilter.srgbToLinearGamma();
+
+    state.getMetatableAux('MTColorFilter');
+    state.setMetatable(-2);
+
+    return 1;
+  }
+
+  // ── Vertices constructor ──
+
+  static int _luaNewVertices(LuaState state) {
+    int modeIndex = state.toInteger(1);
+    VertexMode mode = VertexMode.values[modeIndex];
+
+    List<Offset> positions = [];
+    if (state.isTable(2)) {
+      state.pushNil();
+      while (state.next(2)) {
+        positions.add(state.toUserdata(-1)?.data as Offset);
+        state.pop(1);
+      }
+    }
+
+    List<Color>? colors;
+    if (state.isTable(3)) {
+      colors = [];
+      state.pushNil();
+      while (state.next(3)) {
+        colors.add(state.toUserdata(-1)?.data as Color);
+        state.pop(1);
+      }
+    }
+
+    List<int>? indices;
+    if (state.isTable(4)) {
+      indices = [];
+      state.pushNil();
+      while (state.next(4)) {
+        indices.add(state.toInteger(-1));
+        state.pop(1);
+      }
+    }
+
+    var toReturn = state.newUserdata();
+    toReturn.data = Vertices(mode, positions, colors: colors, indices: indices);
+
+    state.getMetatableAux('MTVertices');
+    state.setMetatable(-2);
+
+    return 1;
+  }
+
+  // ── PictureRecorder / Canvas constructors ──
+
+  static int _luaNewPictureRecorder(LuaState state) {
+    Userdata toReturn = state.newUserdata();
+    toReturn.data = PictureRecorder();
+
+    state.getMetatableAux('MTPictureRecorder');
+    state.setMetatable(-2);
+
+    return 1;
+  }
+
+  static int _luaNewCanvas(LuaState state) {
+    Userdata? recorder = state.toUserdata(1);
+    Userdata? cullRect = state.toUserdata(2);
+
+    Rect? rect = cullRect?.data as Rect?;
+
+    Userdata toReturn = state.newUserdata();
+    toReturn.data = Canvas(recorder!.data as PictureRecorder, rect ?? Rect.largest);
+
+    state.getMetatableAux('MTCanvas');
+    state.setMetatable(-2);
+
+    return 1;
+  }
+
+  // ── Shadow constructor ──
+
+  static int _luaNewShadow(LuaState state) {
+    Userdata? color = state.toUserdata(1);
+    Userdata? offset = state.toUserdata(2);
+    double blurRadius = state.toNumber(3);
+
+    Userdata toReturn = state.newUserdata();
+    toReturn.data = Shadow(
+      color: color!.data as Color,
+      offset: offset!.data as Offset,
+      blurRadius: blurRadius,
+    );
+
+    state.getMetatableAux('MTShadow');
+    state.setMetatable(-2);
+
+    return 1;
+  }
+
+  // ── FontFeature constructors ──
+
+  static int _luaNewFontFeature(LuaState state) {
+    String feature = state.toStr(1)!;
+    int value = state.toIntegerX(2) ?? 1;
+
+    Userdata toReturn = state.newUserdata();
+    toReturn.data = FontFeature(feature, value);
+
+    state.getMetatableAux('MTFontFeature');
+    state.setMetatable(-2);
+
+    return 1;
+  }
+
+  static int _luaNewFontFeatureEnable(LuaState state) {
+    String feature = state.toStr(1)!;
+
+    Userdata toReturn = state.newUserdata();
+    toReturn.data = FontFeature.enable(feature);
+
+    state.getMetatableAux('MTFontFeature');
+    state.setMetatable(-2);
+
+    return 1;
+  }
+
+  static int _luaNewFontFeatureDisable(LuaState state) {
+    String feature = state.toStr(1)!;
+
+    Userdata toReturn = state.newUserdata();
+    toReturn.data = FontFeature.disable(feature);
+
+    state.getMetatableAux('MTFontFeature');
+    state.setMetatable(-2);
+
+    return 1;
+  }
+
+  // ── FontVariation constructor ──
+
+  static int _luaNewFontVariation(LuaState state) {
+    String axis = state.toStr(1)!;
+    double value = state.toNumber(2);
+
+    Userdata toReturn = state.newUserdata();
+    toReturn.data = FontVariation(axis, value);
+
+    state.getMetatableAux('MTFontVariation');
+    state.setMetatable(-2);
+
+    return 1;
+  }
+
+  // ── Locale constructor ──
+
+  static int _luaNewLocale(LuaState state) {
+    String languageCode = state.toStr(1)!;
+    String? countryCode = state.toStr(2);
+
+    Userdata toReturn = state.newUserdata();
+    toReturn.data = Locale(languageCode, countryCode);
+
+    return 1;
+  }
+
+  // ── TextHeightBehavior constructor ──
+
+  static int _luaNewTextHeightBehavior(LuaState state) {
+    bool applyHeightToFirstAscent = true;
+    bool applyHeightToLastDescent = true;
+    TextLeadingDistribution? leadingDistribution;
+
+    if (state.isTable(1)) {
+      state.getField(1, 'applyHeightToFirstAscent');
+      if (!state.isNil(-1)) applyHeightToFirstAscent = state.toBoolean(-1);
+
+      state.getField(1, 'applyHeightToLastDescent');
+      if (!state.isNil(-1)) applyHeightToLastDescent = state.toBoolean(-1);
+
+      state.getField(1, 'leadingDistribution');
+      int? ldIndex = state.toIntegerX(-1);
+      if (ldIndex != null) {
+        leadingDistribution = TextLeadingDistribution.values[ldIndex];
+      }
+    }
+
+    Userdata toReturn = state.newUserdata();
+    toReturn.data = TextHeightBehavior(
+      applyHeightToFirstAscent: applyHeightToFirstAscent,
+      applyHeightToLastDescent: applyHeightToLastDescent,
+      leadingDistribution: leadingDistribution ?? TextLeadingDistribution.proportional,
+    );
+
+    return 1;
+  }
+
+  // ── StrutStyle constructor ──
+
+  static int _luaNewStrutStyle(LuaState state) {
+    String? fontFamily;
+    List<String>? fontFamilyFallback;
+    double? fontSize;
+    double? height;
+    TextLeadingDistribution? leadingDistribution;
+    double? leading;
+    FontWeight? fontWeight;
+    FontStyle? fontStyle;
+    bool? forceStrutHeight;
+
+    if (state.isTable(1)) {
+      state.getField(1, 'fontFamily');
+      fontFamily = state.toStr(-1);
+
+      state.getField(1, 'fontFamilyFallback');
+      if (state.isTable(-1)) {
+        fontFamilyFallback = [];
+        state.pushNil();
+        while (state.next(-2)) {
+          fontFamilyFallback.add(state.toStr(-1)!);
+          state.pop(1);
+        }
+      }
+
+      state.getField(1, 'fontSize');
+      fontSize = state.toNumberX(-1);
+
+      state.getField(1, 'height');
+      height = state.toNumberX(-1);
+
+      state.getField(1, 'leadingDistribution');
+      int? ldIndex = state.toIntegerX(-1);
+      if (ldIndex != null) {
+        leadingDistribution = TextLeadingDistribution.values[ldIndex];
+      }
+
+      state.getField(1, 'leading');
+      leading = state.toNumberX(-1);
+
+      state.getField(1, 'fontWeight');
+      fontWeight = state.toUserdata(-1)?.data as FontWeight?;
+
+      state.getField(1, 'fontStyle');
+      int? fontStyleIndex = state.toIntegerX(-1);
+      if (fontStyleIndex != null) {
+        fontStyle = FontStyle.values[fontStyleIndex];
+      }
+
+      state.getField(1, 'forceStrutHeight');
+      if (!state.isNil(-1)) forceStrutHeight = state.toBoolean(-1);
+    }
+
+    Userdata toReturn = state.newUserdata();
+    toReturn.data = StrutStyle(
+      fontFamily: fontFamily,
+      fontFamilyFallback: fontFamilyFallback,
+      fontSize: fontSize,
+      height: height,
+      leadingDistribution: leadingDistribution,
+      leading: leading,
+      fontWeight: fontWeight,
+      fontStyle: fontStyle,
+      forceStrutHeight: forceStrutHeight,
+    );
+
+    return 1;
+  }
+
+  // ── TextPosition / TextRange constructors ──
+
+  static int _luaNewTextPosition(LuaState state) {
+    int offset = state.toInteger(1);
+    int? affinityIndex = state.toIntegerX(2);
+    TextAffinity affinity = affinityIndex != null
+        ? TextAffinity.values[affinityIndex]
+        : TextAffinity.downstream;
+
+    Userdata toReturn = state.newUserdata();
+    toReturn.data = TextPosition(offset: offset, affinity: affinity);
+
+    state.getMetatableAux('MTTextPosition');
+    state.setMetatable(-2);
+
+    return 1;
+  }
+
+  static int _luaNewTextRange(LuaState state) {
+    int start = state.toInteger(1);
+    int end = state.toInteger(2);
+
+    Userdata toReturn = state.newUserdata();
+    toReturn.data = TextRange(start: start, end: end);
+
+    state.getMetatableAux('MTTextRange');
+    state.setMetatable(-2);
+
+    return 1;
+  }
+
+  // ── Path.combine ──
+
+  static int _luaNewPathCombine(LuaState state) {
+    int opIndex = state.toInteger(1);
+    Userdata? path1 = state.toUserdata(2);
+    Userdata? path2 = state.toUserdata(3);
+
+    Userdata toReturn = state.newUserdata();
+    toReturn.data = Path.combine(
+      PathOperation.values[opIndex],
+      path1!.data as Path,
+      path2!.data as Path,
+    );
+
+    state.getMetatableAux('MTPath');
+    state.setMetatable(-2);
 
     return 1;
   }
@@ -2770,6 +3803,388 @@ class LuaUILib {
     double value = state.toNumber(1);
     state.pushNumber(Curves.slowMiddle.transform(value));
     return 1;
+  }
+
+  // ── Shadow metatable ──
+
+  static int _luaShadowIndex(LuaState state) {
+    Userdata? p = state.toUserdata(1);
+    Shadow shadow = p?.data as Shadow;
+
+    final key = state.checkString(2);
+    switch (key) {
+      case 'color':
+        var data = state.newUserdata();
+        data.data = shadow.color;
+        state.getMetatableAux('MTColor');
+        state.setMetatable(-2);
+        return 1;
+      case 'offset':
+        var data = state.newUserdata();
+        data.data = shadow.offset;
+        state.getMetatableAux('MTOffset');
+        state.setMetatable(-2);
+        return 1;
+      case 'blurRadius':
+        state.pushNumber(shadow.blurRadius);
+        return 1;
+      case 'blurSigma':
+        state.pushNumber(shadow.blurSigma);
+        return 1;
+    }
+
+    state.getMetatableAux('MTShadow');
+    state.getField(-1, key);
+    return 1;
+  }
+
+  // ── FontFeature metatable ──
+
+  static int _luaFontFeatureIndex(LuaState state) {
+    Userdata? p = state.toUserdata(1);
+    FontFeature ff = p?.data as FontFeature;
+
+    final key = state.checkString(2);
+    switch (key) {
+      case 'feature':
+        state.pushString(ff.feature);
+        return 1;
+      case 'value':
+        state.pushInteger(ff.value);
+        return 1;
+    }
+
+    state.getMetatableAux('MTFontFeature');
+    state.getField(-1, key);
+    return 1;
+  }
+
+  // ── FontVariation metatable ──
+
+  static int _luaFontVariationIndex(LuaState state) {
+    Userdata? p = state.toUserdata(1);
+    FontVariation fv = p?.data as FontVariation;
+
+    final key = state.checkString(2);
+    switch (key) {
+      case 'axis':
+        state.pushString(fv.axis);
+        return 1;
+      case 'value':
+        state.pushNumber(fv.value);
+        return 1;
+    }
+
+    state.getMetatableAux('MTFontVariation');
+    state.getField(-1, key);
+    return 1;
+  }
+
+  // ── TextPosition metatable ──
+
+  static int _luaTextPositionIndex(LuaState state) {
+    Userdata? p = state.toUserdata(1);
+    TextPosition tp = p?.data as TextPosition;
+
+    final key = state.checkString(2);
+    switch (key) {
+      case 'offset':
+        state.pushInteger(tp.offset);
+        return 1;
+      case 'affinity':
+        state.pushInteger(tp.affinity.index);
+        return 1;
+    }
+
+    state.getMetatableAux('MTTextPosition');
+    state.getField(-1, key);
+    return 1;
+  }
+
+  // ── TextRange metatable ──
+
+  static int _luaTextRangeIndex(LuaState state) {
+    Userdata? p = state.toUserdata(1);
+    TextRange tr = p?.data as TextRange;
+
+    final key = state.checkString(2);
+    switch (key) {
+      case 'start':
+        state.pushInteger(tr.start);
+        return 1;
+      case 'end':
+        state.pushInteger(tr.end);
+        return 1;
+      case 'isValid':
+        state.pushBoolean(tr.isValid);
+        return 1;
+      case 'isCollapsed':
+        state.pushBoolean(tr.isCollapsed);
+        return 1;
+    }
+
+    state.getMetatableAux('MTTextRange');
+    state.getField(-1, key);
+    return 1;
+  }
+
+  static int _luaTextRangeTextBefore(LuaState state) {
+    Userdata? p = state.toUserdata(1);
+    TextRange tr = p?.data as TextRange;
+    String text = state.toStr(2)!;
+    state.pushString(tr.textBefore(text));
+    return 1;
+  }
+
+  static int _luaTextRangeTextAfter(LuaState state) {
+    Userdata? p = state.toUserdata(1);
+    TextRange tr = p?.data as TextRange;
+    String text = state.toStr(2)!;
+    state.pushString(tr.textAfter(text));
+    return 1;
+  }
+
+  static int _luaTextRangeTextInside(LuaState state) {
+    Userdata? p = state.toUserdata(1);
+    TextRange tr = p?.data as TextRange;
+    String text = state.toStr(2)!;
+    state.pushString(tr.textInside(text));
+    return 1;
+  }
+
+  // ── TextBox metatable ──
+
+  static int _luaTextBoxIndex(LuaState state) {
+    Userdata? p = state.toUserdata(1);
+    TextBox tb = p?.data as TextBox;
+
+    final key = state.checkString(2);
+    switch (key) {
+      case 'left':
+        state.pushNumber(tb.left);
+        return 1;
+      case 'top':
+        state.pushNumber(tb.top);
+        return 1;
+      case 'right':
+        state.pushNumber(tb.right);
+        return 1;
+      case 'bottom':
+        state.pushNumber(tb.bottom);
+        return 1;
+      case 'direction':
+        state.pushInteger(tb.direction.index);
+        return 1;
+    }
+
+    state.getMetatableAux('MTTextBox');
+    state.getField(-1, key);
+    return 1;
+  }
+
+  static int _luaTextBoxToRect(LuaState state) {
+    Userdata? p = state.toUserdata(1);
+    TextBox tb = p?.data as TextBox;
+
+    Userdata toReturn = state.newUserdata();
+    toReturn.data = tb.toRect();
+
+    state.getMetatableAux('MTRect');
+    state.setMetatable(-2);
+
+    return 1;
+  }
+
+  // ── LineMetrics metatable ──
+
+  static int _luaLineMetricsIndex(LuaState state) {
+    Userdata? p = state.toUserdata(1);
+    LineMetrics lm = p?.data as LineMetrics;
+
+    final key = state.checkString(2);
+    switch (key) {
+      case 'hardBreak':
+        state.pushBoolean(lm.hardBreak);
+        return 1;
+      case 'ascent':
+        state.pushNumber(lm.ascent);
+        return 1;
+      case 'descent':
+        state.pushNumber(lm.descent);
+        return 1;
+      case 'unscaledAscent':
+        state.pushNumber(lm.unscaledAscent);
+        return 1;
+      case 'height':
+        state.pushNumber(lm.height);
+        return 1;
+      case 'width':
+        state.pushNumber(lm.width);
+        return 1;
+      case 'left':
+        state.pushNumber(lm.left);
+        return 1;
+      case 'baseline':
+        state.pushNumber(lm.baseline);
+        return 1;
+      case 'lineNumber':
+        state.pushInteger(lm.lineNumber);
+        return 1;
+    }
+
+    state.getMetatableAux('MTLineMetrics');
+    state.getField(-1, key);
+    return 1;
+  }
+
+  // ── Tangent metatable ──
+
+  static int _luaTangentIndex(LuaState state) {
+    Userdata? p = state.toUserdata(1);
+    Tangent t = p?.data as Tangent;
+
+    final key = state.checkString(2);
+    switch (key) {
+      case 'position':
+        var data = state.newUserdata();
+        data.data = t.position;
+        state.getMetatableAux('MTOffset');
+        state.setMetatable(-2);
+        return 1;
+      case 'angle':
+        state.pushNumber(t.angle);
+        return 1;
+      case 'vector':
+        var data = state.newUserdata();
+        data.data = t.vector;
+        state.getMetatableAux('MTOffset');
+        state.setMetatable(-2);
+        return 1;
+    }
+
+    state.getMetatableAux('MTTangent');
+    state.getField(-1, key);
+    return 1;
+  }
+
+  // ── PathMetric metatable ──
+
+  static int _luaPathMetricIndex(LuaState state) {
+    Userdata? p = state.toUserdata(1);
+    PathMetric pm = p?.data as PathMetric;
+
+    final key = state.checkString(2);
+    switch (key) {
+      case 'length':
+        state.pushNumber(pm.length);
+        return 1;
+      case 'isClosed':
+        state.pushBoolean(pm.isClosed);
+        return 1;
+      case 'contourIndex':
+        state.pushInteger(pm.contourIndex);
+        return 1;
+    }
+
+    state.getMetatableAux('MTPathMetric');
+    state.getField(-1, key);
+    return 1;
+  }
+
+  static int _luaPathMetricGetTangentForOffset(LuaState state) {
+    Userdata? p = state.toUserdata(1);
+    PathMetric pm = p?.data as PathMetric;
+    double distance = state.toNumber(2);
+
+    Tangent? tangent = pm.getTangentForOffset(distance);
+    if (tangent == null) {
+      state.pushNil();
+      return 1;
+    }
+
+    Userdata toReturn = state.newUserdata();
+    toReturn.data = tangent;
+
+    state.getMetatableAux('MTTangent');
+    state.setMetatable(-2);
+
+    return 1;
+  }
+
+  static int _luaPathMetricExtractPath(LuaState state) {
+    Userdata? p = state.toUserdata(1);
+    PathMetric pm = p?.data as PathMetric;
+    double start = state.toNumber(2);
+    double end = state.toNumber(3);
+    bool startWithMoveTo = state.toBoolean(4);
+
+    Userdata toReturn = state.newUserdata();
+    toReturn.data = pm.extractPath(start, end, startWithMoveTo: startWithMoveTo);
+
+    state.getMetatableAux('MTPath');
+    state.setMetatable(-2);
+
+    return 1;
+  }
+
+  // ── PathMetrics metatable ──
+
+  static int _luaPathMetricsToList(LuaState state) {
+    Userdata? p = state.toUserdata(1);
+    PathMetrics metrics = p?.data as PathMetrics;
+
+    state.newTable();
+    int i = 1;
+    for (final metric in metrics) {
+      state.pushInteger(i);
+      Userdata ud = state.newUserdata();
+      ud.data = metric;
+      state.getMetatableAux('MTPathMetric');
+      state.setMetatable(-2);
+      state.setTable(-3);
+      i++;
+    }
+
+    return 1;
+  }
+
+  // ── PictureRecorder metatable ──
+
+  static int _luaPictureRecorderIndex(LuaState state) {
+    Userdata? p = state.toUserdata(1);
+    PictureRecorder pr = p?.data as PictureRecorder;
+
+    final key = state.checkString(2);
+    switch (key) {
+      case 'isRecording':
+        state.pushBoolean(pr.isRecording);
+        return 1;
+    }
+
+    state.getMetatableAux('MTPictureRecorder');
+    state.getField(-1, key);
+    return 1;
+  }
+
+  static int _luaPictureRecorderEndRecording(LuaState state) {
+    Userdata? p = state.toUserdata(1);
+    PictureRecorder pr = p?.data as PictureRecorder;
+
+    Userdata toReturn = state.newUserdata();
+    toReturn.data = pr.endRecording();
+
+    state.getMetatableAux('MTPicture');
+    state.setMetatable(-2);
+
+    return 1;
+  }
+
+  // ── Picture metatable ──
+
+  static int _luaPictureDispose(LuaState state) {
+    Userdata? p = state.toUserdata(1);
+    (p?.data as Picture).dispose();
+    return 0;
   }
 
 }
