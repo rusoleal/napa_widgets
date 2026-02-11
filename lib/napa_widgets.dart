@@ -30,6 +30,7 @@ export 'widgets/napa_parent_data_widget.dart';
 export 'widgets/napa_positioned.dart';
 export 'widgets/napa_proxy_widget.dart';
 export 'widgets/napa_render_object_widget.dart';
+export 'widgets/napa_repaint_boundary.dart';
 export 'widgets/napa_rotated_box.dart';
 export 'widgets/napa_row.dart';
 export 'widgets/napa_scroll_view.dart';

@@ -1,3 +1,8 @@
+## 0.4.1
+
+* Unit testing for napa widgets.
+* Fix some serialization errors.
+
 ## 0.4.0
 
 * Custom NapaWidgets must be registered via NapaWidget.registerNapaWidget() method.

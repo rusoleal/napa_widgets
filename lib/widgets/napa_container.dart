@@ -138,6 +138,10 @@ class NapaContainer extends NapaStatelessWidget {
   );
 
   static NapaContainer? decode(dynamic data) {
+    if (data == null) {
+      return null;
+    }
+
     AlignmentGeometry? alignment = decodeAlignmentGeometry(data['alignment']);
     EdgeInsetsGeometry? padding;
     Color? color = decodeColor(data['color']);

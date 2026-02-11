@@ -38,6 +38,10 @@ class NapaColumn extends NapaFlex {
   );
 
   static NapaColumn? decode(dynamic data) {
+    if (data == null) {
+      return null;
+    }
+
     return NapaColumn(
       crossAxisAlignment: decodeCrossAxisAlignment(data['crossAxisAlignment']),
       mainAxisAlignment: decodeMainAxisAlignment(data['mainAxisAlignment']),

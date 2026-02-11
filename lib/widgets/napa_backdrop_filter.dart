@@ -41,7 +41,7 @@ class NapaBackdropFilter extends NapaSingleChildRenderObjectWidget {
 
   @override
   toJson() {
-    return super.toJson().addAll(<String, dynamic>{
+    return super.toJson()..addAll(<String, dynamic>{
       'filter': filter.toJson(),
       'blendMode': blendMode.name,
       'enabled': enabled,

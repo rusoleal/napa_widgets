@@ -121,6 +121,10 @@ class NapaFlex extends NapaMultiChildRenderObjectWidget {
   );
 
   static NapaFlex? decode(dynamic data) {
+    if (data == null) {
+      return null;
+    }
+
     return NapaFlex(
       clipBehavior: decodeClip(data['clipBehavior']),
       crossAxisAlignment: decodeCrossAxisAlignment(data['crossAxisAlignment']),

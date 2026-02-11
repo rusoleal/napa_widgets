@@ -37,6 +37,10 @@ class NapaRow extends NapaFlex {
   );
 
   static NapaRow? decode(dynamic data) {
+    if (data == null) {
+      return null;
+    }
+
     return NapaRow(
       crossAxisAlignment: decodeCrossAxisAlignment(data['crossAxisAlignment']),
       mainAxisAlignment: decodeMainAxisAlignment(data['mainAxisAlignment']),

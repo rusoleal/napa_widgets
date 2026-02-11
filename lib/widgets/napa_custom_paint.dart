@@ -89,12 +89,12 @@ class NapaCustomPaint extends NapaSingleChildRenderObjectWidget {
 
   static NapaCustomPaint? decode(dynamic data) {
     if (data == null) {
-      return data;
+      return null;
     }
 
     return NapaCustomPaint(
       painter: NapaCustomPainter.decode(data['painter']),
-      foregroundPainter: NapaCustomPainter.decode('foregroundPainter'),
+      foregroundPainter: NapaCustomPainter.decode(data['foregroundPainter']),
       isComplex: data['isComplex'],
       willChange: data['willChange'],
       size: decodeSize(data['size'])!,

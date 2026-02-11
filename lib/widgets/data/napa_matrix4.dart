@@ -28,7 +28,7 @@ class NapaMatrix4Compose {
   }
 
   dynamic toJson() {
-    elements.map((e) => e.toJson()).toList();
+    return elements.map((e) => e.toJson()).toList();
   }
 
   static NapaMatrix4Compose? decode(dynamic data) {
@@ -37,7 +37,7 @@ class NapaMatrix4Compose {
     }
 
     return NapaMatrix4Compose(
-      elements: data.map((e) => NapaMatrix4.decode(e)).toList(),
+      elements: data.map<NapaMatrix4>((e) => NapaMatrix4.decode(e)!).toList(),
     );
   }
 }
