@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:inspectable_property/inspectable.dart';
 import 'package:napa_widgets/napa_widgets.dart';
-import 'napa_repaint_boundary.dart';
 
 /// Wrapper class for Widget base class.
 /// https://api.flutter.dev/flutter/widgets/Widget-class.html
