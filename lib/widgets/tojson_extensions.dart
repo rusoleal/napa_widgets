@@ -413,8 +413,8 @@ extension LocaleToJson on Locale {
   dynamic toJson() {
     return <String, dynamic>{
       'languageCode': languageCode,
-      if (scriptCode != null) 'scriptCode': scriptCode!,
-      if (countryCode != null) 'countryCode': countryCode!,
+      'scriptCode': ?scriptCode,
+      'countryCode': ?countryCode,
     };
   }
 }
@@ -434,16 +434,16 @@ Locale? decodeLocale(dynamic data) {
 extension StrutStyleToJson on StrutStyle {
   dynamic toJson() {
     return <String, dynamic>{
-      if (fontFamily != null) 'fontFamily': fontFamily!,
-      if (fontFamilyFallback != null) 'fontFamilyFallback': fontFamilyFallback!,
-      if (fontSize != null) 'fontSize': fontSize!,
-      if (height != null) 'height': height!,
+      'fontFamily': ?fontFamily,
+      'fontFamilyFallback': ?fontFamilyFallback,
+      'fontSize': ?fontSize,
+      'height': ?height,
       if (leadingDistribution != null)
         'leadingDistribution': leadingDistribution!.name,
-      if (leading != null) 'leading': leading!,
+      'leading': ?leading,
       if (fontWeight != null) 'fontWeight': fontWeight!.value,
       if (fontStyle != null) 'fontStyle': fontStyle!.name,
-      if (forceStrutHeight != null) 'forceStrutHeight': forceStrutHeight!,
+      'forceStrutHeight': ?forceStrutHeight,
     };
   }
 }

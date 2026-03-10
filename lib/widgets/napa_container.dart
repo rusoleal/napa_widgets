@@ -105,8 +105,8 @@ class NapaContainer extends NapaStatelessWidget {
       if (decoration != null) 'decoration': decoration!.toJson(),
       if (foregroundDecoration != null)
         'foregroundDecoration': foregroundDecoration!.toJson(),
-      if (width != null) 'width': width!,
-      if (height != null) 'height': height!,
+      'width': ?width,
+      'height': ?height,
       if (constraints != null) 'constraints': constraints!.toJson(),
       if (margin != null) 'margin': margin!.toJson(),
       if (transform != null) 'transform': transform!.toJson(),

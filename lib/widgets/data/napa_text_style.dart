@@ -115,13 +115,13 @@ class NapaTextStyle {
       'inherit': inherit,
       if (color != null) 'color': color!.toJson(),
       if (backgroundColor != null) 'backgroundColor': backgroundColor!.toJson(),
-      if (fontSize != null) 'fontSize': fontSize!,
+      'fontSize': ?fontSize,
       if (fontWeight != null) 'fontWeight': fontWeight!.value,
       if (fontStyle != null) 'fontStyle': fontStyle!.name,
-      if (letterSpacing != null) 'letterSpacing': letterSpacing!,
-      if (wordSpacing != null) 'wordSpacing': wordSpacing!,
+      'letterSpacing': ?letterSpacing,
+      'wordSpacing': ?wordSpacing,
       if (textBaseline != null) 'textBaseline': textBaseline!.name,
-      if (height != null) 'height': height!,
+      'height': ?height,
       if (leadingDistribution != null)
         'leadingDistribution': leadingDistribution!.name,
       if (locale != null) 'locale': locale!.toJson(),
@@ -136,12 +136,11 @@ class NapaTextStyle {
         'decoration': decoration!.map((e) => e.name).toList(),
       if (decorationColor != null) 'decorationColor': decorationColor!.toJson(),
       if (decorationStyle != null) 'decorationStyle': decorationStyle!.name,
-      if (decorationThickness != null)
-        'decorationThickness': decorationThickness!,
+      'decorationThickness': ?decorationThickness,
       if (debugLabel != null) 'debugLabel': debugLabel,
       if (fontFamily != null) 'fontFamily': fontFamily,
-      if (fontFamilyFallback != null) 'fontFamilyFallback': fontFamilyFallback!,
-      if (package != null) 'package': package!,
+      'fontFamilyFallback': ?fontFamilyFallback,
+      'package': ?package,
       if (overflow != null) 'overflow': overflow!.name,
     };
   }

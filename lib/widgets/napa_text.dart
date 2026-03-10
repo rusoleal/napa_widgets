@@ -126,13 +126,12 @@ class NapaText extends NapaStatelessWidget {
       if (textAlign != null) 'textAlign': textAlign!.name,
       if (textDirection != null) 'textDirection': textDirection!.name,
       if (locale != null) 'locale': locale!.toJson(),
-      if (softWrap != null) 'softWrap': softWrap!,
+      'softWrap': ?softWrap,
       if (overflow != null) 'overflow': overflow!.name,
       if (textScaler != null) 'textScaler': textScaler!.toJson(),
-      if (maxLines != null) 'maxLines': maxLines!,
-      if (semanticsLabel != null) 'semanticsLabel': semanticsLabel!,
-      if (semanticsIdentifier != null)
-        'semanticsIdentifier': semanticsIdentifier!,
+      'maxLines': ?maxLines,
+      'semanticsLabel': ?semanticsLabel,
+      'semanticsIdentifier': ?semanticsIdentifier,
       if (textWidthBasis != null) 'textWidthBasis': textWidthBasis!.name,
       if (textHeightBehavior != null)
         'textHeightBehavior': textHeightBehavior!.toJson(),
