@@ -1,3 +1,7 @@
+## 0.5.0
+
+* Added NapaGestureDetector widget with full serialization and inspection support.
+
 ## 0.4.1
 
 * Unit testing for napa widgets.

@@ -28,6 +28,7 @@ Napa widgets are an inspectable and serializable version of common Flutter widge
 | Flex              | Ok      |                                  |
 | Flexible          | Ok      |                                  |
 | Flow              | Pending |                                  |
+| GestureDetector   | Ok      |                                  |
 | Icon              | Pending |                                  |
 | Image             | Ok      |                                  |
 | ImageFiltered     | Ok      |                                  |

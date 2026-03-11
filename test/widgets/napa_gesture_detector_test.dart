@@ -174,7 +174,7 @@ void main() {
       });
 
       group('Lua callbacks are invoked correctly', () {
-        int _luaGetInt(LuaState ls, String name) {
+        int luaGetInt(LuaState ls, String name) {
           ls.getGlobal(name);
           final value = ls.toNumber(-1).toInt();
           ls.pop(1);
@@ -185,7 +185,7 @@ void main() {
           final handler =
               NapaGestureHandler(script: 'called = 0\nfunction onTap() called = 1 end');
           handler.onTap!();
-          expect(_luaGetInt(handler.luaState, 'called'), 1);
+          expect(luaGetInt(handler.luaState, 'called'), 1);
         });
 
         test('onTapDown passes position table to Lua', () {
@@ -198,7 +198,7 @@ void main() {
               globalPosition: Offset.zero,
             ),
           );
-          expect(_luaGetInt(handler.luaState, 'lx'), 42);
+          expect(luaGetInt(handler.luaState, 'lx'), 42);
         });
 
         test('onLongPressMoveUpdate passes offset fields to Lua', () {
@@ -214,7 +214,7 @@ void main() {
               localOffsetFromOrigin: const Offset(7, 0),
             ),
           );
-          expect(_luaGetInt(handler.luaState, 'odx'), 7);
+          expect(luaGetInt(handler.luaState, 'odx'), 7);
         });
 
         test('onPanUpdate passes delta to Lua', () {
@@ -228,7 +228,7 @@ void main() {
               delta: const Offset(15, 0),
             ),
           );
-          expect(_luaGetInt(handler.luaState, 'vdx'), 15);
+          expect(luaGetInt(handler.luaState, 'vdx'), 15);
         });
 
         test('onScaleUpdate passes scale to Lua', () {
@@ -238,7 +238,7 @@ void main() {
           handler.onScaleUpdate!(
             ScaleUpdateDetails(scale: 2.0),
           );
-          expect(_luaGetInt(handler.luaState, 's'), 2);
+          expect(luaGetInt(handler.luaState, 's'), 2);
         });
 
         test('onLongPressEnd passes velocity to Lua', () {
@@ -250,7 +250,7 @@ void main() {
               velocity: const Velocity(pixelsPerSecond: Offset(100, 0)),
             ),
           );
-          expect(_luaGetInt(handler.luaState, 'vx'), 100);
+          expect(luaGetInt(handler.luaState, 'vx'), 100);
         });
 
         test('onPanEnd passes velocity to Lua', () {
@@ -262,7 +262,7 @@ void main() {
               velocity: const Velocity(pixelsPerSecond: Offset(0, 50)),
             ),
           );
-          expect(_luaGetInt(handler.luaState, 'vy'), 50);
+          expect(luaGetInt(handler.luaState, 'vy'), 50);
         });
       });
     });
