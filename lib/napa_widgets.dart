@@ -16,6 +16,7 @@ export 'widgets/napa_custom_paint.dart';
 export 'widgets/napa_decorated_box.dart';
 export 'widgets/napa_expanded.dart';
 export 'widgets/napa_fitted_box.dart';
+export 'widgets/napa_gesture_detector.dart';
 export 'widgets/napa_flex.dart';
 export 'widgets/napa_flexible.dart';
 export 'widgets/napa_flow.dart';

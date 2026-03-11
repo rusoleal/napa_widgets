@@ -35,6 +35,7 @@ abstract class NapaWidget with Inspectable {
     'DecoratedBox': (data) => NapaDecoratedBox.decode(data),
     'Expanded': (data) => NapaExpanded.decode(data),
     'FittedBox': (data) => NapaFittedBox.decode(data),
+    'GestureDetector': (data) => NapaGestureDetector.decode(data),
     'Flex': (data) => NapaFlex.decode(data),
     'Flexible': (data) => NapaFlexible.decode(data),
     'Flow': (data) => NapaFlow.decode(data),
