@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:napa_widgets/scripting/napa_script_type.dart';
 import 'data/image_wrapper.dart';
@@ -369,6 +370,117 @@ extension BoxConstraintsToJson on BoxConstraints {
       'maxHeight': maxHeight,
     };
   }
+}
+
+EdgeInsets decodeEdgeInsets(dynamic data) {
+  if (data == null) {
+    return EdgeInsets.zero;
+  }
+
+  return EdgeInsets.fromLTRB(
+    (data['left'] as num).toDouble(),
+    (data['top'] as num).toDouble(),
+    (data['right'] as num).toDouble(),
+    (data['bottom'] as num).toDouble(),
+  );
+}
+
+extension MouseCursorToJson on MouseCursor {
+  String toJson() {
+    if (this == MouseCursor.defer) return 'defer';
+    if (this == MouseCursor.uncontrolled) return 'uncontrolled';
+    if (this is SystemMouseCursor) {
+      return (this as SystemMouseCursor).kind;
+    }
+    return 'basic';
+  }
+}
+
+MouseCursor decodeMouseCursor(String? name) {
+  switch (name) {
+    case 'none':
+      return SystemMouseCursors.none;
+    case 'click':
+      return SystemMouseCursors.click;
+    case 'forbidden':
+      return SystemMouseCursors.forbidden;
+    case 'wait':
+      return SystemMouseCursors.wait;
+    case 'progress':
+      return SystemMouseCursors.progress;
+    case 'contextMenu':
+      return SystemMouseCursors.contextMenu;
+    case 'help':
+      return SystemMouseCursors.help;
+    case 'text':
+      return SystemMouseCursors.text;
+    case 'verticalText':
+      return SystemMouseCursors.verticalText;
+    case 'cell':
+      return SystemMouseCursors.cell;
+    case 'precise':
+      return SystemMouseCursors.precise;
+    case 'move':
+      return SystemMouseCursors.move;
+    case 'grab':
+      return SystemMouseCursors.grab;
+    case 'grabbing':
+      return SystemMouseCursors.grabbing;
+    case 'noDrop':
+      return SystemMouseCursors.noDrop;
+    case 'alias':
+      return SystemMouseCursors.alias;
+    case 'copy':
+      return SystemMouseCursors.copy;
+    case 'allScroll':
+      return SystemMouseCursors.allScroll;
+    case 'resizeLeftRight':
+      return SystemMouseCursors.resizeLeftRight;
+    case 'resizeUpDown':
+      return SystemMouseCursors.resizeUpDown;
+    case 'resizeUpLeftDownRight':
+      return SystemMouseCursors.resizeUpLeftDownRight;
+    case 'resizeUpRightDownLeft':
+      return SystemMouseCursors.resizeUpRightDownLeft;
+    case 'resizeUp':
+      return SystemMouseCursors.resizeUp;
+    case 'resizeDown':
+      return SystemMouseCursors.resizeDown;
+    case 'resizeLeft':
+      return SystemMouseCursors.resizeLeft;
+    case 'resizeRight':
+      return SystemMouseCursors.resizeRight;
+    case 'resizeUpLeft':
+      return SystemMouseCursors.resizeUpLeft;
+    case 'resizeUpRight':
+      return SystemMouseCursors.resizeUpRight;
+    case 'resizeDownLeft':
+      return SystemMouseCursors.resizeDownLeft;
+    case 'resizeDownRight':
+      return SystemMouseCursors.resizeDownRight;
+    case 'resizeColumn':
+      return SystemMouseCursors.resizeColumn;
+    case 'resizeRow':
+      return SystemMouseCursors.resizeRow;
+    case 'zoomIn':
+      return SystemMouseCursors.zoomIn;
+    case 'zoomOut':
+      return SystemMouseCursors.zoomOut;
+    case 'uncontrolled':
+      return MouseCursor.uncontrolled;
+    case 'defer':
+    default:
+      return MouseCursor.defer;
+  }
+}
+
+BoxConstraints decodeBoxConstraints(dynamic data) {
+  return BoxConstraints(
+    minWidth: (data['minWidth'] as num).toDouble(),
+    maxWidth: (data['maxWidth'] as num).toDouble(),
+    minHeight: (data['minHeight'] as num).toDouble(),
+    maxHeight: (data['maxHeight'] as num).toDouble(),
+  );
 }
 
 extension SizeToJson on Size {
@@ -756,6 +868,14 @@ AlignmentGeometry? decodeAlignmentGeometry(dynamic data) {
   return AlignmentGeometry.xy(data['x'], data['y']);
 }
 
+Alignment? decodeAlignment(dynamic data) {
+  if (data == null) return null;
+  return Alignment(
+    (data['x'] as num).toDouble(),
+    (data['y'] as num).toDouble(),
+  );
+}
+
 BlendMode? decodeBlendMode(String? name) {
   if (name == null) {
     return null;
@@ -955,6 +1075,98 @@ ImageRepeat decodeImageRepeat(String name) {
     case 'noRepeat':
     default:
       return ImageRepeat.noRepeat;
+  }
+}
+
+extension DurationToJson on Duration {
+  dynamic toJson() => inMicroseconds;
+}
+
+Duration decodeDuration(dynamic data) {
+  if (data is int) return Duration(microseconds: data);
+  if (data is double) return Duration(microseconds: data.toInt());
+  return const Duration(milliseconds: 300);
+}
+
+extension CurveToJson on Curve {
+  String toJson() {
+    if (this == Curves.linear) return 'linear';
+    if (this == Curves.ease) return 'ease';
+    if (this == Curves.easeIn) return 'easeIn';
+    if (this == Curves.easeOut) return 'easeOut';
+    if (this == Curves.easeInOut) return 'easeInOut';
+    if (this == Curves.easeInBack) return 'easeInBack';
+    if (this == Curves.easeOutBack) return 'easeOutBack';
+    if (this == Curves.easeInOutBack) return 'easeInOutBack';
+    if (this == Curves.easeInCirc) return 'easeInCirc';
+    if (this == Curves.easeOutCirc) return 'easeOutCirc';
+    if (this == Curves.easeInOutCirc) return 'easeInOutCirc';
+    if (this == Curves.easeInExpo) return 'easeInExpo';
+    if (this == Curves.easeOutExpo) return 'easeOutExpo';
+    if (this == Curves.easeInOutExpo) return 'easeInOutExpo';
+    if (this == Curves.easeInSine) return 'easeInSine';
+    if (this == Curves.easeOutSine) return 'easeOutSine';
+    if (this == Curves.easeInOutSine) return 'easeInOutSine';
+    if (this == Curves.easeInQuad) return 'easeInQuad';
+    if (this == Curves.easeOutQuad) return 'easeOutQuad';
+    if (this == Curves.easeInOutQuad) return 'easeInOutQuad';
+    if (this == Curves.easeInCubic) return 'easeInCubic';
+    if (this == Curves.easeOutCubic) return 'easeOutCubic';
+    if (this == Curves.easeInOutCubic) return 'easeInOutCubic';
+    if (this == Curves.easeInQuart) return 'easeInQuart';
+    if (this == Curves.easeOutQuart) return 'easeOutQuart';
+    if (this == Curves.easeInOutQuart) return 'easeInOutQuart';
+    if (this == Curves.bounceIn) return 'bounceIn';
+    if (this == Curves.bounceOut) return 'bounceOut';
+    if (this == Curves.bounceInOut) return 'bounceInOut';
+    if (this == Curves.elasticIn) return 'elasticIn';
+    if (this == Curves.elasticOut) return 'elasticOut';
+    if (this == Curves.elasticInOut) return 'elasticInOut';
+    if (this == Curves.decelerate) return 'decelerate';
+    if (this == Curves.fastOutSlowIn) return 'fastOutSlowIn';
+    if (this == Curves.slowMiddle) return 'slowMiddle';
+    return 'linear';
+  }
+}
+
+Curve decodeCurve(String? name) {
+  switch (name) {
+    case 'ease': return Curves.ease;
+    case 'easeIn': return Curves.easeIn;
+    case 'easeOut': return Curves.easeOut;
+    case 'easeInOut': return Curves.easeInOut;
+    case 'easeInBack': return Curves.easeInBack;
+    case 'easeOutBack': return Curves.easeOutBack;
+    case 'easeInOutBack': return Curves.easeInOutBack;
+    case 'easeInCirc': return Curves.easeInCirc;
+    case 'easeOutCirc': return Curves.easeOutCirc;
+    case 'easeInOutCirc': return Curves.easeInOutCirc;
+    case 'easeInExpo': return Curves.easeInExpo;
+    case 'easeOutExpo': return Curves.easeOutExpo;
+    case 'easeInOutExpo': return Curves.easeInOutExpo;
+    case 'easeInSine': return Curves.easeInSine;
+    case 'easeOutSine': return Curves.easeOutSine;
+    case 'easeInOutSine': return Curves.easeInOutSine;
+    case 'easeInQuad': return Curves.easeInQuad;
+    case 'easeOutQuad': return Curves.easeOutQuad;
+    case 'easeInOutQuad': return Curves.easeInOutQuad;
+    case 'easeInCubic': return Curves.easeInCubic;
+    case 'easeOutCubic': return Curves.easeOutCubic;
+    case 'easeInOutCubic': return Curves.easeInOutCubic;
+    case 'easeInQuart': return Curves.easeInQuart;
+    case 'easeOutQuart': return Curves.easeOutQuart;
+    case 'easeInOutQuart': return Curves.easeInOutQuart;
+    case 'bounceIn': return Curves.bounceIn;
+    case 'bounceOut': return Curves.bounceOut;
+    case 'bounceInOut': return Curves.bounceInOut;
+    case 'elasticIn': return Curves.elasticIn;
+    case 'elasticOut': return Curves.elasticOut;
+    case 'elasticInOut': return Curves.elasticInOut;
+    case 'decelerate': return Curves.decelerate;
+    case 'fastOutSlowIn': return Curves.fastOutSlowIn;
+    case 'slowMiddle': return Curves.slowMiddle;
+    case 'linear':
+    default: return Curves.linear;
   }
 }
 

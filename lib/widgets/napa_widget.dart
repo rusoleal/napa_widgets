@@ -19,7 +19,10 @@ abstract class NapaWidget with Inspectable {
   /// By default, _register is populated with built-in [NapaWidgets].
   ///
   static final Map<String, NapaWidget? Function(dynamic data)> _register = {
+    'AbsorbPointer': (data) => NapaAbsorbPointer.decode(data),
     'Align': (data) => NapaAlign.decode(data),
+    'DefaultTextStyle': (data) => NapaDefaultTextStyle.decode(data),
+    'Directionality': (data) => NapaDirectionality.decode(data),
     'AspectRatio': (data) => NapaAspectRatio.decode(data),
     'BackdropFilter': (data) => NapaBackdropFilter.decode(data),
     'Baseline': (data) => NapaBaseline.decode(data),
@@ -29,31 +32,69 @@ abstract class NapaWidget with Inspectable {
     'ClipRect': (data) => NapaClipRect.decode(data),
     'ClipRRect': (data) => NapaClipRRect.decode(data),
     'ClipRSuperellipse': (data) => NapaClipRSuperellipse.decode(data),
+    'ColoredBox': (data) => NapaColoredBox.decode(data),
     'Column': (data) => NapaColumn.decode(data),
+    'ConstrainedBox': (data) => NapaConstrainedBox.decode(data),
     'Container': (data) => NapaContainer.decode(data),
     'CustomPaint': (data) => NapaCustomPaint.decode(data),
     'DecoratedBox': (data) => NapaDecoratedBox.decode(data),
     'Expanded': (data) => NapaExpanded.decode(data),
     'FittedBox': (data) => NapaFittedBox.decode(data),
+    'FractionallySizedBox': (data) => NapaFractionallySizedBox.decode(data),
     'GestureDetector': (data) => NapaGestureDetector.decode(data),
     'Flex': (data) => NapaFlex.decode(data),
     'Flexible': (data) => NapaFlexible.decode(data),
     'Flow': (data) => NapaFlow.decode(data),
+    'IgnorePointer': (data) => NapaIgnorePointer.decode(data),
+    'IntrinsicHeight': (data) => NapaIntrinsicHeight.decode(data),
+    'IntrinsicWidth': (data) => NapaIntrinsicWidth.decode(data),
     //case 'Icon':
     //  return NapaIcon.decode(data);
     'Image': (data) => NapaImage.decode(data),
+    'IndexedStack': (data) => NapaIndexedStack.decode(data),
+    'LimitedBox': (data) => NapaLimitedBox.decode(data),
+    'Listener': (data) => NapaListener.decode(data),
     'ListView': (data) => NapaListView.decode(data),
+    'MouseRegion': (data) => NapaMouseRegion.decode(data),
+    'Offstage': (data) => NapaOffstage.decode(data),
+    'OverflowBox': (data) => NapaOverflowBox.decode(data),
     'Opacity': (data) => NapaOpacity.decode(data),
     'Padding': (data) => NapaPadding.decode(data),
     'Positioned': (data) => NapaPositioned.decode(data),
     'RepaintBoundary': (data) => NapaRepaintBoundary.decode(data),
     'RotatedBox': (data) => NapaRotatedBox.decode(data),
     'Row': (data) => NapaRow.decode(data),
+    'SafeArea': (data) => NapaSafeArea.decode(data),
+    'SingleChildScrollView': (data) => NapaSingleChildScrollView.decode(data),
+    'SizedOverflowBox': (data) => NapaSizedOverflowBox.decode(data),
     'SizedBox': (data) => NapaSizedBox.decode(data),
     'Stack': (data) => NapaStack.decode(data),
     'Text': (data) => NapaText.decode(data),
     'Transform': (data) => NapaTransform.decode(data),
+    'UnconstrainedBox': (data) => NapaUnconstrainedBox.decode(data),
+    'Visibility': (data) => NapaVisibility.decode(data),
     'Wrap': (data) => NapaWrap.decode(data),
+    'AnimatedAlign': (data) => NapaAnimatedAlign.decode(data),
+    'AnimatedContainer': (data) => NapaAnimatedContainer.decode(data),
+    'AnimatedOpacity': (data) => NapaAnimatedOpacity.decode(data),
+    'AnimatedPadding': (data) => NapaAnimatedPadding.decode(data),
+    'AnimatedPositioned': (data) => NapaAnimatedPositioned.decode(data),
+    'AnimatedRotation': (data) => NapaAnimatedRotation.decode(data),
+    'AnimatedScale': (data) => NapaAnimatedScale.decode(data),
+    'AnimatedSize': (data) => NapaAnimatedSize.decode(data),
+    'AnimatedSlide': (data) => NapaAnimatedSlide.decode(data),
+    'ExcludeSemantics': (data) => NapaExcludeSemantics.decode(data),
+    'GridView': (data) => NapaGridView.decode(data),
+    'InteractiveViewer': (data) => NapaInteractiveViewer.decode(data),
+    'MergeSemantics': (data) => NapaMergeSemantics.decode(data),
+    'PhysicalModel': (data) => NapaPhysicalModel.decode(data),
+    'AnimatedSwitcher': (data) => NapaAnimatedSwitcher.decode(data),
+    'AnimatedCrossFade': (data) => NapaAnimatedCrossFade.decode(data),
+    'PageView': (data) => NapaPageView.decode(data),
+    'Focus': (data) => NapaFocus.decode(data),
+    'FocusScope': (data) => NapaFocusScope.decode(data),
+    'Semantics': (data) => NapaSemantics.decode(data),
+    'RichText': (data) => NapaRichText.decode(data),
   };
 
   final NapaChildMode childMode;
@@ -119,6 +160,14 @@ abstract class NapaWidget with Inspectable {
     NapaWidget? Function(dynamic data) decodeFunction,
   ) {
     _register[name] = decodeFunction;
+  }
+
+  /// Remove a previously registered [NapaWidget] from the decoding register.
+  ///
+  /// Has no effect if [name] was never registered.
+  ///
+  static void unregisterNapaWidget(String name) {
+    _register.remove(name);
   }
 }
 

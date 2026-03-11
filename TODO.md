@@ -3,33 +3,33 @@
 Standard Flutter widgets (no Cupertino / Material) not yet implemented.
 
 ## Layout
-- [ ] ConstrainedBox
-- [ ] UnconstrainedBox
-- [ ] FractionallySizedBox
-- [ ] IntrinsicHeight
-- [ ] IntrinsicWidth
-- [ ] LimitedBox
-- [ ] OverflowBox
-- [ ] SizedOverflowBox
+- [x] ConstrainedBox
+- [x] UnconstrainedBox
+- [x] FractionallySizedBox
+- [x] IntrinsicHeight
+- [x] IntrinsicWidth
+- [x] LimitedBox
+- [x] OverflowBox
+- [x] SizedOverflowBox
 - [ ] CustomSingleChildLayout
 - [ ] CustomMultiChildLayout
-- [ ] IndexedStack
+- [x] IndexedStack
 - [ ] Table
 - [ ] TableCell
 
 ## Visibility & Rendering
-- [ ] Visibility
-- [ ] Offstage
-- [ ] ColoredBox
-- [ ] PhysicalModel
+- [x] Visibility
+- [x] Offstage
+- [x] ColoredBox
+- [x] PhysicalModel
 - [ ] PhysicalShape
-- [ ] AbsorbPointer
-- [ ] IgnorePointer
+- [x] AbsorbPointer
+- [x] IgnorePointer
 
 ## Scrolling
-- [ ] SingleChildScrollView
-- [ ] GridView
-- [ ] PageView
+- [x] SingleChildScrollView
+- [x] GridView
+- [x] PageView
 - [ ] CustomScrollView
 - [ ] SliverList
 - [ ] SliverGrid
@@ -38,54 +38,54 @@ Standard Flutter widgets (no Cupertino / Material) not yet implemented.
 - [ ] Scrollbar
 
 ## Text & Rich Content
-- [ ] RichText
-- [ ] DefaultTextStyle
+- [x] RichText
+- [x] DefaultTextStyle
 
 ## Interaction
-- [ ] MouseRegion
-- [ ] Listener
+- [x] MouseRegion
+- [x] Listener
 - [ ] Draggable
 - [ ] LongPressDraggable
 - [ ] DragTarget
-- [ ] InteractiveViewer
+- [x] InteractiveViewer
 - [ ] Dismissible
 - [ ] Scrollable
 
 ## Animation (Implicit)
-- [ ] AnimatedContainer
-- [ ] AnimatedOpacity
-- [ ] AnimatedPadding
-- [ ] AnimatedAlign
-- [ ] AnimatedSize
-- [ ] AnimatedPositioned
-- [ ] AnimatedScale
-- [ ] AnimatedRotation
-- [ ] AnimatedSlide
-- [ ] AnimatedSwitcher
-- [ ] AnimatedCrossFade
-- [ ] TweenAnimationBuilder
+- [x] AnimatedContainer
+- [x] AnimatedOpacity
+- [x] AnimatedPadding
+- [x] AnimatedAlign
+- [x] AnimatedSize
+- [x] AnimatedPositioned
+- [x] AnimatedScale
+- [x] AnimatedRotation
+- [x] AnimatedSlide
+- [x] AnimatedSwitcher
+- [x] AnimatedCrossFade
+- [ ] TweenAnimationBuilder _(requires runtime Animation object — N/A)_
 
 ## Animation (Explicit)
-- [ ] FadeTransition
-- [ ] SlideTransition
-- [ ] ScaleTransition
-- [ ] RotationTransition
+- [ ] FadeTransition _(requires runtime Animation object — N/A)_
+- [ ] SlideTransition _(requires runtime Animation object — N/A)_
+- [ ] ScaleTransition _(requires runtime Animation object — N/A)_
+- [ ] RotationTransition _(requires runtime Animation object — N/A)_
 
 ## Focus & Input
-- [ ] Focus
-- [ ] FocusScope
+- [x] Focus
+- [x] FocusScope
 - [ ] KeyboardListener
 - [ ] Shortcuts
 - [ ] Actions
 
 ## Semantics & Accessibility
-- [ ] Semantics
-- [ ] ExcludeSemantics
-- [ ] MergeSemantics
+- [x] Semantics
+- [x] ExcludeSemantics
+- [x] MergeSemantics
 - [ ] Tooltip
 
 ## Utility
-- [ ] SafeArea
+- [x] SafeArea
 - [ ] MediaQuery
-- [ ] Directionality
+- [x] Directionality
 - [ ] KeyedSubtree
